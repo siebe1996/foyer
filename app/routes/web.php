@@ -25,11 +25,17 @@ use Illuminate\Support\Facades\Route;
     return view('welcome');
 });*/
 
-Route::resource('games', GameWebController::class);
+//Route::resource('games', GameWebController::class);
 Route::resource('messages', MessageWebController::class);
 Route::resource('roles', RoleWebController::class);
 Route::resource('users', UserWebController::class);
 Route::resource('games', WeaponWebController::class);
+
+Route::prefix('games')->group(function () {
+    Route::post('{id}/pause', [GameWebController::class, 'pause'])->whereNumber('id');
+    Route::post('{id}/start', [GameWebController::class, 'start'])->whereNumber('id');
+});
+Route::get('/', [GameWebController::class,'index']);
 
 Route::prefix('api')->group(function () {
     Route::post('login', [LoginController::class, 'login']);
