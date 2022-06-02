@@ -20,14 +20,12 @@ class UserApiController extends Controller
      */
     public function index(Request $request)
     {
-        /*Gate::authorize('show-all-users');
-        $users = User::query();
-        $users = $users->paginate(15)->withQueryString();
-        $users = new UserCollection($users);
-        return response(['data' => $users], 200)
-            ->header('Content-Type', 'application/json');*/
-        if(true/*$request->filled('gameId')*/){
-
+        //Gate::authorize('show-all-users');
+        $request->validate([
+            'gameId' => 'required|numeric',
+            'aliveState' => 'boolean',
+        ]);
+        if($request->filled('gameId')){
             $users = User::query();
             $users->when($request->filled('gameId'), function ($q) use ($request){
                 $q->whereHas('games', function ($q) use ($request){

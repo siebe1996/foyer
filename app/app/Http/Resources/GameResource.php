@@ -22,13 +22,12 @@ class GameResource extends JsonResource
             'start_date' => $this->start_date,
             'end_date' => $this->end_date,
             'weapon_id'=> $this->relationLoaded('weapon') ? new WeaponResource($this->weapon) : $this->weapon_id,
-            //'category' => $this->whenLoaded('category', new CategoryResource($this->category), $this->category_id),
-            //'category'=> $this->relationLoaded('category') ? new CategoryResource($this->category) : $this->category_id,
-            //'author' => new AuthorResource($this->whenLoaded('author')),
-            //'author' => $this->relationLoaded('author') ? new AuthorResource($this->author) : $this->author_id,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'players' => new UserCollection($this->whenLoaded('usersWithPivot')),
+            'game_user' => new GameUserResource($this->whenPivotLoaded('game_user', function () {
+                return $this->pivot;
+            })),
             'has_user' => $this->has_user,
         ];
     }

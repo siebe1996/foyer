@@ -10,13 +10,18 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 
 class GameLogicController extends Controller
 {
     public function gotKilledUser(Request $request)
     {
+        $request->validate([
+            'gameId' => 'required|numeric',
+        ]);
         if($request->filled('gameId')) {
             $gameId = $request->gameId;
+            Gate::authorize('can-kill', $gameId);
             $gebruikers_id = Auth::id();
             $this->gotKilled($gebruikers_id, $gameId);
             return response(['data' => 'u got killed'], 200)
@@ -26,6 +31,10 @@ class GameLogicController extends Controller
 
     public function gotKilledAdmin(Request $request)
     {
+        $request->validate([
+            'gameId' => 'required|numeric',
+            'userId' => 'required|numeric',
+        ]);
         if($request->filled('gameId') && $request->filled('userId') ) {
             $gameId = $request->gameId;
             $gebruikers_id = $request->userId;

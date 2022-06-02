@@ -22,10 +22,4 @@ class Game extends Model
     public function weapon(){
         return $this->belongsTo(Weapon::class);
     }
-
-/*
- * //NIET OKE
-    public function game_user(){
-        return $this->hasMany(Game_User::class);
-    }*/
 }

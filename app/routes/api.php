@@ -31,29 +31,17 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
         ->header('Content-Type', 'application/json');
 });
 
-//Route::middleware('auth:sanctum')->post('userinfo/{id}', [GameUserApiController::class, 'store']);//->middleware('auth:sanctum');
 Route::middleware('auth:sanctum')->group(function (){
-    Route::apiResource('games', GameApiController::class)->only(['index', 'show', 'update']);
+    Route::apiResource('games', GameApiController::class)->only(['index', 'show']);
     Route::get('currentgames', [GameApiController::class, 'current']);
+    Route::apiResource('userinfo', GameUserApiController::class)->only(['show', 'store']);
     Route::get('target', [GameUserApiController::class, 'target']);
-    Route::apiResource('messages', MessageApiController::class)->only(['index', 'show']);
-    Route::apiResource('users', UserApiController::class)->only(['index', 'show', 'update', 'store']);//->middleware('auth:sanctum');;
-    Route::apiResource('userinfo', GameUserApiController::class)->only(['index', 'show', 'store']);
-    //Route::post('/userinfo/{gameId}', [GameUserApiController::class, 'store'])->whereNumber('gameId');
-//Route::get('usergames/{id}', [GameUserApiController::class, 'getGamesForUser'])->where(['id' => '[0-9]+']);
-    Route::apiResource('weapons', WeaponApiController::class)->only(['index', 'show']);
-    Route::prefix('gamelogic')->group(function () {
-        Route::patch('', [GameLogicController::class, 'gotKilledUser']);
-        /*Route::get('add', [BlogController::class,'add']);
-        Route::get('search', [BlogController::class, 'search']);
-
-        Route::post('add', [BlogController::class,'store']);
-        Route::post('{id}/delete', [BlogController::class, 'deleteBlogpost'])->where(['id' => '[0-9]+'])
-            ->middleware('auth');*/
-    });
-    Route::prefix('admin')->group(function (){
-        Route::prefix('gamelogic')->group(function () {
-            Route::patch('', [GameLogicController::class, 'gotKilledAdmin']);
+    Route::apiResource('messages', MessageApiController::class)->only(['index', 'show']); //toDo implementeer messages
+    Route::patch('gamelogic', [GameLogicController::class, 'gotKilledUser']);
+    Route::middleware('role:spelbegeleider')->group(function () {
+        Route::prefix('admin')->group(function (){
+            Route::patch('gamelogic', [GameLogicController::class, 'gotKilledAdmin']);
+            Route::get('users', [UserApiController::class, 'index']);
         });
     });
 });

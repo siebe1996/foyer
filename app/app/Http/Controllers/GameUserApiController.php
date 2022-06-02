@@ -6,7 +6,6 @@ use App\Http\Resources\GameCollection;
 use App\Http\Resources\GameResource;
 use App\Http\Resources\GameUserResource;
 use App\Models\Game;
-use App\Models\Game_User;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -22,10 +21,7 @@ class GameUserApiController extends Controller
      */
     public function index()
     {
-        $id = Auth::id();
-
-        return response(['data' => $id], 200)
-            ->header('Content-Type', 'application/json');
+        //
     }
 
     /**
@@ -48,7 +44,10 @@ class GameUserApiController extends Controller
     {
         if($request->filled('gameId')){
             $gameId = $request->gameId;
-            Gate::authorize('store-gameuser', $gameId);
+            if(!is_numeric($gameId)){
+                return response(['data' => 'bad request'], 400)
+                    ->header('Content-Type', 'application/json');
+            }
             $userId = Auth::id();
             $game = Game::where('id', $gameId)->first();
             if($game->start_date > Carbon::now()){
@@ -70,8 +69,12 @@ class GameUserApiController extends Controller
      * @param  int  $gameId
      * @return \Illuminate\Http\Response
      */
-    public function show($gameId) //toDo dit moet via Request $request
+    public function show($gameId)
     {
+        if(!is_numeric($gameId)){
+            return response(['data' => 'bad request'], 400)
+                ->header('Content-Type', 'application/json');
+        }
         $userId = Auth::id();
         $weaponId = Game::where('id', $gameId)->pluck('weapon_id');
         $gameUser = Game::where('id', $gameId)
@@ -86,11 +89,7 @@ class GameUserApiController extends Controller
         $targetId = $gameUser->usersWithPivot->first()->pivot->target_id;
         $targetName = User::where('id', $targetId)->pluck('first_name');
         $data = new GameResource($gameUser);
-        //todo: why doesn't this work with players
         $data->usersWithPivot->first()->pivot->target_name = $targetName;
-        //$gameUser->usersWithpivot->first()->pivot->target_id = 5;
-        /*$gameUser->usersWithpivot->first()->target_id = null;
-        $gameUser->first();*/
 
         return response(['data' => $data], 200)
             ->header('Content-Type', 'application/json');
@@ -130,24 +129,6 @@ class GameUserApiController extends Controller
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function getGamesForUser()
-    {
-        $userId = Auth::id();
-        $games = new GameCollection(Game::
-            whereHas('users', function ($q) use ($userId){
-                $q->where('users.id', $userId);
-            })->with(['usersWithPivot'=> function ($query) use ($userId) {
-                $query->where('users.id', $userId);
-            }])->get());
-        return response(['data' => $games], 200)
-            ->header('Content-Type', 'application/json');
-    }
 
     /**
      * Display target of current game.
@@ -157,11 +138,11 @@ class GameUserApiController extends Controller
     public function target(Request $request){
         if($request->filled('gameId')){
             $gameId = $request->gameId;
+            if(!is_numeric($gameId)){
+                return response(['data' => 'bad request'], 400)
+                    ->header('Content-Type', 'application/json');
+            }
             $userId = Auth::id();
-            /*$targetId = $request->targetId;
-            $targetName = User::where('id', $targetId)->pluck('first_name');
-            */
-            //$targetId = $gameUser->users_with_pivot;//->players->game_user->target_id;
             $game = Game::with('users')->findOrFail($gameId)->with('usersWithPivot')->findOrFail($gameId);
             $targetId = $game->usersWithPivot->where('pivot.user_id', $userId)->pluck('pivot.target_id');
             $targetName = User::where('id', $targetId)->pluck('first_name')->first();
