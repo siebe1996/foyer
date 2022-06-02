@@ -17,11 +17,14 @@
 <div class="container">
     <header class="blog-header py-3">
         <a href="{{ url('/') }}" ><h1>Gotcha</h1></a>
-        @if($buttons['create'])
-            <a href="{{ url('') }}">Create Game</a>
+        @if($buttons['create'] ?? '')
+            <a href="{{ url('games/create') }}">Create Game</a>
         @endif
-        @if($buttons['logout'])
-            <a href="{{ url('') }}">Logout</a>
+        @if($buttons['logout'] ?? '')
+            <form action="{{url('/logout')}}" method="post">
+                @csrf
+                <button type="submit">Logout</button>
+            </form>
         @endif
     </header>
 </div>

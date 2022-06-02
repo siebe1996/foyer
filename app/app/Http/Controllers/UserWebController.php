@@ -81,4 +81,20 @@ class UserWebController extends Controller
     {
         //
     }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     */
+    public function kill(Request $request, $id)
+    {
+        $request->validate([
+            'game_id' => 'required|numeric',
+        ]);
+        $gameId = $request->game_id;
+        (new GameLogicController())->gotKilled($id, $gameId);
+        return redirect('games/'.$gameId);
+    }
 }

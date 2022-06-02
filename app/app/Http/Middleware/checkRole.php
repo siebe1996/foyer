@@ -4,6 +4,8 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class checkRole
 {
@@ -17,7 +19,9 @@ class checkRole
     public function handle(Request $request, Closure $next, $role)
     {
         if (! $request->user()->hasRole($role)) {
-            // Redirect...
+            Session::flush();
+            Auth::logout();
+            return redirect('login');
         }
         return $next($request);
     }

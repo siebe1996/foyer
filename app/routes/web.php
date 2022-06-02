@@ -20,24 +20,28 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::middleware(['auth', 'role:administrator'])->group(function () {
+    Route::prefix('games')->group(function () {
+        Route::post('{id}/pause', [GameWebController::class, 'pause'])->whereNumber('id');
+        Route::post('{id}/unpause', [GameWebController::class, 'unpause'])->whereNumber('id');
+        Route::post('', [GameWebController::class, 'store']);
+        Route::post('{id}', [GameWebController::class, 'update'])->whereNumber('id');
+        Route::get('/create', [GameWebController::class, 'create']);
+        Route::get('{id}', [GameWebController::class, 'show'])->whereNumber('id');
+        Route::get('{id}/leaderboard', [GameWebController::class, 'leaderboard'])->whereNumber('id');
+        Route::get('{id}/edit', [GameWebController::class, 'edit'])->whereNumber('id');
+    });
 
-/*Route::get('/', function () {
-    return view('welcome');
-});*/
+    Route::prefix('users')->group(function () {
+        Route::post('{id}/kill', [UserWebController::class, 'kill'])->whereNumber('id');
+    });
 
-//Route::resource('games', GameWebController::class);
-Route::resource('messages', MessageWebController::class);
-Route::resource('roles', RoleWebController::class);
-Route::resource('users', UserWebController::class);
-Route::resource('games', WeaponWebController::class);
-
-Route::prefix('games')->group(function () {
-    Route::post('{id}/pause', [GameWebController::class, 'pause'])->whereNumber('id');
-    Route::post('{id}/start', [GameWebController::class, 'start'])->whereNumber('id');
+    Route::get('/', [GameWebController::class, 'index']);
 });
-Route::get('/', [GameWebController::class,'index']);
 
 Route::prefix('api')->group(function () {
     Route::post('login', [LoginController::class, 'login']);
     Route::post('logout', [LoginController::class, 'logout']);
 });
+
+require __DIR__.'/auth.php';
