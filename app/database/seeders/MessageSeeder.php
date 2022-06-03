@@ -23,7 +23,8 @@ class MessageSeeder extends Seeder
             for ($i = 0; $i < $amount; $i++) {
                 DB::table('messages')->insert([
                     'content' => $faker->realText(100, 3),
-                    'user_id' => $user->id,
+                    'sender_id' => $user->id,
+                    'receiver_id' => rand(1,count($users)),
                     'created_at' => $faker->dateTimeBetween($user->created_at , 'now')->format('Y-m-d H:i:s'),
                     'updated_at' => null
                 ]);

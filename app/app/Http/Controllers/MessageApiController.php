@@ -2,10 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\ChatMessage;
+use App\Http\Resources\MessageCollection;
+use App\Models\Message;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class MessageApiController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+
+
     /**
      * Display a listing of the resource.
      *
@@ -13,18 +25,42 @@ class MessageApiController extends Controller
      */
     public function index()
     {
-        //
+        $userId = Auth::id();
+
+        $messages = new MessageCollection(Message::where('receiver_id', $userId)->get());
+
+        return response(['data' => $messages], 200)
+            ->header('Content-Type', 'application/json');
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return void
      */
+
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'content'=>'required',
+            'user'=>'required|numeric',
+        ]);
+
+        $senderId = Auth::id();
+        $sender = User::findOrFail($senderId);
+        $receiver = User::findOrFail($request->user);
+        $message = new Message();
+        $message->content = $request->input('content');
+        $message->sender_id = $senderId;
+        $message->receiver_id = $request->input('user');
+        //$message->user()->associate($sender);
+        //$message->user()->associate($receiver);
+        $message->save();
+
+        broadcast(new ChatMessage($message));
+
+        //return "true";
     }
 
     /**

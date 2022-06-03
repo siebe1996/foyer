@@ -52,6 +52,10 @@ class User extends Authenticatable
         return $this->belongsToMany(Game::class, 'game_user');
     }
 
+    public function messages(){
+        return $this->hasMany(Message::class);
+    }
+
     public function hasRole($role){
         //return false;
         return $this->roles()->where('title', $role)->exists();

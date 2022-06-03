@@ -25,29 +25,29 @@ class UserApiController extends Controller
             'gameId' => 'required|numeric',
             'aliveState' => 'boolean',
         ]);
-        if($request->filled('gameId')){
+        if ($request->filled('gameId')) {
             $users = User::query();
-            $users->when($request->filled('gameId'), function ($q) use ($request){
-                $q->whereHas('games', function ($q) use ($request){
-                    $q->where('games.id',$request->gameId);
-                })->with(['gamesWithPivot' => function ($q) use ($request){
-                    $q->where('games.id',$request->gameId);
-                }]);
-               return $q;
-            });
-            $users->when($request->filled('name'), function ($q) use ($request){
-                $q->whereHas('games', function ($q) use ($request){
-                    $q->where('users.first_name',$request->name);
-                })->with(['gamesWithPivot' => function ($q) use ($request){
-                    $q->where('games.id',$request->gameId);
+            $users->when($request->filled('gameId'), function ($q) use ($request) {
+                $q->whereHas('games', function ($q) use ($request) {
+                    $q->where('games.id', $request->gameId);
+                })->with(['gamesWithPivot' => function ($q) use ($request) {
+                    $q->where('games.id', $request->gameId);
                 }]);
                 return $q;
             });
-            $users->when($request->filled('aliveState'), function ($q) use ($request){
-                $q->whereHas('gamesWithPivot', function ($q) use ($request){
-                    $q->where('game_user.alive',$request->aliveState);
-                })->with(['gamesWithPivot' => function ($q) use ($request){
-                    $q->where('game_user.alive',$request->aliveState);
+            $users->when($request->filled('name'), function ($q) use ($request) {
+                $q->whereHas('games', function ($q) use ($request) {
+                    $q->where('users.first_name', $request->name);
+                })->with(['gamesWithPivot' => function ($q) use ($request) {
+                    $q->where('games.id', $request->gameId);
+                }]);
+                return $q;
+            });
+            $users->when($request->filled('aliveState'), function ($q) use ($request) {
+                $q->whereHas('gamesWithPivot', function ($q) use ($request) {
+                    $q->where('game_user.alive', $request->aliveState);
+                })->with(['gamesWithPivot' => function ($q) use ($request) {
+                    $q->where('game_user.alive', $request->aliveState);
                 }]);
                 return $q;
             });
@@ -64,27 +64,27 @@ class UserApiController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
         /**
          * 'first_name' => 'Dries',
-        'last_name' => 'Loco',
-        'email' => 'driesloco@odisee.be',
-        'password' => Hash::make('Azerty123'),
-        'total_kills' => 0,
-        'deaths' => 1,
-        'games_played' => 1,
-        'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-        'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+         * 'last_name' => 'Loco',
+         * 'email' => 'driesloco@odisee.be',
+         * 'password' => Hash::make('Azerty123'),
+         * 'total_kills' => 0,
+         * 'deaths' => 1,
+         * 'games_played' => 1,
+         * 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+         * 'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
          */
 
         Gate::authorize('store-user');
         $comment = new User;
         $comment->first_name = "nel";
-        $comment->last_name= "li";
+        $comment->last_name = "li";
         $comment->email = "nelli@odisee.be";
         $comment->password = Hash::make('Azerty123');
         $comment->total_kills = 0;
@@ -101,7 +101,7 @@ class UserApiController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -115,8 +115,8 @@ class UserApiController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -127,11 +127,27 @@ class UserApiController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+
+    public function allUsers(Request $request)
+    {
+        //Gate::authorize('show-all-users');
+
+        $users = User::all();
+        return response(['data' => $users], 200)
+            ->header('Content-Type', 'application/json');
+
     }
 }
