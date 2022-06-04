@@ -64,6 +64,7 @@ class GameApiController extends Controller
         $winner = $alivePlayers->count() == 1 ? $alivePlayers->first()->first_name : null;
         $mostKilled = $game->usersWithPivot->sortByDesc('pivot.kills')->take(5);
         $mostKilled = new UserCollection($mostKilled);
+        $alivePlayers = new UserCollection($alivePlayers);
 
 
         return response(['data' =>['game_data' => $game, 'alive_player' => $alivePlayers, 'winner' => $winner, 'most_killed' => $mostKilled]], 200)
