@@ -94,6 +94,16 @@ class MessageApiController extends Controller
      */
     public function destroy($id)
     {
-        //
+        if(!is_numeric($id)){
+            return response(['data' => 'bad request'], 400)
+                ->header('Content-Type', 'application/json');
+        }
+
+        $message = Message::findOrFail($id);
+        $this->authorize('forceDelete', $message);
+        $message->delete();
+
+        return response(['data' => 'resource deleted successfully'], 200)
+            ->header('Content-Type', 'application/json');
     }
 }

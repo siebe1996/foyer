@@ -7,7 +7,7 @@
     <meta name="author" content="Van de Voorde Siebe">
     <title>@yield('title')</title>
 
-    <link rel="icon" href="{{asset('img/icons/scared.ico')}}">
+    <link rel="icon" href="{{ url('favicon.ico') }}">
 
     <!-- Custom styles for this template -->
     <link href="{{asset('css/main.css')}}" rel="stylesheet">

@@ -36,9 +36,8 @@ Route::middleware('auth:sanctum')->group(function (){
     Route::get('currentgames', [GameApiController::class, 'current']);
     Route::apiResource('userinfo', GameUserApiController::class)->only(['show', 'store']);
     Route::get('target', [GameUserApiController::class, 'target']);
-    Route::apiResource('messages', MessageApiController::class)->only(['index', 'show']); //toDo implementeer messages
     Route::patch('gamelogic', [GameLogicController::class, 'gotKilledUser']);
-    Route::apiResource('messages', MessageApiController::class);
+    Route::apiResource('messages', MessageApiController::class)->only(['index', 'store', 'destroy']);
     Route::get('allusers', [UserApiController::class, 'allUsers']);
     Route::middleware('role:spelbegeleider')->group(function () {
         Route::prefix('admin')->group(function (){
