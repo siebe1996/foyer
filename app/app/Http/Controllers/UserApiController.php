@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
+use phpDocumentor\Reflection\Types\Boolean;
 
 class UserApiController extends Controller
 {
@@ -25,40 +26,37 @@ class UserApiController extends Controller
             'gameId' => 'required|numeric',
             'aliveState' => 'boolean',
         ]);
-        if ($request->filled('gameId')) {
-            $users = User::query();
-            $users->when($request->filled('gameId'), function ($q) use ($request) {
-                $q->whereHas('games', function ($q) use ($request) {
-                    $q->where('games.id', $request->gameId);
-                })->with(['gamesWithPivot' => function ($q) use ($request) {
-                    $q->where('games.id', $request->gameId);
-                }]);
-                return $q;
-            });
-            $users->when($request->filled('name'), function ($q) use ($request) {
-                $q->whereHas('games', function ($q) use ($request) {
-                    $q->where('users.first_name', $request->name);
-                })->with(['gamesWithPivot' => function ($q) use ($request) {
-                    $q->where('games.id', $request->gameId);
-                }]);
-                return $q;
-            });
-            $users->when($request->filled('aliveState'), function ($q) use ($request) {
-                $q->whereHas('gamesWithPivot', function ($q) use ($request) {
-                    $q->where('game_user.alive', $request->aliveState);
-                })->with(['gamesWithPivot' => function ($q) use ($request) {
-                    $q->where('game_user.alive', $request->aliveState);
-                }]);
-                return $q;
-            });
+        $users = User::query();
+        $users->when($request->filled('gameId'), function ($q) use ($request) {
+            $q->whereHas('games', function ($q) use ($request) {
+                $q->where('games.id', $request->gameId);
+            })->with(['gamesWithPivot' => function ($q) use ($request) {
+                $q->where('games.id', $request->gameId);
+            }]);
+            return $q;
+        });
+        $users->when($request->filled('name'), function ($q) use ($request) {
+            $q->whereHas('games', function ($q) use ($request) {
+                $q->where('users.first_name', $request->name);
+            })->with(['gamesWithPivot' => function ($q) use ($request) {
+                $q->where('games.id', $request->gameId);
+            }]);
+            return $q;
+        });
+        $users->when($request->filled('aliveState'), function ($q) use ($request) {
+            $q->whereHas('gamesWithPivot', function ($q) use ($request) {
+                $q->where('game_user.alive', (bool)$request->aliveState);
+            })->with(['games' => function ($q) use ($request) {
+                $q->where('games.id', $request->gameId);
+            }]);
+            return $q;
+        });
 
-            $users = $users->get();
-            //$users = new UserCollection($users);
-            return response(['data' => $users], 200)
-                ->header('Content-Type', 'application/json');
-        }
-        return response(['data' => "Bad Request"], 400)
+        $users = $users->get();
+        //$users = new UserCollection($users);
+        return response(['data' => $users], 200)
             ->header('Content-Type', 'application/json');
+
     }
 
     /**
