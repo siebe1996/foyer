@@ -16,7 +16,7 @@
 
 <div class="container">
     <header class="blog-header py-3">
-        <a href="{{ url('/') }}" ><h1>Gotcha</h1></a>
+        <h1><a href="{{ url('/') }}">Gotcha</a></h1>
         @if($buttons['create'] ?? '')
             <a href="{{ url('games/create') }}">Create Game</a>
         @endif
@@ -40,6 +40,7 @@
 </footer>
 
 
-
+<script src="https://kit.fontawesome.com/571d0438fc.js" crossorigin="anonymous"></script>
 </body>
+
 </html>

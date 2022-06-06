@@ -5,7 +5,7 @@
         <h2>Games</h2>
         @if($startedGames || $otherGames)
             @foreach($startedGames as $startedGame)
-                <div>
+                <div class="game">
                     <a href="{{ url('games/'.$startedGame->id) }}">{{$startedGame->title}}</a>
                     @if($startedGame->active)
                         <form action="{{url('games/'.$startedGame->id.'/pause')}}" method="post">
@@ -21,7 +21,7 @@
                 </div>
             @endforeach
             @foreach($otherGames as $otherGame)
-                <div>
+                <div class="game">
                     <a href="{{ url('games/'.$otherGame->id) }}">{{$otherGame->title}}</a>
                 </div>
             @endforeach

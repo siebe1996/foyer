@@ -36,6 +36,6 @@ class ChatMessage implements ShouldBroadcast
     {
         //return new PrivateChannel('channel-name');
         //console.log($this->message['receiver']);
-        return new Channel('chat-message');//.$this->message['receiver_id']);
+        return new PrivateChannel('chat-message.'.$this->message['receiver_id']);
     }
 }

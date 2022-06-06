@@ -3,17 +3,17 @@
 @section('main')
     <main class="container">
         <h2>{{ $game->title }}</h2>
-        <a href="{{ url('games/'.$game->id.'/edit') }}">edit</a>
-        <a href="{{ url('games/'.$game->id.'/leaderboard') }}">leaderbord</a>
+        <a class="gameControls" href="{{ url('games/'.$game->id.'/edit') }}">edit</a>
+        <a class="gameControls" href="{{ url('games/'.$game->id.'/leaderboard') }}">leaderbord</a>
         <div>
-            <div>
+            <div class="gameheaders">
                 <p>id</p>
                 <p>name</p>
                 <p>target</p>
                 <p>status</p>
             </div>
             @foreach($users as $user)
-                <div>
+                <div class="gameheaders">
                     <p>{{$user->id}}</p>
                     <p>{{$user->first_name}}</p>
                     <p>{{$user->pivot->target_id}}</p>

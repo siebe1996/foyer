@@ -8,6 +8,7 @@ use App\Models\Message;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class MessageApiController extends Controller
 {
@@ -58,7 +59,7 @@ class MessageApiController extends Controller
         //$message->user()->associate($receiver);
         $message->save();
 
-        broadcast(new ChatMessage($message));
+        //broadcast(new ChatMessage($message));
 
         //return "true";
     }

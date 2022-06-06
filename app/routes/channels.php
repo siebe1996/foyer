@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Broadcast;
 
 /*
@@ -13,7 +14,6 @@ use Illuminate\Support\Facades\Broadcast;
 |
 */
 
-Broadcast::channel('chat-message', function ($message) {
-    info("test");
-    return true;
+Broadcast::channel('chat-message.{userId}', function ($user) {
+    return true;//$user->id === $userId;
 });

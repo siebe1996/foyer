@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use phpDocumentor\Reflection\Types\Boolean;
 
 class UserApiController extends Controller
@@ -43,14 +44,17 @@ class UserApiController extends Controller
             }]);
             return $q;
         });
+        Log::Info($users->get());
         $users->when($request->filled('aliveState'), function ($q) use ($request) {
             $q->whereHas('gamesWithPivot', function ($q) use ($request) {
+                $q->where('game_user.game_id', $request->gameId);
                 $q->where('game_user.alive', (bool)$request->aliveState);
-            })->with(['games' => function ($q) use ($request) {
+            })/*->with(['games' => function ($q) use ($request) {
                 $q->where('games.id', $request->gameId);
-            }]);
+            }])*/;
             return $q;
         });
+        Log::Info($users->get());
 
         $users = $users->get();
         //$users = new UserCollection($users);

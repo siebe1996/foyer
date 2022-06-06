@@ -11,14 +11,14 @@
               enctype="multipart/form-data">
             @csrf
             <div>
-                <label for="start-date" class="form-label">Start Date</label>
+                <label for="start-date" class="form-label datelabel">Start Date</label>
                 <input type="datetime-local"
                        class="{{ session()->exists('_old_input.start_date') ? (in_array('start_date', $errorArray) ? 'is-invalid' : 'is-valid')  : '' }}"
                        id="start-date" name="start_date" value="{{ old('start_date', date('Y-m-d\TH:i:s', strtotime($game->start_date))) }}">
             </div>
 
             <div>
-                <label for="end-date" class="form-label">End Date</label>
+                <label for="end-date" class="form-label datelabel">End Date</label>
                 <input type="datetime-local"
                        class="{{ session()->exists('_old_input.end_date') ? (in_array('end_date', $errorArray) ? 'is-invalid' : 'is-valid')  : '' }}"
                        id="end-date" name="end_date" value="{{ old('end_date', date('Y-m-d\TH:i:s', strtotime($game->end_date))) }}">
