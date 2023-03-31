@@ -22,8 +22,7 @@ class UserSeeder extends Seeder
             'last_name' => 'Delrue',
             'email' => 'bartdelrue@odisee.be',
             'password' => Hash::make('Azerty123'),
-            'total_kills' => 0,
-            'deaths' => 1,
+            'total_wins' => 0,
             'games_played' => 1,
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
@@ -33,8 +32,7 @@ class UserSeeder extends Seeder
             'last_name' => 'Maervoet',
             'email' =>'jorismaervoet@odisee.be',
             'password' => Hash::make('Azerty123'),
-            'total_kills' => 0,
-            'deaths' => 1,
+            'total_wins' => 0,
             'games_played' => 1,
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
@@ -44,8 +42,7 @@ class UserSeeder extends Seeder
             'last_name' => 'Van Peteghem',
             'email' => 'pietervanpeteghem@odisee.be',
             'password' => Hash::make('Azerty123'),
-            'total_kills' => 0,
-            'deaths' => 1,
+            'total_wins' => 0,
             'games_played' => 1,
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
@@ -55,8 +52,7 @@ class UserSeeder extends Seeder
             'last_name' => 'De Winne',
             'email' => 'davydewinne@odisee.be',
             'password' => Hash::make('Azerty123'),
-            'total_kills' => 0,
-            'deaths' => 1,
+            'total_wins' => 0,
             'games_played' => 1,
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
@@ -76,15 +72,15 @@ class UserSeeder extends Seeder
         for ($i = 4; $i < 10; $i++) {
             $firstName = $faker->firstName;
             $lastName = $faker->lastName;
+            $wins = $faker->randomDigit();
             $email = strtolower(str_replace(' ', '', $firstName) . str_replace(' ', '', $lastName)) . '@odisee.be';
             DB::table('users')->insert([
                 'first_name' => $firstName,
                 'last_name' => $lastName,
                 'email' => $email,
                 'password' => Hash::make('Azerty123'),
-                'total_kills' => 0,
-                'deaths' => 1,
-                'games_played' => 1,
+                'total_wins' => $wins,
+                'games_played' => $faker->numberBetween($wins, $wins+10),
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
             ]);
@@ -93,7 +89,7 @@ class UserSeeder extends Seeder
         //$firstUser = DB::table('users')->where('id', 1);
         //$firstUser->update(['target_id' => 10]);
 
-        $userIds = DB::table('users')->pluck('id')->all();
+        /*$userIds = DB::table('users')->pluck('id')->all();
         for ($i = 1; $i <= count($userIds); $i++){
             if ($i == count($userIds)){
                 $targetId = $userIds[0];
@@ -108,22 +104,21 @@ class UserSeeder extends Seeder
                 'alive' => true,
                 'target_id' => $targetId
             ]);
-        }
+        }*/
 
         DB::table('users')->insert([
             'first_name' => 'Dries',
             'last_name' => 'Loco',
             'email' => 'driesloco@odisee.be',
             'password' => Hash::make('Azerty123'),
-            'total_kills' => 0,
-            'deaths' => 1,
-            'games_played' => 1,
+            'total_wins' => 2,
+            'games_played' => 5,
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
         ]);
 
         //$lastUserId = DB::table('users')->pluck('id')->last();
-        DB::table('game_user')->insert([
+        /*DB::table('game_user')->insert([
             'game_id' => 2 ,
             'user_id' => 11,
             'kills' => 0,
@@ -136,7 +131,7 @@ class UserSeeder extends Seeder
             'kills' => 0,
             'alive' => true,
             'target_id' => null
-        ]);
+        ]);*/
         /*$userIds = DB::table('users')->pluck('id')->all();
         for ($i = 0; $i < count($userIds); $i++){
             if ($i < (count($userIds) - 1)){

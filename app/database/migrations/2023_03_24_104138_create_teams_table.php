@@ -17,9 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->foreignId('speler1')->references('id')->on('users');
-            $table->unique('speler1');
             $table->foreignId('speler2')->nullable()->references('id')->on('users');
-            $table->unique('speler2');
             $table->unsignedBigInteger('total_wins')->default(0);
             $table->unsignedBigInteger('games_played')->default(0);
             $table->timestamps();
