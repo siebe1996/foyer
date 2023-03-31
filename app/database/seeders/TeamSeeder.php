@@ -43,10 +43,8 @@ class TeamSeeder extends Seeder
     public function reroll($id1, $userIds, $faker){
         $id2 = $userIds[$faker->numberBetween(0, count($userIds)+1)];
         if ($id1 == $id2){
-            $this->reroll($id1, $userIds, $faker);
+            $id2 = $this->reroll($id1, $userIds, $faker);
         }
-        else{
-            return $id2;
-        }
+        return $id2;
     }
 }
