@@ -21,8 +21,7 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
-            $table->unsignedBigInteger('total_kills')->default(0);
-            $table->unsignedBigInteger('deaths')->default(0);
+            $table->unsignedBigInteger('total_wins')->default(0);
             $table->unsignedBigInteger('games_played')->default(0);
             $table->timestamps();
         });

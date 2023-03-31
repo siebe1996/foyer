@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateWeaponsTable extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,12 @@ class CreateWeaponsTable extends Migration
      */
     public function up()
     {
-        Schema::create('weapons', function (Blueprint $table) {
+        Schema::create('competities', function (Blueprint $table) {
             $table->id();
-            $table->string('technique');
+            $table->string('name');
+            $table->timestamp('start_date')->nullable(true);
+            $table->timestamp('end_date')->nullable(true);
+            $table->foreignId('winaar')->nullable()->references('id')->on('teams');
             $table->timestamps();
         });
     }
@@ -27,6 +30,6 @@ class CreateWeaponsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('weapons');
+        Schema::dropIfExists('competities');
     }
-}
+};

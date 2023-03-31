@@ -1,11 +1,11 @@
-# Backend gotcha project
-Final project web-mobile full-stack
+# Backend fooseball project
+Web api for communicating with a smart fooseball table
 ## Links
 
 * [Course slides wmfs-laravel](https://intern.ikdoeict.be/apps/leercentrum/courses/wmfs-laravel-course-materials/)
 * [PHP Documentation](https://www.php.net/docs.php)
-* [MySQL 5.7 Reference Manual](https://dev.mysql.com/doc/refman/5.7/en/)
-* [Laravel 8 documentation](https://laravel.com/docs/8.x)
+* [MySQL 5.7 Reference Manual](https://dev.mysql.com/doc/refman/8.0/en/)
+* [Laravel 9 documentation](https://laravel.com/docs/9.x)
 * [Odisee Hoge school](https://odisee.be)
 
 ## How to pull it from git
@@ -17,7 +17,7 @@ Final project web-mobile full-stack
 mkdir my-project
 cd my-project
 git init
-git pull https://gitlab.com/ikdoeict/siebe.vandevoorde/2122wmfs-backend
+git pull https://gitlab.com/ikdoeict/siebe.vandevoorde/smart-fooseball
 ```
 
 ## Running and stopping the Docker MCE

@@ -17,9 +17,11 @@ services:
      - "3307:3306"
     volumes:
      - "./docker/mysql-data:/var/lib/mysql"
+     - "./docker/fooseball.sql:/docker-entrypoint-initdb.d/dump.sql"
     environment:
      - MYSQL_ROOT_PASSWORD=Azerty123
-     - MYSQL_DATABASE=laravel-project
+     - LANG=C.UTF-8
+     #- MYSQL_DATABASE=laravel-project
   myadmin:
     image: phpmyadmin/phpmyadmin
     container_name: phpmyadmin

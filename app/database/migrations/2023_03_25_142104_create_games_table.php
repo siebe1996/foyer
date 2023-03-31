@@ -19,7 +19,8 @@ class CreateGamesTable extends Migration
             $table->boolean('active')->default(0);
             $table->timestamp('start_date')->nullable(true);
             $table->timestamp('end_date')->nullable(true);
-            $table->foreignId('weapon_id')->constrained();
+            $table->foreignId('competitie_id')->nullable();
+            $table->foreignId('winaar')->nullable()->references('id')->on('teams');
             $table->timestamps();
         });
     }
