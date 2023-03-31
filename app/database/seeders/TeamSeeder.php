@@ -26,6 +26,9 @@ class TeamSeeder extends Seeder
             $wins = $faker->randomDigit();
             $id1 = $userIds[$faker->numberBetween(0, count($userIds)+1)];
             $id2 = $userIds[$faker->numberBetween(0, count($userIds)+1)];
+            if($id1 == $id2){
+                $id2 = $this->reroll($id1, $userIds, $faker);
+            }
             DB::table('users')->insert([
                 'name' => $name,
                 'speler1' => $id1,
@@ -35,6 +38,15 @@ class TeamSeeder extends Seeder
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
             ]);
+        }
+    }
+    public function reroll($id1, $userIds, $faker){
+        $id2 = $userIds[$faker->numberBetween(0, count($userIds)+1)];
+        if ($id1 == $id2){
+            $this->reroll($id1, $userIds, $faker);
+        }
+        else{
+            return $id2;
         }
     }
 }
