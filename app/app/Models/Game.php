@@ -15,7 +15,7 @@ class Game extends Model
         'start_date',
         'end_date',
         'competition_id',
-        'winner',
+        'winner_id',
     ];
 
     protected $casts = [
@@ -36,5 +36,10 @@ class Game extends Model
     public function teams()
     {
         return $this->belongsToMany(Team::class, 'gameinfo')->withPivot('goals');
+    }
+
+    public function gameinfo()
+    {
+        return $this->hasMany(Gameinfo::class, 'game_id');
     }
 }

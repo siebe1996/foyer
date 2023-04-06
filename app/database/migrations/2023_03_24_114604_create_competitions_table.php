@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('name');
             $table->timestamp('start_date')->nullable(true);
             $table->timestamp('end_date')->nullable(true);
-            $table->foreignId('winner')->nullable()->references('id')->on('teams');
+            $table->foreignId('winner_id')->nullable()->references('id')->on('teams');
             $table->timestamps();
         });
     }

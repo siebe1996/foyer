@@ -20,7 +20,7 @@ class CreateGamesTable extends Migration
             $table->timestamp('start_date')->nullable(true);
             $table->timestamp('end_date')->nullable(true);
             $table->foreignId('competition_id')->nullable();
-            $table->foreignId('winner')->nullable()->references('id')->on('teams');
+            $table->foreignId('winner_id')->nullable()->references('id')->on('teams');
             $table->timestamps();
         });
     }

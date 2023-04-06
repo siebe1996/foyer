@@ -17,18 +17,20 @@ class GameResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'title' => $this->title,
+            'name' => $this->name,
             'active' => $this->active,
             'start_date' => $this->start_date,
             'end_date' => $this->end_date,
-            'weapon_id'=> $this->relationLoaded('weapon') ? new WeaponResource($this->weapon) : $this->weapon_id,
+            'competition_id' => $this->relationLoaded('competition') ? new CompetitionResource($this->competition) : $this->competition_id,
+            'winner_id' => $this->relationLoaded('winner') ? new TeamResource($this->winner) : $this->winner_id,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
-            'players' => new UserCollection($this->whenLoaded('usersWithPivot')),
-            'game_user' => new GameUserResource($this->whenPivotLoaded('game_user', function () {
+            'teams' => new TeamCollection($this->whenLoaded('teams')),
+            'gameinfo' => new GameinfoCollection($this->whenLoaded('gameinfo')),
+            /*'game_user' => new GameUserResource($this->whenPivotLoaded('game_user', function () {
                 return $this->pivot;
             })),
-            'has_user' => $this->has_user,
+            'has_user' => $this->has_user,*/
         ];
     }
 }

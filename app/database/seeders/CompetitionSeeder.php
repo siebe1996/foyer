@@ -26,7 +26,7 @@ class CompetitionSeeder extends Seeder
             $end_date = $faker->dateTimeBetween($start_date, 'now');
             DB::table('competitions')->insert([
                 'name' => $name,
-                'winner' => $teamIds[$faker->numberBetween(0, count($teamIds)-1)],
+                'winner_id' => $teamIds[$faker->numberBetween(0, count($teamIds)-1)],
                 'start_date' => $start_date,
                 'total_wins' => $end_date,
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
@@ -37,7 +37,7 @@ class CompetitionSeeder extends Seeder
             $name = $faker->word;
             DB::table('competitions')->insert([
                 'name' => $name,
-                'winner' => null,
+                'winner_id' => null,
                 'start_date' => null,
                 'total_wins' => null,
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),

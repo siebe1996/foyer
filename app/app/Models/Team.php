@@ -17,8 +17,8 @@ class Team extends Model
      */
     protected $fillable = [
         'name',
-        'player1',
-        'player2',
+        'player1_id',
+        'player2_id',
         'total_wins',
         'games_played'
     ];
@@ -47,13 +47,13 @@ class Team extends Model
         return $this->belongsTo(User::class, 'player2' );
     }
 
-    public function users()
+    /*public function users()
     {
         return $this->belongsToMany(User::class);
-    }
+    }*/
 
     public function gameinfo(){
-        return $this->hasMany(Gameinfo::class, 'game_id');
+        return $this->hasMany(Gameinfo::class, 'team_id');
     }
 
     public function games()

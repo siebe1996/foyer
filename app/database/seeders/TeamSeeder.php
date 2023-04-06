@@ -31,8 +31,8 @@ class TeamSeeder extends Seeder
             }
             DB::table('teams')->insert([
                 'name' => $name,
-                'player1' => $id1,
-                'player2' => $id2,
+                'player1_id' => $id1,
+                'player2_id' => $id2,
                 'total_wins' => $wins,
                 'games_played' => $faker->numberBetween($wins, $wins+10),
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),

@@ -30,7 +30,7 @@ class GameSeeder extends Seeder
                 'start_date' => $start_date,
                 'end_date' => $end_date,
                 'competition_id' => $competitionIds[$faker->numberBetween(0, count($competitionIds)-1)],
-                'winner' => $teamIds[$faker->numberBetween(0, count($teamIds)-1)],
+                'winner_id' => $teamIds[$faker->numberBetween(0, count($teamIds)-1)],
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
             ]);
