@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Rules\DifferentPlayers;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -60,4 +61,10 @@ class Team extends Model
         return $this->belongsToMany(Game::class, 'gameinfo')->withPivot('goals');
     }
 
+    public function validateDifferentPlayers()
+    {
+        return [
+            'player2' => [new DifferentPlayers($this->player1, $this->player2)],
+        ];
+    }
 }

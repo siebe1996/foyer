@@ -51,9 +51,9 @@ class User extends Authenticatable
         return $this->belongsToMany(Role::class, 'user_role');
     }
 
-    public function teams(){
+    /*public function teams(){
         return $this->belongsToMany(Team::class);
-    }
+    }*/
 
     public function teamsAsPlayer1()
     {
