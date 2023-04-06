@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -22,6 +23,8 @@ class User extends Authenticatable
         'last_name',
         'email',
         'password',
+        'total_wins',
+        'games_played'
     ];
 
     /**
@@ -41,31 +44,33 @@ class User extends Authenticatable
      * @var array<string, string>
      */
     protected $casts = [
-        'email_verified_at' => 'datetime',
+        'email_verified_at' => 'datetime:Y-m-d',
     ];
 
     public function roles(){
         return $this->belongsToMany(Role::class, 'user_role');
     }
 
-    public function games(){
-        return $this->belongsToMany(Game::class, 'game_user');
+    public function teams(){
+        return $this->belongsToMany(Team::class);
     }
 
-    public function messages(){
+    /*public function messages(){
         return $this->hasMany(Message::class);
-    }
+    }*/
 
     public function hasRole($role){
         //return false;
         return $this->roles()->where('title', $role)->exists();
     }
 
-    public function gamesWithPivot(){
+    /*public function gamesWithPivot(){
         return $this->belongsToMany(Game::class, 'game_user')->withPivot('game_id', 'user_id', 'kills', 'alive', 'when_killed', 'target_id');
-    }
+    }*/
 
-    public function getFullNameAttribute(){
-        return $this->first_name . ' ' . $this->last_name;
+    protected function fullName(): Attribute{
+        return Attribute::make(
+            get: fn ($value, $attributes) => ($attributes['first_name'] . ' ' . $attributes['last_name']),
+        );
     }
 }
