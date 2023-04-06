@@ -16,7 +16,26 @@ class GameSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('games')->insert([
+        $faker = FakerFactory::create();
+        $faker->seed(137);
+        $competitieIds = DB::table('competities')->pluck('id')->all();
+        $teamIds = DB::table('teams')->pluck('id')->all();
+        for ($i = 0; $i < 7; $i++) {
+            $name = $faker->word;
+            $start_date = $faker->dateTimeBetween('-1 week', 'now');
+            $end_date = $faker->dateTimeBetween($start_date, '+1 week');
+            DB::table('games')->insert([
+                'name' => $name,
+                'active' => $faker->boolean(70),
+                'start_date' => $start_date,
+                'end_date' => $end_date,
+                'competitie_id' => $competitieIds[$faker->numberBetween(0, count($competitieIds)-1)],
+                'winaar' => $teamIds[$faker->numberBetween(0, count($teamIds)-1)],
+                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+            ]);
+        }
+        /*DB::table('games')->insert([
             'title' => 'ict',
             'active' => true,
             'start_date' => new Carbon('2016-01-23 11:53:20'),
@@ -60,6 +79,7 @@ class GameSeeder extends Seeder
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
         ]);
+        */
         /*
         $faker = FakerFactory::create();
         $faker->seed(222);

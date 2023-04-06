@@ -24,12 +24,12 @@ class TeamSeeder extends Seeder
         for ($i = 0; $i < 10; $i++) {
             $name = $faker->word;
             $wins = $faker->randomDigit();
-            $id1 = $userIds[$faker->numberBetween(0, count($userIds)+1)];
-            $id2 = $userIds[$faker->numberBetween(0, count($userIds)+1)];
+            $id1 = $userIds[$faker->numberBetween(0, count($userIds)-1)];
+            $id2 = $userIds[$faker->numberBetween(0, count($userIds)-1)];
             if($id1 == $id2){
                 $id2 = $this->reroll($id1, $userIds, $faker);
             }
-            DB::table('users')->insert([
+            DB::table('teams')->insert([
                 'name' => $name,
                 'speler1' => $id1,
                 'speler2' => $id2,
