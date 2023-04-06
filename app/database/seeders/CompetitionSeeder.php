@@ -8,7 +8,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class CompetitieSeeder extends Seeder
+class CompetitionSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -24,9 +24,9 @@ class CompetitieSeeder extends Seeder
             $name = $faker->word;
             $start_date = $faker->dateTimeBetween('-1 year', 'yesterday');
             $end_date = $faker->dateTimeBetween($start_date, 'now');
-            DB::table('competities')->insert([
+            DB::table('competitions')->insert([
                 'name' => $name,
-                'winaar' => $teamIds[$faker->numberBetween(0, count($teamIds)-1)],
+                'winner' => $teamIds[$faker->numberBetween(0, count($teamIds)-1)],
                 'start_date' => $start_date,
                 'total_wins' => $end_date,
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
@@ -35,9 +35,9 @@ class CompetitieSeeder extends Seeder
         }
         for ($i = 0; $i < 2; $i++){
             $name = $faker->word;
-            DB::table('competities')->insert([
+            DB::table('competitions')->insert([
                 'name' => $name,
-                'winaar' => null,
+                'winner' => null,
                 'start_date' => null,
                 'total_wins' => null,
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),

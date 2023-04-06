@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Competitie extends Model
+class Competition extends Model
 {
     use HasFactory;
 
@@ -13,7 +13,12 @@ class Competitie extends Model
         'name',
         'start_date',
         'end_date',
-        'winaar',
+        'winner',
+    ];
+
+    protected $casts = [
+        'start_date' => 'datetime:Y-m-d',
+        'end_date' => 'datetime:Y-m-d',
     ];
 
     public function games()
@@ -21,8 +26,8 @@ class Competitie extends Model
         return $this->hasMany(Game::class);
     }
 
-    public function winaar()
+    public function winner()
     {
-        return $this->belongsTo(Team::class, 'winaar');
+        return $this->belongsTo(Team::class, 'winner');
     }
 }

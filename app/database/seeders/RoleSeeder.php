@@ -16,17 +16,17 @@ class RoleSeeder extends Seeder
     public function run()
     {
         DB::table('roles')->insert([
-            'title' => 'player',
+            'title' => \App\Enums\RolesEnum::PLAYER,
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
         ]);
         DB::table('roles')->insert([
-            'title' => 'moderator',
+            'title' => \App\Enums\RolesEnum::MODERATOR,
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
         ]);
         DB::table('roles')->insert([
-            'title' => 'administrator',
+            'title' => \App\Enums\RolesEnum::ADMINISTRATOR,
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
         ]);

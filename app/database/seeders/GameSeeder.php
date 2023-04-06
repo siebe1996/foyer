@@ -18,7 +18,7 @@ class GameSeeder extends Seeder
     {
         $faker = FakerFactory::create();
         $faker->seed(137);
-        $competitieIds = DB::table('competities')->pluck('id')->all();
+        $competitionIds = DB::table('competitions')->pluck('id')->all();
         $teamIds = DB::table('teams')->pluck('id')->all();
         for ($i = 0; $i < 7; $i++) {
             $name = $faker->word;
@@ -29,8 +29,8 @@ class GameSeeder extends Seeder
                 'active' => $faker->boolean(70),
                 'start_date' => $start_date,
                 'end_date' => $end_date,
-                'competitie_id' => $competitieIds[$faker->numberBetween(0, count($competitieIds)-1)],
-                'winaar' => $teamIds[$faker->numberBetween(0, count($teamIds)-1)],
+                'competition_id' => $competitionIds[$faker->numberBetween(0, count($competitionIds)-1)],
+                'winner' => $teamIds[$faker->numberBetween(0, count($teamIds)-1)],
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
             ]);

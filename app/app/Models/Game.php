@@ -14,18 +14,23 @@ class Game extends Model
         'active',
         'start_date',
         'end_date',
-        'competitie_id',
-        'winaar',
+        'competition_id',
+        'winner',
     ];
 
-    public function competitie()
+    protected $casts = [
+        'active' => 'boolean',
+        'start_date' => 'datetime:Y-m-d',
+        'end_date' => 'datetime:Y-m-d',
+    ];
+    public function competition()
     {
-        return $this->belongsTo(Competitie::class);
+        return $this->belongsTo(Competition::class);
     }
 
-    public function winaar()
+    public function winner()
     {
-        return $this->belongsTo(Team::class, 'winaar');
+        return $this->belongsTo(Team::class, 'winner');
     }
 
     public function teams()

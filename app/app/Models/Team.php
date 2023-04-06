@@ -16,8 +16,8 @@ class Team extends Model
      */
     protected $fillable = [
         'name',
-        'speler1',
-        'speler2',
+        'player1',
+        'player2',
         'total_wins',
         'games_played'
     ];
@@ -38,12 +38,12 @@ class Team extends Model
     protected $casts = [
     ];
 
-    public function speler1(){
-        return $this->belongsTo(User::class, 'speler1' );
+    public function player1(){
+        return $this->belongsTo(User::class, 'player1' );
     }
 
-    public function speler2(){
-        return $this->belongsTo(User::class, 'speler2' );
+    public function player2(){
+        return $this->belongsTo(User::class, 'player2' );
     }
 
     public function users()

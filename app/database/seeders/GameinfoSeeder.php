@@ -22,7 +22,7 @@ class GameinfoSeeder extends Seeder
         $teamIds = DB::table('teams')->pluck('id')->all();
         $gameIds = DB::table('games')->pluck('id')->all();
         for ($i = 0; $i < 5; $i++) {
-            DB::table('competities')->insert([
+            DB::table('gameinfo')->insert([
                 'team_id' => $teamIds[$faker->numberBetween(0, count($teamIds)-1)],
                 'game_id' => $gameIds[$faker->numberBetween(0, count($gameIds)-1)],
                 'goals' => $faker->numberBetween(0, 10),

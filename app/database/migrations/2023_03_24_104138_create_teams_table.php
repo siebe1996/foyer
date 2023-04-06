@@ -16,8 +16,8 @@ return new class extends Migration
         Schema::create('teams', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->foreignId('speler1')->references('id')->on('users');
-            $table->foreignId('speler2')->nullable()->references('id')->on('users');
+            $table->foreignId('player1')->references('id')->on('users');
+            $table->foreignId('player2')->nullable()->references('id')->on('users');
             $table->unsignedBigInteger('total_wins')->default(0);
             $table->unsignedBigInteger('games_played')->default(0);
             $table->timestamps();
