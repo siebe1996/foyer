@@ -26,9 +26,9 @@ class TeamSeeder extends Seeder
             $wins = $faker->randomDigit();
             $id1 = $userIds[$faker->numberBetween(0, count($userIds)-1)];
             $id2 = $userIds[$faker->numberBetween(0, count($userIds)-1)];
-            if($id1 == $id2){
+            /*if($id1 == $id2){
                 $id2 = $this->reroll($id1, $userIds, $faker);
-            }
+            }*/
             DB::table('teams')->insert([
                 'name' => $name,
                 'player1_id' => $id1,
@@ -40,11 +40,11 @@ class TeamSeeder extends Seeder
             ]);
         }
     }
-    public function reroll($id1, $userIds, $faker){
+    /*public function reroll($id1, $userIds, $faker){
         $id2 = $userIds[$faker->numberBetween(0, count($userIds)+1)];
         if ($id1 == $id2){
             $id2 = $this->reroll($id1, $userIds, $faker);
         }
         return $id2;
-    }
+    }*/
 }

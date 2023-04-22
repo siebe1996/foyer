@@ -28,7 +28,7 @@ class CompetitionSeeder extends Seeder
                 'name' => $name,
                 'winner_id' => $teamIds[$faker->numberBetween(0, count($teamIds)-1)],
                 'start_date' => $start_date,
-                'total_wins' => $end_date,
+                'end_date' => $end_date,
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
             ]);
@@ -39,7 +39,7 @@ class CompetitionSeeder extends Seeder
                 'name' => $name,
                 'winner_id' => null,
                 'start_date' => null,
-                'total_wins' => null,
+                'end_date' => null,
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
             ]);

@@ -16,6 +16,7 @@ class CompetitionResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'name' => $this->name,
             'start_date' => $this->start_date,
             'end_date' => $this->end_date,
             'winner_id' => $this->relationLoaded('winner') ? new TeamResource($this->winner) : $this->winner_id,

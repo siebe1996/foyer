@@ -16,6 +16,7 @@ class Game extends Model
         'end_date',
         'competition_id',
         'winner_id',
+        'fooseballtable_id',
     ];
 
     protected $casts = [
@@ -26,6 +27,9 @@ class Game extends Model
     public function competition()
     {
         return $this->belongsTo(Competition::class);
+    }
+    public function fooseballtable(){
+        return $this->belongsTo(Fooseballtable::class);
     }
 
     public function winner()

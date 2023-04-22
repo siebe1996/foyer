@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
             RoleSeeder::class,
             TeamSeeder::class,
             CompetitionSeeder::class,
+            FooseballtableSeeder::class,
             GameSeeder::class,
             GameinfoSeeder::class,
         ]);

@@ -2,13 +2,13 @@ SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
 --
--- Database: `demo_wmfs`
+-- Database: `fooseball`
 -- main database to be used in main Laravel project
 --
-DROP DATABASE IF EXISTS demo_wmfs;
-CREATE DATABASE demo_wmfs DEFAULT CHARACTER SET utf8mb4 DEFAULT COLLATE utf8mb4_unicode_ci;
+DROP DATABASE IF EXISTS fooseball;
+CREATE DATABASE fooseball DEFAULT CHARACTER SET utf8mb4 DEFAULT COLLATE utf8mb4_unicode_ci;
 
-
+/*
 --
 -- Database: `todo`
 -- database used in 02.2 INTRODUCING ORM
@@ -41,3 +41,4 @@ INSERT INTO `todos` (`id`, `what`, `priority`) VALUES
 (4,  'A very urgent task', 'high');
 
 -- --------------------------------------------------------
+*/
