@@ -117,6 +117,33 @@ class UserSeeder extends Seeder
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
         ]);
 
+        //
+        //Users needed for start anon game, DONT DELETE
+        //------------------------------------------------------------
+        DB::table('users')->insert([
+            'first_name' => 'Anon1',
+            'last_name' => 'Anonymous',
+            'email' => 'anon1@example.com',
+            'password' => Hash::make('Azerty123'),
+            'total_wins' => 0,
+            'games_played' => 0,
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+        ]);
+
+        DB::table('users')->insert([
+            'first_name' => 'Anon2',
+            'last_name' => 'Anonymous',
+            'email' => 'anon2@example.com',
+            'password' => Hash::make('Azerty123'),
+            'total_wins' => 0,
+            'games_played' => 0,
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+        ]);
+        //------------------------------------------------------------
+        //
+
         //$lastUserId = DB::table('users')->pluck('id')->last();
         /*DB::table('game_user')->insert([
             'game_id' => 2 ,

@@ -4,6 +4,7 @@ use App\Http\Controllers\GameApiController;
 use App\Http\Controllers\GameLogicController;
 use App\Http\Controllers\GameUserApiController;
 use App\Http\Controllers\MessageApiController;
+use App\Http\Controllers\TableApiController;
 use App\Http\Controllers\UserApiController;
 use App\Http\Controllers\WeaponApiController;
 use App\Http\Resources\UserResource;
@@ -23,7 +24,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+/*Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     $id = Auth::id();
     $u = User::with('roles')->findOrFail($id);
     $user = new UserResource(User::with('roles')->findOrFail($id));
@@ -45,5 +46,7 @@ Route::middleware('auth:sanctum')->group(function (){
             Route::get('users', [UserApiController::class, 'index']);
         });
     });
-});
+});*/
+
+Route::get('/table/{id}/start', [TableApiController::class, 'start']);
 

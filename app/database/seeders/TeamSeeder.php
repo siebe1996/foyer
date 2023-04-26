@@ -39,6 +39,29 @@ class TeamSeeder extends Seeder
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
             ]);
         }
+
+        //
+        //Teams needed for start anon game, DONT DELETE
+        //------------------------------------------------------------
+        $anon1 = DB::table('users')->where('email', 'anon1@example.com')->pluck('id')->first();
+        DB::table('teams')->insert([
+            'name' => 'anonteam1',
+            'player1_id' => $anon1,
+            'total_wins' => 0,
+            'games_played' => 0,
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+        ]);
+        $anon2 = DB::table('users')->where('email', 'anon2@example.com')->pluck('id')->first();
+        DB::table('teams')->insert([
+            'name' => 'anonteam2',
+            'player1_id' => $anon2,
+            'total_wins' => 0,
+            'games_played' => 0,
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+        ]);
+        //------------------------------------------------------------
     }
     /*public function reroll($id1, $userIds, $faker){
         $id2 = $userIds[$faker->numberBetween(0, count($userIds)+1)];
