@@ -36,7 +36,7 @@ class TableApiController extends Controller
 
         $game->teams()->attach($teamIds); //attach() for new, sync() for adding
 
-        return response()->json(['message' => 'Game started succesfully'], 202);
+        return response()->json(['message' => 'Game started succesfully']);
         /*$game = Game::create([
             'name' => 'anon',
             'active' => true,
@@ -73,7 +73,7 @@ class TableApiController extends Controller
         $game->winner = $winner;
         $game->save();
 
-        return response()->json(['message' => 'Game ended succesfully'], 200);
+        return response()->json(['message' => 'Game ended succesfully']);
     }
 
     /**
