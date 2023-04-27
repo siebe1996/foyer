@@ -57,12 +57,12 @@ class User extends Authenticatable
 
     public function teamsAsPlayer1()
     {
-        return $this->hasMany(Team::class, 'player1');
+        return $this->hasMany(Team::class, 'player1_id');
     }
 
     public function teamsAsPlayer2()
     {
-        return $this->hasMany(Team::class, 'player2');
+        return $this->hasMany(Team::class, 'player2_id');
     }
 
     /*public function messages(){
