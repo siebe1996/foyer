@@ -29,7 +29,7 @@ class Game extends Model
         return $this->belongsTo(Competition::class);
     }
     public function fooseballtable(){
-        return $this->belongsTo(Fooseballtable::class);
+        return $this->belongsTo(Fooseballtable::class, 'fooseballtable_id');
     }
 
     public function winner()
@@ -37,9 +37,13 @@ class Game extends Model
         return $this->belongsTo(Team::class, 'winner_id');
     }
 
-    public function teams()
+    public function teams(){
+        return $this->belongsToMany(Team::class, 'gameinfos');
+    }
+
+    public function teamsWithPivot()
     {
-        return $this->belongsToMany(Team::class, 'gameinfo')->withPivot('goals');
+        return $this->belongsToMany(Team::class, 'gameinfos')->withPivot('goals');
     }
 
     public function gameinfo()

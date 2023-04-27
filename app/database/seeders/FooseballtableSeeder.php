@@ -19,7 +19,7 @@ class FooseballtableSeeder extends Seeder
     {
         $faker = FakerFactory::create();
         $faker->seed(328);
-        for ($i = 0; $i < 1; $i++) {
+        for ($i = 0; $i < 2; $i++) {
             DB::table('fooseballtables')->insert([
                 'name' => $faker->word,
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),

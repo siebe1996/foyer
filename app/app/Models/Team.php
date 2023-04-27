@@ -56,9 +56,13 @@ class Team extends Model
         return $this->hasMany(Gameinfo::class, 'team_id');
     }
 
-    public function games()
+    public function games(){
+        return $this->belongsToMany(Game::class, 'gameinfos');
+    }
+
+    public function gamesWithPivot()
     {
-        return $this->belongsToMany(Game::class, 'gameinfo')->withPivot('goals');
+        return $this->belongsToMany(Game::class, 'gameinfos')->withPivot('goals');
     }
 
     public function validateDifferentPlayers()

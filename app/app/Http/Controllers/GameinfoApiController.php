@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\GameinfoResource;
 use App\Models\Fooseballtable;
 use App\Models\Game;
 use App\Models\Gameinfo;
@@ -51,19 +52,24 @@ class GameinfoApiController extends Controller
      */
     public function update(Request $request, int $tableId, int $teamId)
     {
-        $gameId = Fooseballtable::where('table_id', $tableId)->games()->where('active', true)
+        $gameId = Fooseballtable::findOrFail($tableId)->games()->where('active', true)
             ->pluck('id')->firstOrFail();
 
-        $gameInfo = Gameinfo::where('team_id', $teamId)
-            ->where('game_id', $gameId)->firstOrFail();
+        $gameInfo = Game::where('id', $gameId)
+            ->whereHas('teams', function ($q) use ($teamId) {
+                $q->where('teams.id', $teamId);
+            })->with(['teamsWithPivot' => function ($query) use ($teamId) {
+                $query->where('teams.id', $teamId);
+            }])->first();
+        $goals = $gameInfo->teamsWithPivot->first()->pivot->goals;
 
         $scoreChange = $request->input('score_change');
         if ($scoreChange !== 1 && $scoreChange !== -1) {
             return response()->json(['error' => 'Invalid score change.'], 400);
         }
+        $goals += $scoreChange;
+        $gameInfo->teamsWithPivot->first()->pivot->update(['goals' => $goals]);
 
-        $gameInfo->goals += $scoreChange;
-        $gameInfo->save();
         return response()->json(['message' => 'Score updated successfully.']);
     }
 
