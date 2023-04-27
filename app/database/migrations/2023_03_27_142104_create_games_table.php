@@ -19,7 +19,7 @@ class CreateGamesTable extends Migration
             $table->boolean('active')->default(0);
             $table->timestamp('start_date')->nullable(true);
             $table->timestamp('end_date')->nullable(true);
-            $table->foreignId('competition_id')->nullable();
+            $table->foreignId('competition_id')->nullable()->constrained();
             $table->foreignId('winner_id')->nullable()->references('id')->on('teams');
             $table->foreignId('fooseballtable_id')->constrained();
             $table->timestamps();
