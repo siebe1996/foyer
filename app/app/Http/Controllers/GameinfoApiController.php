@@ -52,6 +52,9 @@ class GameinfoApiController extends Controller
      */
     public function update(Request $request, int $tableId, int $teamId)
     {
+        $request->validate([
+            'score_change' => 'required|numeric',
+        ]);
         $gameId = Fooseballtable::findOrFail($tableId)->games()->where('active', true)
             ->pluck('id')->firstOrFail();
 
