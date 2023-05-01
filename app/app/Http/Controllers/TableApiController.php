@@ -9,7 +9,9 @@ use App\Models\Gameinfo;
 use App\Models\Team;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use mysql_xdevapi\Exception;
 
 class TableApiController extends Controller
 {
@@ -21,26 +23,31 @@ class TableApiController extends Controller
      */
     public function start(int $id){
         $table = Fooseballtable::findOrFail($id);
+        try{
+            Game::where('fooseballtable_id', $id)->where('active', true)->firstOrFail();
+        }catch (ModelNotFoundException){
+            $team1id = Team::where('name', 'anonteam1')->pluck('id')->firstOrFail();
+            $team2id = Team::where('name', 'anonteam2')->pluck('id')->firstOrFail();
+            $teamIds = [$team1id, $team2id];
+
+            $game = new Game;
+            $game->name = 'anon';
+            $game->active = true;
+            $game->start_date = Carbon::now()->format('Y-m-d H:i:s');
+            $game->fooseballtable()->associate($table);
+            $game->save();
+
+            $game->teams()->attach($teamIds); //attach() for new, sync() for adding
+
+            return response()->json(['message' => 'Game started succesfully']);
+        }
+        return response()->json(['message' => 'Game is already running']);
 
         /*$player1 = User::where('email', 'anon1@example.com')->firstOrFail(); //toDo research firstOrCreate
         $player2 = User::where('email', 'anon2@example.com')->firstOrFail();
 
         $team1id = $player1->teamsAsPlayer1()->pluck('id')->firstOrFail(); //toDo research firstOrCreate
-        $team2id = $player2->teamsAsPlayer1()->pluck('id')->firstOrFail();*/
-        $team1id = Team::where('name', 'anonteam1')->pluck('id')->firstOrFail();
-        $team2id = Team::where('name', 'anonteam2')->pluck('id')->firstOrFail();
-        $teamIds = [$team1id, $team2id];
-
-        $game = new Game;
-        $game->name = 'anon';
-        $game->active = true;
-        $game->start_date = Carbon::now()->format('Y-m-d H:i:s');
-        $game->fooseballtable()->associate($table);
-        $game->save();
-
-        $game->teams()->attach($teamIds); //attach() for new, sync() for adding
-
-        return response()->json(['message' => 'Game started succesfully']);
+        */
     }
 
     /**
@@ -52,8 +59,12 @@ class TableApiController extends Controller
     public function end(int $id){
         $team1 = Team::where('name', 'anonteam1')->firstOrFail();
         $team2 = Team::where('name', 'anonteam2')->firstOrFail();
-
-        $game = Game::where('fooseballtable_id', $id)->firstOrFail();
+        try{
+            Game::where('fooseballtable_id', $id)->where('active', true)->firstOrFail();
+        }catch (ModelNotFoundException){
+            return response()->json(['message' => 'No Game is running']);
+        }
+        $game = Game::where('fooseballtable_id', $id)->where('active', true)->firstOrFail();
 
         $scoreTeam1 = $this->getGoalsTeams($game->id, $team1->id);
         $scoreTeam2 = $this->getGoalsTeams($game->id, $team2->id);
