@@ -84,9 +84,9 @@
                             "application/json": {
                                 "schema": {
                                     "properties": {
-                                        "message": {
+                                        "error": {
                                             "type": "string",
-                                            "example": "Score updated successfully."
+                                            "example": "Invalid score change."
                                         }
                                     },
                                     "type": "object"
