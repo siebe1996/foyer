@@ -6,6 +6,7 @@ use App\Http\Resources\GameinfoResource;
 use App\Models\Fooseballtable;
 use App\Models\Game;
 use App\Models\Gameinfo;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
 class GameinfoApiController extends Controller
@@ -92,11 +93,11 @@ class GameinfoApiController extends Controller
      *          response=422,
      *          description="Unprocessable Entity",
      *       ),
-     *      @OA\Response(
+     *     @OA\Response(
      *          response=400,
      *          description="Bad request",
      *          @OA\JsonContent(
-     *              @OA\Property(property="error", type="string", example="Invalid score change.")
+     *              @OA\Property(property="error", type="string", example="error to be displayed")
      *          )
      *      ),
      *      @OA\Response(response=404, description="Resource Not Found"),
@@ -107,15 +108,31 @@ class GameinfoApiController extends Controller
         $request->validate([
             'score_change' => 'required|numeric',
         ]);
+        try{
+            Fooseballtable::findOrFail($tableId)->games()->where('active', true)
+                ->pluck('id')->firstOrFail();
+        }catch (ModelNotFoundException){
+            return response()->json(['error' => 'No game is active on this table.'], 400);
+        }
         $gameId = Fooseballtable::findOrFail($tableId)->games()->where('active', true)
             ->pluck('id')->firstOrFail();
+        try{
+            Game::where('id', $gameId)
+                ->whereHas('teams', function ($q) use ($teamId) {
+                    $q->where('teams.id', $teamId);
+                })->with(['teamsWithPivot' => function ($query) use ($teamId) {
+                    $query->where('teams.id', $teamId);
+                }])->firstOrFail();
+        }catch (ModelNotFoundException){
+            return response()->json(['error' => 'This team isnt playing this game'], 400);
+        }
 
         $gameInfo = Game::where('id', $gameId)
             ->whereHas('teams', function ($q) use ($teamId) {
                 $q->where('teams.id', $teamId);
             })->with(['teamsWithPivot' => function ($query) use ($teamId) {
                 $query->where('teams.id', $teamId);
-            }])->first();
+            }])->firstOrFail();
         $goals = $gameInfo->teamsWithPivot->first()->pivot->goals;
 
         $scoreChange = $request->input('score_change');

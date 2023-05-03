@@ -86,7 +86,7 @@
                                     "properties": {
                                         "error": {
                                             "type": "string",
-                                            "example": "Invalid score change."
+                                            "example": "error to be displayed"
                                         }
                                     },
                                     "type": "object"
