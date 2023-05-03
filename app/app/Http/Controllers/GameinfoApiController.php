@@ -96,7 +96,7 @@ class GameinfoApiController extends Controller
      *          response=400,
      *          description="Bad request",
      *          @OA\JsonContent(
-     *              @OA\Property(property="message", type="string", example="Score updated successfully.")
+     *              @OA\Property(property="error", type="string", example="Invalid score change.")
      *          )
      *      ),
      *      @OA\Response(response=404, description="Resource Not Found"),
