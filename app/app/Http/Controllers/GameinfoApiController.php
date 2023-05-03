@@ -50,6 +50,58 @@ class GameinfoApiController extends Controller
      * @param  int  $teamId
      * @return \Illuminate\Http\JsonResponse
      */
+    /**
+     * @OA\Patch(
+     * path="api/table/{tableId}/team/{teamId}",
+     * operationId="updateGameinfo",
+     * tags={"Gameinfo"},
+     * summary="Update the specified resource in storage",
+     * description="Update the specified resource in storage",
+     *     @OA\Parameter(
+     *          name="tableId",
+     *          description="Table id",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *     @OA\Parameter(
+     *          name="teamId",
+     *          description="Team id",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *     @OA\RequestBody(
+     *          required=true,
+     *          @OA\JsonContent(
+     *              @OA\Property(property="score_change", type="integer", example=1),
+     *          ),
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="OK",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="message", type="string", example="Score updated successfully.")
+     *          )
+     *       ),
+     *      @OA\Response(
+     *          response=422,
+     *          description="Unprocessable Entity",
+     *       ),
+     *      @OA\Response(
+     *          response=400,
+     *          description="Bad request",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="message", type="string", example="Score updated successfully.")
+     *          )
+     *      ),
+     *      @OA\Response(response=404, description="Resource Not Found"),
+     * )
+     */
     public function update(Request $request, int $tableId, int $teamId)
     {
         $request->validate([

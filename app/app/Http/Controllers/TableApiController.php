@@ -21,6 +21,44 @@ class TableApiController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\JsonResponse
      */
+    /**
+     * @OA\Get(
+     * path="/api/table/{id}/start",
+     * operationId="start",
+     * tags={"Table"},
+     * summary="Start an anonymous game",
+     * description="Start an anonymous game",
+     *     @OA\Parameter(
+     *          name="id",
+     *          description="Table id",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="OK",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="message", type="string", example="Game started succesfully")
+     *          )
+     *       ),
+     *      @OA\Response(
+     *          response=208,
+     *          description="Already Reported",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="message", type="string", example="Game is already running")
+     *          )
+     *       ),
+     *      @OA\Response(
+     *          response=422,
+     *          description="Unprocessable Entity",
+     *      ),
+     *      @OA\Response(response=400, description="Bad request"),
+     *      @OA\Response(response=404, description="Resource Not Found"),
+     * )
+     */
     public function start(int $id){
         $table = Fooseballtable::findOrFail($id);
         try{
@@ -41,7 +79,7 @@ class TableApiController extends Controller
 
             return response()->json(['message' => 'Game started succesfully']);
         }
-        return response()->json(['message' => 'Game is already running']);
+        return response()->json(['message' => 'Game is already running'], 208);
 
         /*$player1 = User::where('email', 'anon1@example.com')->firstOrFail(); //toDo research firstOrCreate
         $player2 = User::where('email', 'anon2@example.com')->firstOrFail();
@@ -56,13 +94,51 @@ class TableApiController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\JsonResponse
      */
+    /**
+     * @OA\Get(
+     * path="/api/table/{id}/end",
+     * operationId="end",
+     * tags={"Table"},
+     * summary="Stop an anonymous game",
+     * description="Stop an anonymous game",
+     *     @OA\Parameter(
+     *          name="id",
+     *          description="Table id",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="OK",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="message", type="string", example="Game ended succesfully")
+     *          )
+     *       ),
+     *      @OA\Response(
+     *          response=208,
+     *          description="Already Reported",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="message", type="string", example="No Game is running")
+     *          )
+     *       ),
+     *      @OA\Response(
+     *          response=422,
+     *          description="Unprocessable Entity",
+     *       ),
+     *      @OA\Response(response=400, description="Bad request"),
+     *      @OA\Response(response=404, description="Resource Not Found"),
+     * )
+     */
     public function end(int $id){
         $team1 = Team::where('name', 'anonteam1')->firstOrFail();
         $team2 = Team::where('name', 'anonteam2')->firstOrFail();
         try{
             Game::where('fooseballtable_id', $id)->where('active', true)->firstOrFail();
         }catch (ModelNotFoundException){
-            return response()->json(['message' => 'No Game is running']);
+            return response()->json(['message' => 'No Game is running'],208);
         }
         $game = Game::where('fooseballtable_id', $id)->where('active', true)->firstOrFail();
 
