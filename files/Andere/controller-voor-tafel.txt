@@ -1,0 +1,12 @@
+//backend
+
+-> offline player1 en offline player2 zijn standaard users die wnr er gestart wordt zonder app dat de data wordt bijgehouden
+-> je start een match enkel id van tafel
+-->tafel/1/start
+-> score! team1 update score(arduino houdt teams niet bij kent enkel tafel) in de jsn wordt een +1 of een -1 gestuurt en tafelid 
+-->tafel/1/team/1
+-> iets voor endsession tafelid
+-> is er 1 van de spelers aan bezig op tafelid? zoja update speler ipv update anon anons zijn per tafel 2.
+-->tafel/1/end
+
+tabel in db Tafel velden: id, naam, locatie
