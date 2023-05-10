@@ -64,6 +64,9 @@ class TableApiController extends Controller
         try{
             Game::where('fooseballtable_id', $id)->where('active', true)->firstOrFail();
         }catch (ModelNotFoundException){
+            //toDo kijk of er een start_date van een game met deze tafel_id null is
+            //als start_date null is zet deze active op true en vult start_date in
+            //extra controle om te kijken of er 2 teams in game zitten
             $team1id = Team::where('name', 'anonteam1')->pluck('id')->firstOrFail();
             $team2id = Team::where('name', 'anonteam2')->pluck('id')->firstOrFail();
             $teamIds = [$team1id, $team2id];
@@ -133,6 +136,7 @@ class TableApiController extends Controller
      * )
      */
     public function end(int $id){
+        //toDo check welke teams er op deze tafel zijn aan het spelen
         $team1 = Team::where('name', 'anonteam1')->firstOrFail();
         $team2 = Team::where('name', 'anonteam2')->firstOrFail();
         try{
