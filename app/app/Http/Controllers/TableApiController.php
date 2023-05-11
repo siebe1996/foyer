@@ -16,7 +16,7 @@ use mysql_xdevapi\Exception;
 class TableApiController extends Controller
 {
     /**
-     * Start an anonymous game.
+     * Start a game.
      *
      * @param  int  $id
      * @return \Illuminate\Http\JsonResponse
@@ -64,23 +64,28 @@ class TableApiController extends Controller
         try{
             Game::where('fooseballtable_id', $id)->where('active', true)->firstOrFail();
         }catch (ModelNotFoundException){
-            //toDo kijk of er een start_date van een game met deze tafel_id null is
-            //als start_date null is zet deze active op true en vult start_date in
-            //extra controle om te kijken of er 2 teams in game zitten
-            $team1id = Team::where('name', 'anonteam1')->pluck('id')->firstOrFail();
-            $team2id = Team::where('name', 'anonteam2')->pluck('id')->firstOrFail();
-            $teamIds = [$team1id, $team2id];
+            try{
+                $game = Game::where('fooseballtable_id', $id)->where('start_date', null)->firstOrFail();
+                $game->active = true;
+                $game->start_date = Carbon::now()->format('Y-m-d H:i:s');
+                $game->save();
+                return response()->json(['message' => 'Game started succesfully']);
+            }catch(ModelNotFoundException){
+                $team1id = Team::where('name', 'anonteam1')->pluck('id')->firstOrFail();
+                $team2id = Team::where('name', 'anonteam2')->pluck('id')->firstOrFail();
+                $teamIds = [$team1id, $team2id];
 
-            $game = new Game;
-            $game->name = 'anon';
-            $game->active = true;
-            $game->start_date = Carbon::now()->format('Y-m-d H:i:s');
-            $game->fooseballtable()->associate($table);
-            $game->save();
+                $game = new Game;
+                $game->name = 'anon';
+                $game->active = true;
+                $game->start_date = Carbon::now()->format('Y-m-d H:i:s');
+                $game->fooseballtable()->associate($table);
+                $game->save();
 
-            $game->teams()->attach($teamIds); //attach() for new, sync() for adding
+                $game->teams()->attach($teamIds); //attach() for new, sync() for adding
 
-            return response()->json(['message' => 'Game started succesfully']);
+                return response()->json(['message' => 'Anon Game started succesfully']);
+            }
         }
         return response()->json(['message' => 'Game is already running'], 208);
 
@@ -92,7 +97,7 @@ class TableApiController extends Controller
     }
 
     /**
-     * Stop an anonymous game.
+     * Stop a game.
      *
      * @param  int  $id
      * @return \Illuminate\Http\JsonResponse
