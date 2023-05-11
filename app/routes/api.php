@@ -50,6 +50,17 @@ Route::middleware('auth:sanctum')->group(function (){
     });
 });*/
 
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+    return $request->user();
+    /*$id = Auth::id();
+    $u = User::with('roles')->findOrFail($id);
+    $user = new UserResource(User::with('roles')->findOrFail($id));
+    return response(['data' => $user, 'admin' => $u->hasRole('administrator')], 200)
+        ->header('Content-Type', 'application/json');
+    return response()->json(['something']);*/
+});
+
+
 Route::get('/tables/{id}/start', [TableApiController::class, 'start']);
 Route::get('/tables/{id}/end', [TableApiController::class, 'end']);
 Route::patch('/tables/{tableId}/teams/{teamId}', [GameinfoApiController::class, 'update']);

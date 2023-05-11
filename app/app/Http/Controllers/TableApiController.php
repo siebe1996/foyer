@@ -77,6 +77,7 @@ class TableApiController extends Controller
             Game::where('fooseballtable_id', $id)->where('active', true)->firstOrFail();
         }catch (ModelNotFoundException){
             try{
+                //wat als een game wordt gemaakt en niet gestart?
                 $game = Game::where('fooseballtable_id', $id)->where('start_date', null)->firstOrFail();
                 $game->active = true;
                 $game->start_date = Carbon::now()->format('Y-m-d H:i:s');
