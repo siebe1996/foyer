@@ -137,24 +137,34 @@ class TableApiController extends Controller
      */
     public function end(int $id){
         //toDo check welke teams er op deze tafel zijn aan het spelen
-        $team1 = Team::where('name', 'anonteam1')->firstOrFail();
-        $team2 = Team::where('name', 'anonteam2')->firstOrFail();
+        /*$team1 = Team::where('name', 'anonteam1')->firstOrFail();
+        $team2 = Team::where('name', 'anonteam2')->firstOrFail();*/
         try{
             Game::where('fooseballtable_id', $id)->where('active', true)->firstOrFail();
         }catch (ModelNotFoundException){
             return response()->json(['message' => 'No Game is running'],208);
         }
         $game = Game::where('fooseballtable_id', $id)->where('active', true)->firstOrFail();
-
-        $scoreTeam1 = $this->getGoalsTeams($game->id, $team1->id);
-        $scoreTeam2 = $this->getGoalsTeams($game->id, $team2->id);
-
-        $winner = $scoreTeam1 > $scoreTeam2 ? $team1 : $team2;
-
+        $teams = $game->teams()->get();
+        $scoreTeam1 = $this->getGoalsTeams($game->id, $teams[0]->id);
+        $scoreTeam2 = $this->getGoalsTeams($game->id, $teams[1]->id);
+        if($scoreTeam1 > $scoreTeam2){
+            $winner = $teams[0];
+            $teams[0]->total_wins = $teams[0]->total_wins+1;
+        }
+        else{
+            $winner = $teams[1];
+            $teams[1]->total_wins = $teams[1]->total_wins+1;
+        }
+        //$winner = $scoreTeam1 > $scoreTeam2 ? $teams[0] : $teams[1];
+        $teams[0]->games_played = $teams[0]->games_played+1;
+        $teams[1]->games_played = $teams[1]->games_played+1;
         $game->active = false;
         $game->end_date = Carbon::now()->format('Y-m-d H:i:s');
         $game->winner()->associate($winner);
         $game->save();
+        $teams[0]->save();
+        $teams[1]->save();
 
         return response()->json(['message' => 'Game ended succesfully']);
     }
