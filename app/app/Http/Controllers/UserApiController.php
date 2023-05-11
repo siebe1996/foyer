@@ -175,4 +175,133 @@ class UserApiController extends Controller
             ->header('Content-Type', 'application/json');
 
     }
+
+    /**
+     * Display loggedin user.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    /**
+     * @OA\Get(
+     *     path="api/profile",
+     *     summary="Get loggedin user profile",
+     *     tags={"Profile"},
+     *     security={{"sanctum":{}}},
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 property="data",
+     *                 @OA\Schema(
+     *                     @OA\Property(
+     *                         property="id",
+     *                         type="integer",
+     *                         example=1
+     *                     ),
+     *                     @OA\Property(
+     *                         property="first_name",
+     *                         type="string",
+     *                         example="John"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="last_name",
+     *                         type="string",
+     *                         example="Doe"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="email",
+     *                         type="string",
+     *                         example="bartdelrue@odisee.be"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="total_wins",
+     *                         type="integer",
+     *                         example=0
+     *                     ),
+     *                     @OA\Property(
+     *                         property="games_played",
+     *                         type="integer",
+     *                         example=1
+     *                     ),
+     *                     @OA\Property(
+     *                         property="roles",
+     *                         type="array",
+     *                         @OA\Items(
+     *                             @OA\Property(
+     *                                 property="id",
+     *                                 type="integer",
+     *                                 example=1
+     *                             ),
+     *                             @OA\Property(
+     *                                 property="title",
+     *                                 type="string",
+     *                                 example="player"
+     *                             )
+     *                         )
+     *                     ),
+     *                     @OA\Property(
+     *                         property="teams",
+     *                         @OA\Property(
+     *                             property="as_player1",
+     *                             type="array",
+     *                             @OA\Items()
+     *                         ),
+     *                         @OA\Property(
+     *                             property="as_player2",
+     *                             type="array",
+     *                             @OA\Items(
+     *                                 @OA\Property(
+     *                                     property="id",
+     *                                     type="string",
+     *                                     example="ut"
+     *                                 ),
+     *                                 @OA\Property(
+     *                                     property="player1_id",
+     *                                     type="integer",
+     *                                     example=3
+     *                                 ),
+     *                                 @OA\Property(
+     *                                     property="player2_id",
+     *                                     type="integer",
+     *                                     example=1
+     *                                 ),
+     *                                 @OA\Property(
+     *                                     property="total_wins",
+     *                                     type="integer",
+     *                                     example=3
+     *                                 ),
+     *                                 @OA\Property(
+     *                                     property="games_played",
+     *                                     type="integer",
+     *                                     example=9
+     *                                 )
+     *                             )
+     *                         )
+     *                     )
+     *                 )
+     *             ),
+     *             @OA\Property(
+     *                 property="admin",
+     *                 type="boolean",
+     *                 description="Indicates if the user is an administrator"
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthenticated"
+     *     ),
+     *     @OA\Response(
+     *         response=403,
+     *         description="Forbidden"
+     *     )
+     * )
+     */
+    public function profile(){
+        $id = Auth::id();
+        $u = User::with('roles')->findOrFail($id);
+        $user = new UserResource(User::with('roles')->with('teamsAsPlayer1')->with('teamsAsPlayer2')->findOrFail($id));
+        return response()->json(['data' => $user, 'admin' => $u->hasRole('administrator')]);
+    }
 }

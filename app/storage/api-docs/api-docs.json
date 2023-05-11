@@ -439,6 +439,45 @@
                     }
                 }
             }
+        },
+        "api/profile": {
+            "get": {
+                "tags": [
+                    "Profile"
+                ],
+                "summary": "Get loggedin user profile",
+                "operationId": "61ba7129bf33f31e7fa33c456876b5de",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {},
+                                        "admin": {
+                                            "description": "Indicates if the user is an administrator",
+                                            "type": "boolean"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
         }
     }
 }
