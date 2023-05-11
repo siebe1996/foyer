@@ -14,35 +14,50 @@
         "version": "1.0.0"
     },
     "paths": {
-        "api/table/{tableId}/team/{teamId}": {
+        "sanctum/csrf-cookie": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Get CSRF cookie",
+                "responses": {
+                    "204": {
+                        "description": "CSRF cookie retrieved successfully"
+                    }
+                }
+            }
+        },
+        "api/tables/{tableId}/teams/{teamId}": {
             "patch": {
                 "tags": [
                     "Gameinfo"
                 ],
-                "summary": "Update the specified resource in storage",
-                "description": "Update the specified resource in storage",
-                "operationId": "updateGameinfo",
+                "summary": "Update score",
+                "operationId": "914ca45c4d078d9c5293957eedd90650",
                 "parameters": [
                     {
                         "name": "tableId",
                         "in": "path",
-                        "description": "Table id",
+                        "description": "ID of the foosball table",
                         "required": true,
                         "schema": {
-                            "type": "integer"
+                            "type": "integer",
+                            "format": "int64"
                         }
                     },
                     {
                         "name": "teamId",
                         "in": "path",
-                        "description": "Team id",
+                        "description": "ID of the team",
                         "required": true,
                         "schema": {
-                            "type": "integer"
+                            "type": "integer",
+                            "format": "int64"
                         }
                     }
                 ],
                 "requestBody": {
+                    "description": "Score change",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -60,7 +75,7 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "OK",
+                        "description": "Score updated successfully",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -75,18 +90,15 @@
                             }
                         }
                     },
-                    "422": {
-                        "description": "Unprocessable Entity"
-                    },
                     "400": {
-                        "description": "Bad request",
+                        "description": "Bad Request",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
                                         "error": {
                                             "type": "string",
-                                            "example": "error to be displayed"
+                                            "example": "Invalid score change."
                                         }
                                     },
                                     "type": "object"
@@ -95,40 +107,143 @@
                         }
                     },
                     "404": {
-                        "description": "Resource Not Found"
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "No game is active on this table."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 }
             }
         },
-        "/api/table/{id}/start": {
-            "get": {
+        "api/login": {
+            "post": {
                 "tags": [
-                    "Table"
+                    "Authentication"
                 ],
-                "summary": "Start an anonymous game",
-                "description": "Start an anonymous game",
-                "operationId": "start",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "Table id",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
+                "summary": "User Login",
+                "operationId": "44ea62aec60279fc737c08a3415dab4f",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "example": "user@example.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "example": "password123"
+                                    }
+                                },
+                                "type": "object"
+                            }
                         }
                     }
-                ],
+                },
                 "responses": {
                     "200": {
-                        "description": "OK",
+                        "description": "Successful authentication",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
                                         "message": {
                                             "type": "string",
-                                            "example": "Game started succesfully"
+                                            "example": "The user has been authenticated successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "The provided credentials do not match our records."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "api/logout": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "User Logout",
+                "operationId": "043d4cac9dc94cd052bb3f902e82823a",
+                "responses": {
+                    "200": {
+                        "description": "Successful logout",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "The user has been logged out successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "api/tables/{id}/start": {
+            "get": {
+                "tags": [
+                    "Game"
+                ],
+                "summary": "Start game",
+                "operationId": "f0a5ea2b33d07ea7327fbb39d1123e5f",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the foosball table",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Game started successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Game started successfully."
                                         }
                                     },
                                     "type": "object"
@@ -137,14 +252,14 @@
                         }
                     },
                     "208": {
-                        "description": "Already Reported",
+                        "description": "Game is already running",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
                                         "message": {
                                             "type": "string",
-                                            "example": "Game is already running"
+                                            "example": "Game is already running."
                                         }
                                     },
                                     "type": "object"
@@ -152,47 +267,54 @@
                             }
                         }
                     },
-                    "422": {
-                        "description": "Unprocessable Entity"
-                    },
-                    "400": {
-                        "description": "Bad request"
-                    },
                     "404": {
-                        "description": "Resource Not Found"
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Foosball table not found."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 }
             }
         },
-        "/api/table/{id}/end": {
+        "api/tables/{id}/end": {
             "get": {
                 "tags": [
-                    "Table"
+                    "Game"
                 ],
-                "summary": "Stop an anonymous game",
-                "description": "Stop an anonymous game",
-                "operationId": "end",
+                "summary": "End game",
+                "operationId": "b28822fa0551a7e8f6d23f08e43446c4",
                 "parameters": [
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "Table id",
+                        "description": "ID of the foosball table",
                         "required": true,
                         "schema": {
-                            "type": "integer"
+                            "type": "integer",
+                            "format": "int64"
                         }
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "OK",
+                        "description": "Game ended successfully",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
                                         "message": {
                                             "type": "string",
-                                            "example": "Game ended succesfully"
+                                            "example": "Game ended successfully."
                                         }
                                     },
                                     "type": "object"
@@ -201,14 +323,89 @@
                         }
                     },
                     "208": {
-                        "description": "Already Reported",
+                        "description": "No Game is running",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
                                         "message": {
                                             "type": "string",
-                                            "example": "No Game is running"
+                                            "example": "No Game is running."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Game not found."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "api/register": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "User Registration",
+                "description": "Register a new user",
+                "operationId": "registerUser",
+                "requestBody": {
+                    "description": "User data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "first_name": {
+                                        "type": "string",
+                                        "example": "John"
+                                    },
+                                    "last_name": {
+                                        "type": "string",
+                                        "example": "Doe"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "john@example.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "secret"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "User registered successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "User registered successfully."
                                         }
                                     },
                                     "type": "object"
@@ -217,13 +414,28 @@
                         }
                     },
                     "422": {
-                        "description": "Unprocessable Entity"
-                    },
-                    "400": {
-                        "description": "Bad request"
-                    },
-                    "404": {
-                        "description": "Resource Not Found"
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "The given data was invalid."
+                                        },
+                                        "errors": {
+                                            "type": "object",
+                                            "example": {
+                                                "email": [
+                                                    "The email field is required."
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 }
             }

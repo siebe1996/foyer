@@ -66,38 +66,61 @@ class UserApiController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\JsonResponse
      */
+    /**
+     * @OA\Post(
+     *     path="api/register",
+     *     summary="User Registration",
+     *     description="Register a new user",
+     *     operationId="registerUser",
+     *     tags={"Authentication"},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         description="User data",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="first_name", type="string", example="John"),
+     *             @OA\Property(property="last_name", type="string", example="Doe"),
+     *             @OA\Property(property="email", type="string", format="email", example="john@example.com"),
+     *             @OA\Property(property="password", type="string", format="password", example="secret"),
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="User registered successfully",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="User registered successfully.")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=422,
+     *         description="Validation error",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="The given data was invalid."),
+     *             @OA\Property(property="errors", type="object", example={"email": {"The email field is required."}})
+     *         )
+     *     ),
+     * )
+     */
+
     public function store(Request $request)
     {
-        /**
-         * 'first_name' => 'Dries',
-         * 'last_name' => 'Loco',
-         * 'email' => 'driesloco@odisee.be',
-         * 'password' => Hash::make('Azerty123'),
-         * 'total_kills' => 0,
-         * 'deaths' => 1,
-         * 'games_played' => 1,
-         * 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-         * 'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
-         */
+        $request->validate([
+            'first_name' => 'required|string',
+            'last_name' => 'required|string',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|string|min:6',
+        ]);
 
-        Gate::authorize('store-user');
-        $comment = new User;
-        $comment->first_name = "nel";
-        $comment->last_name = "li";
-        $comment->email = "nelli@odisee.be";
-        $comment->password = Hash::make('Azerty123');
-        $comment->total_kills = 0;
-        $comment->deaths = 1;
-        $comment->games_played = 1;
-        /*'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-        'updated_at' => Carbon::now()->format('Y-m-d H:i:s')*/
-        $comment->save();
-        $comment = new UserResource($comment);
-        return response(['data' => $comment], 201)
-            ->header('Content-Type', 'application/json');
+        $user = User::create([
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+        ]);
+
+        return response()->json(['message' => 'User registered successfully.']);
     }
 
     /**

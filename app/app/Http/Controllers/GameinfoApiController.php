@@ -53,54 +53,73 @@ class GameinfoApiController extends Controller
      */
     /**
      * @OA\Patch(
-     * path="api/table/{tableId}/team/{teamId}",
-     * operationId="updateGameinfo",
-     * tags={"Gameinfo"},
-     * summary="Update the specified resource in storage",
-     * description="Update the specified resource in storage",
+     *     path="api/tables/{tableId}/teams/{teamId}",
+     *     summary="Update score",
+     *     tags={"Gameinfo"},
      *     @OA\Parameter(
-     *          name="tableId",
-     *          description="Table id",
-     *          required=true,
-     *          in="path",
-     *          @OA\Schema(
-     *              type="integer"
-     *          )
-     *      ),
+     *         name="tableId",
+     *         in="path",
+     *         description="ID of the foosball table",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="integer",
+     *             format="int64"
+     *         )
+     *     ),
      *     @OA\Parameter(
-     *          name="teamId",
-     *          description="Team id",
-     *          required=true,
-     *          in="path",
-     *          @OA\Schema(
-     *              type="integer"
-     *          )
-     *      ),
+     *         name="teamId",
+     *         in="path",
+     *         description="ID of the team",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="integer",
+     *             format="int64"
+     *         )
+     *     ),
      *     @OA\RequestBody(
-     *          required=true,
-     *          @OA\JsonContent(
-     *              @OA\Property(property="score_change", type="integer", example=1),
-     *          ),
-     *      ),
-     *      @OA\Response(
-     *          response=200,
-     *          description="OK",
-     *          @OA\JsonContent(
-     *              @OA\Property(property="message", type="string", example="Score updated successfully.")
-     *          )
-     *       ),
-     *      @OA\Response(
-     *          response=422,
-     *          description="Unprocessable Entity",
-     *       ),
+     *         required=true,
+     *         description="Score change",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 property="score_change",
+     *                 type="integer",
+     *                 example=1
+     *             )
+     *         )
+     *     ),
      *     @OA\Response(
-     *          response=400,
-     *          description="Bad request",
-     *          @OA\JsonContent(
-     *              @OA\Property(property="error", type="string", example="error to be displayed")
-     *          )
-     *      ),
-     *      @OA\Response(response=404, description="Resource Not Found"),
+     *         response=200,
+     *         description="Score updated successfully",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 example="Score updated successfully."
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Bad Request",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 property="error",
+     *                 type="string",
+     *                 example="Invalid score change."
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Not found",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 property="error",
+     *                 type="string",
+     *                 example="No game is active on this table."
+     *             )
+     *         )
+     *     )
      * )
      */
     public function update(Request $request, int $tableId, int $teamId)

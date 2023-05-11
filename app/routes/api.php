@@ -4,6 +4,7 @@ use App\Http\Controllers\GameApiController;
 use App\Http\Controllers\GameinfoApiController;
 use App\Http\Controllers\GameLogicController;
 use App\Http\Controllers\GameUserApiController;
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MessageApiController;
 use App\Http\Controllers\TableApiController;
 use App\Http\Controllers\UserApiController;
@@ -49,7 +50,7 @@ Route::middleware('auth:sanctum')->group(function (){
     });
 });*/
 
-Route::get('/table/{id}/start', [TableApiController::class, 'start']);
-Route::get('/table/{id}/end', [TableApiController::class, 'end']);
-Route::patch('/table/{tableId}/team/{teamId}', [GameinfoApiController::class, 'update']);
-
+Route::get('/tables/{id}/start', [TableApiController::class, 'start']);
+Route::get('/tables/{id}/end', [TableApiController::class, 'end']);
+Route::patch('/tables/{tableId}/teams/{teamId}', [GameinfoApiController::class, 'update']);
+Route::post('/register', [UserApiController::class, 'store']);

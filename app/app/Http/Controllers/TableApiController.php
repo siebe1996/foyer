@@ -23,40 +23,52 @@ class TableApiController extends Controller
      */
     /**
      * @OA\Get(
-     * path="/api/table/{id}/start",
-     * operationId="start",
-     * tags={"Table"},
-     * summary="Start an anonymous game",
-     * description="Start an anonymous game",
+     *     path="api/tables/{id}/start",
+     *     summary="Start game",
+     *     tags={"Game"},
      *     @OA\Parameter(
-     *          name="id",
-     *          description="Table id",
-     *          required=true,
-     *          in="path",
-     *          @OA\Schema(
-     *              type="integer"
-     *          )
-     *      ),
-     *      @OA\Response(
-     *          response=200,
-     *          description="OK",
-     *          @OA\JsonContent(
-     *              @OA\Property(property="message", type="string", example="Game started succesfully")
-     *          )
-     *       ),
-     *      @OA\Response(
-     *          response=208,
-     *          description="Already Reported",
-     *          @OA\JsonContent(
-     *              @OA\Property(property="message", type="string", example="Game is already running")
-     *          )
-     *       ),
-     *      @OA\Response(
-     *          response=422,
-     *          description="Unprocessable Entity",
-     *      ),
-     *      @OA\Response(response=400, description="Bad request"),
-     *      @OA\Response(response=404, description="Resource Not Found"),
+     *         name="id",
+     *         in="path",
+     *         description="ID of the foosball table",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="integer",
+     *             format="int64"
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Game started successfully",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 example="Game started successfully."
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=208,
+     *         description="Game is already running",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 example="Game is already running."
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Not found",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 property="error",
+     *                 type="string",
+     *                 example="Foosball table not found."
+     *             )
+     *         )
+     *     )
      * )
      */
     public function start(int $id){
@@ -104,46 +116,55 @@ class TableApiController extends Controller
      */
     /**
      * @OA\Get(
-     * path="/api/table/{id}/end",
-     * operationId="end",
-     * tags={"Table"},
-     * summary="Stop an anonymous game",
-     * description="Stop an anonymous game",
+     *     path="api/tables/{id}/end",
+     *     summary="End game",
+     *     tags={"Game"},
      *     @OA\Parameter(
-     *          name="id",
-     *          description="Table id",
-     *          required=true,
-     *          in="path",
-     *          @OA\Schema(
-     *              type="integer"
-     *          )
-     *      ),
-     *      @OA\Response(
-     *          response=200,
-     *          description="OK",
-     *          @OA\JsonContent(
-     *              @OA\Property(property="message", type="string", example="Game ended succesfully")
-     *          )
-     *       ),
-     *      @OA\Response(
-     *          response=208,
-     *          description="Already Reported",
-     *          @OA\JsonContent(
-     *              @OA\Property(property="message", type="string", example="No Game is running")
-     *          )
-     *       ),
-     *      @OA\Response(
-     *          response=422,
-     *          description="Unprocessable Entity",
-     *       ),
-     *      @OA\Response(response=400, description="Bad request"),
-     *      @OA\Response(response=404, description="Resource Not Found"),
+     *         name="id",
+     *         in="path",
+     *         description="ID of the foosball table",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="integer",
+     *             format="int64"
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Game ended successfully",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 example="Game ended successfully."
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=208,
+     *         description="No Game is running",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 example="No Game is running."
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Not found",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 property="error",
+     *                 type="string",
+     *                 example="Game not found."
+     *             )
+     *         )
+     *     )
      * )
      */
     public function end(int $id){
-        //toDo check welke teams er op deze tafel zijn aan het spelen
-        /*$team1 = Team::where('name', 'anonteam1')->firstOrFail();
-        $team2 = Team::where('name', 'anonteam2')->firstOrFail();*/
         try{
             Game::where('fooseballtable_id', $id)->where('active', true)->firstOrFail();
         }catch (ModelNotFoundException){
@@ -161,7 +182,6 @@ class TableApiController extends Controller
             $winner = $teams[1];
             $teams[1]->total_wins = $teams[1]->total_wins+1;
         }
-        //$winner = $scoreTeam1 > $scoreTeam2 ? $teams[0] : $teams[1];
         $teams[0]->games_played = $teams[0]->games_played+1;
         $teams[1]->games_played = $teams[1]->games_played+1;
         $game->active = false;

@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::middleware(['auth', 'role:administrator'])->group(function () {
+/*Route::middleware(['auth', 'role:administrator'])->group(function () {
     Route::prefix('games')->group(function () {
         Route::post('{id}/pause', [GameWebController::class, 'pause'])->whereNumber('id');
         Route::post('{id}/unpause', [GameWebController::class, 'unpause'])->whereNumber('id');
@@ -37,11 +37,15 @@ Route::middleware(['auth', 'role:administrator'])->group(function () {
     });
 
     Route::get('/', [GameWebController::class, 'index']);
-});
+});*/
 
 Route::prefix('api')->group(function () {
     Route::post('login', [LoginController::class, 'login']);
     Route::post('logout', [LoginController::class, 'logout']);
+});
+
+Route::get('/', function () {
+    return redirect('/api/documentation');
 });
 
 require __DIR__.'/auth.php';
