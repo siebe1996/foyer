@@ -1,5 +1,4 @@
 
-todo: routes naar meervoud, unieke code bv DVJ8 om een tafel te herkennen
 routes
 x post /login
 x post /register
@@ -9,20 +8,21 @@ x post /teams -> solo of niet {id: null, name: test} -> maakt een nieuw team -> 
 x get /teams -> alle team names, id buiten eigen teams
 x get /teams/my -> geeft eigen teams
 x post /games -> {name: test, unique_code: DVJ8, team1_id:1, team2_id: 2} -> maakt game, team1_id zijn eigen teams, team2_id zijn geen eigen teams
-(get /games -> alle games)
-(get /games/my)
-(get /games/{id})
+x (get /games -> alle games)
+x (get /games/my)
+x (get /games/{id})
 (get /tables)
 (get /tables/{id})
 
 
----> nog geen login pas op het einde credentials steken
+---> protected get-routes hebben cookie nodig : fooseball_session=...
+---> protected post-routes hebben X-XSRF-TOKEN nodig
 
 ge zijt user -> user maakt team ()
 ->
 <select name="users" id="users">
   <option value="-1">ik ben een solo team</option>
-  <option value="0">Saab</option>
-  <option value="1">Mercedes</option>
-  <option value="2">Audi</option>
+  <option value="0">Eli</option>
+  <option value="1">Jarno</option>
+  <option value="2">Ruben</option>
 </select>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\FooseballtableCollection;
 use App\Http\Resources\FooseballtableResource;
 use App\Models\Fooseballtable;
 use App\Models\Game;
@@ -211,13 +212,50 @@ class TableApiController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * Get a list of fooseball tables.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
+     *
+     * @OA\Get(
+     *     path="api/tables",
+     *     operationId="getFooseballTables",
+     *     tags={"Tables"},
+     *     security={{"sanctum":{}}},
+     *     summary="Get a list of fooseball tables",
+     *     description="Returns a list of fooseball tables",
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 property="data",
+     *                 type="array",
+     *                 @OA\Items(
+     *                     type="object",
+     *                     @OA\Property(
+     *                         property="id",
+     *                         type="integer",
+     *                         example=1
+     *                     ),
+     *                     @OA\Property(
+     *                         property="name",
+     *                         type="string",
+     *                         example="Table1"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="unique_code",
+     *                         type="string",
+     *                         example="ABCD"
+     *                     )
+     *                 )
+     *             )
+     *         )
+     *     )
+     * )
      */
     public function index()
     {
-        //
+        return response()->json(['data' => new FooseballtableCollection(Fooseballtable::get())]);
     }
 
     /**

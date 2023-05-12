@@ -7,6 +7,7 @@ use App\Http\Resources\GameResource;
 use App\Http\Resources\UserCollection;
 use App\Models\Fooseballtable;
 use App\Models\Game;
+use App\Models\Team;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
@@ -54,7 +55,7 @@ class GameApiController extends Controller
      *                 @OA\Items(
      *                     type="object",
      *                     @OA\Property(property="id", type="integer", example=1),
-     *                     @OA\Property(property="name", type="string", example="inventore"),
+     *                     @OA\Property(property="name", type="string", example="Game1"),
      *                     @OA\Property(property="active", type="boolean", example=true),
      *                     @OA\Property(property="start_date", type="string", format="date-time", example="2023-05-09T05:06:41.000000Z"),
      *                     @OA\Property(property="end_date", type="string", format="date-time", example="2023-05-10T03:28:53.000000Z"),
@@ -137,13 +138,7 @@ class GameApiController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    /*public function show($id)
     {
         if(!is_numeric($id)){
             return response(['data' => 'bad request'], 400)
@@ -159,6 +154,115 @@ class GameApiController extends Controller
 
         return response(['data' =>['game_data' => $game, 'alive_player' => $alivePlayers, 'winner' => $winner, 'most_killed' => $mostKilled]], 200)
             ->header('Content-Type', 'application/json');
+    }*/
+    /**
+     * Get a game by ID.
+     *
+     * @param int $id Game ID
+     * @return \Illuminate\Http\JsonResponse
+     *
+     * @OA\Get(
+     *     path="api/games/{id}",
+     *     operationId="getGameById",
+     *     tags={"Games"},
+     *     security={{"sanctum":{}}},
+     *     summary="Get a game by ID",
+     *     description="Returns a game based on the provided ID",
+     *     @OA\Parameter(
+     *         name="id",
+     *         description="Game ID",
+     *         required=true,
+     *         in="path",
+     *         @OA\Schema(
+     *             type="integer",
+     *             format="int64"
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 property="data",
+     *                 type="object",
+     *                 @OA\Property(
+     *                     property="id",
+     *                     type="integer",
+     *                     example=1
+     *                 ),
+     *                 @OA\Property(
+     *                     property="name",
+     *                     type="string",
+     *                     example="inventore"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="active",
+     *                     type="boolean",
+     *                     example=true
+     *                 ),
+     *                 @OA\Property(
+     *                     property="start_date",
+     *                     type="string",
+     *                     format="date-time",
+     *                     example="2023-05-09T05:06:41.000000Z"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="end_date",
+     *                     type="string",
+     *                     format="date-time",
+     *                     example="2023-05-10T03:28:53.000000Z"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="competition_id",
+     *                     type="integer",
+     *                     example=4
+     *                 ),
+     *                 @OA\Property(
+     *                     property="winner_id",
+     *                     type="integer",
+     *                     example=10
+     *                 ),
+     *                 @OA\Property(
+     *                     property="fooseballtable_id",
+     *                     type="integer",
+     *                     example=2
+     *                 ),
+     *                 @OA\Property(
+     *                     property="created_at",
+     *                     type="string",
+     *                     format="date-time",
+     *                     example="2023-05-12T17:45:16.000000Z"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="updated_at",
+     *                     type="string",
+     *                     format="date-time",
+     *                     example="2023-05-12T17:45:16.000000Z"
+     *                 )
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Game not found",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 example="Game doesn't exist"
+     *             )
+     *         )
+     *     )
+     * )
+     */
+    public function show($id){
+        try{
+            $game = Game::findOrFail($id);
+            //dd($game);
+            return response()->json(['data' => new GameResource($game)]);
+        }catch(ModelNotFoundException){
+            return response()->json(['message' => 'Game doesnt exist'], 404);
+        }
     }
 
     /**
@@ -207,5 +311,55 @@ class GameApiController extends Controller
 
         return response(['data' => ['current_games' => $activeGamesWithUser]], 200)
             ->header('Content-Type', 'application/json');
+    }
+
+    /**
+     * Display the games associated with the authenticated player.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     *
+     * @OA\Get(
+     *     path="api/games/my",
+     *     summary="Get the games associated with the authenticated player",
+     *     tags={"Games"},
+     *     security={{"sanctum": {}}},
+     *     @OA\Response(
+     *         response=200,
+     *         description="Success",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="data",
+     *                 type="array",
+     *                 @OA\Items(
+     *                     type="object",
+     *                     @OA\Property(property="id", type="integer", example=1),
+     *                     @OA\Property(property="name", type="string", example="Game1"),
+     *                     @OA\Property(property="active", type="boolean", example=true),
+     *                     @OA\Property(property="start_date", type="string", format="date-time", example="2023-05-09T05:06:41.000000Z"),
+     *                     @OA\Property(property="end_date", type="string", format="date-time", example="2023-05-10T03:28:53.000000Z"),
+     *                     @OA\Property(property="competition_id", type="integer", example=4),
+     *                     @OA\Property(property="winner_id", type="integer", example=10),
+     *                     @OA\Property(property="fooseballtable_id", type="integer", example=2),
+     *                     @OA\Property(property="created_at", type="string", format="date-time", example="2023-05-12T17:45:16.000000Z"),
+     *                     @OA\Property(property="updated_at", type="string", format="date-time", example="2023-05-12T17:45:16.000000Z")
+     *                 )
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthenticated"
+     *     )
+     * )
+     */
+    public function myGames()
+    {
+        $id = Auth::id();
+        $games = Game::whereHas('teams', function ($q) use ($id){
+            $q->where('teams.player1_id', $id)->orWhere('teams.player2_id', $id);
+        })->get();
+        $games = new GameCollection($games);
+        return response()->json(['data' => $games]);
     }
 }
