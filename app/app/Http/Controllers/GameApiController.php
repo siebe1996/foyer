@@ -15,11 +15,7 @@ use Illuminate\Support\Facades\Gate;
 
 class GameApiController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    /*
     public function index()
     {
         $userId = Auth::id();
@@ -36,6 +32,46 @@ class GameApiController extends Controller
 
         return response(['data' => ['active' => ['active_joinable' => $joinable, 'active_not_joinable' => $notJoinable, 'started_games' => $startedGames], 'previous_games' => $previousGames]], 200)
             ->header('Content-Type', 'application/json');
+    }*/
+    /**
+     * Get a list of games.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     *
+     * @OA\Get(
+     *     path="api/games",
+     *     summary="Get a list of games",
+     *     tags={"Games"},
+     *     security={{"sanctum":{}}},
+     *     @OA\Response(
+     *         response=200,
+     *         description="Success",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="data",
+     *                 type="array",
+     *                 @OA\Items(
+     *                     type="object",
+     *                     @OA\Property(property="id", type="integer", example=1),
+     *                     @OA\Property(property="name", type="string", example="inventore"),
+     *                     @OA\Property(property="active", type="boolean", example=true),
+     *                     @OA\Property(property="start_date", type="string", format="date-time", example="2023-05-09T05:06:41.000000Z"),
+     *                     @OA\Property(property="end_date", type="string", format="date-time", example="2023-05-10T03:28:53.000000Z"),
+     *                     @OA\Property(property="competition_id", type="integer", example=4),
+     *                     @OA\Property(property="winner_id", type="integer", example=10),
+     *                     @OA\Property(property="fooseballtable_id", type="integer", example=2),
+     *                     @OA\Property(property="created_at", type="string", format="date-time", example="2023-05-12T17:45:16.000000Z"),
+     *                     @OA\Property(property="updated_at", type="string", format="date-time", example="2023-05-12T17:45:16.000000Z"),
+     *                 ),
+     *             ),
+     *         ),
+     *     ),
+     * )
+     */
+    public function index(){
+        $games = new GameCollection(Game::get());
+        return response()->json(['data' => $games]);
     }
     /**
      * Store a new game.

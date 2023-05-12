@@ -49,6 +49,7 @@ Route::middleware('auth:sanctum')->group(function (){
     Route::get('/teams', [TeamApiController::class, 'index']);
     Route::post('/teams', [TeamApiController::class, 'store']);
     Route::get('/teams/my', [TeamApiController::class, 'myTeams']);
+    Route::get('/games', [GameApiController::class, 'index']);
     Route::post('/games', [GameApiController::class, 'store']);
 });
 

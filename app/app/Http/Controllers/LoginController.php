@@ -17,6 +17,7 @@ class LoginController extends Controller
      *     path="api/login",
      *     summary="User Login",
      *     tags={"Authentication"},
+     *     security={{"sanctum":{}}},
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\MediaType(
@@ -61,6 +62,7 @@ class LoginController extends Controller
      *     path="api/logout",
      *     summary="User Logout",
      *     tags={"Authentication"},
+     *     security={{"sanctum":{}}},
      *     @OA\Response(
      *         response=200,
      *         description="Successful logout",

@@ -5,7 +5,7 @@ namespace App\Annotations;
 use OpenApi\Annotations as OA;
 
 /**
- * @OA\Post(
+ * @OA\Get(
  *     path="sanctum/csrf-cookie",
  *     summary="Get CSRF cookie",
  *     tags={"Authentication"},

@@ -15,7 +15,7 @@
     },
     "paths": {
         "sanctum/csrf-cookie": {
-            "post": {
+            "get": {
                 "tags": [
                     "Authentication"
                 ],
@@ -28,6 +28,85 @@
             }
         },
         "api/games": {
+            "get": {
+                "tags": [
+                    "Games"
+                ],
+                "summary": "Get a list of games",
+                "description": "Get a list of games.",
+                "operationId": "289b0e7fa2144f8e77695f3f02af1e83",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "name": {
+                                                        "type": "string",
+                                                        "example": "inventore"
+                                                    },
+                                                    "active": {
+                                                        "type": "boolean",
+                                                        "example": true
+                                                    },
+                                                    "start_date": {
+                                                        "type": "string",
+                                                        "format": "date-time",
+                                                        "example": "2023-05-09T05:06:41.000000Z"
+                                                    },
+                                                    "end_date": {
+                                                        "type": "string",
+                                                        "format": "date-time",
+                                                        "example": "2023-05-10T03:28:53.000000Z"
+                                                    },
+                                                    "competition_id": {
+                                                        "type": "integer",
+                                                        "example": 4
+                                                    },
+                                                    "winner_id": {
+                                                        "type": "integer",
+                                                        "example": 10
+                                                    },
+                                                    "fooseballtable_id": {
+                                                        "type": "integer",
+                                                        "example": 2
+                                                    },
+                                                    "created_at": {
+                                                        "type": "string",
+                                                        "format": "date-time",
+                                                        "example": "2023-05-12T17:45:16.000000Z"
+                                                    },
+                                                    "updated_at": {
+                                                        "type": "string",
+                                                        "format": "date-time",
+                                                        "example": "2023-05-12T17:45:16.000000Z"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
             "post": {
                 "tags": [
                     "Games"
@@ -270,7 +349,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
             }
         },
         "api/logout": {
@@ -298,7 +382,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
             }
         },
         "api/tables/{id}/start": {
