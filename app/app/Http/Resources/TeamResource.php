@@ -15,7 +15,8 @@ class TeamResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id' => $this->name,
+            'id' => $this->id,
+            'name' => $this->name,
             //'player1' => new UserResource($this->whenLoaded('player1')),
             'player1_id'=> $this->relationLoaded('player1') ? new UserResource($this->player1) : $this->player1_id,
             //'player2' => new UserResource($this->whenLoaded('player2')),

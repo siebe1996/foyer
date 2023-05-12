@@ -7,6 +7,7 @@ use App\Http\Controllers\GameUserApiController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MessageApiController;
 use App\Http\Controllers\TableApiController;
+use App\Http\Controllers\TeamApiController;
 use App\Http\Controllers\UserApiController;
 use App\Http\Controllers\WeaponApiController;
 use App\Http\Resources\UserResource;
@@ -44,6 +45,8 @@ Route::middleware('auth:sanctum')->group(function (){
 
 Route::middleware('auth:sanctum')->group(function (){
     Route::get('/profile', [UserApiController::class, 'profile']);
+    Route::get('/users', [UserApiController::class, 'index']);
+    Route::get('/teams', [TeamApiController::class, 'index']);
 });
 
 Route::get('/tables/{id}/start', [TableApiController::class, 'start']);

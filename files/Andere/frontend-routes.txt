@@ -1,12 +1,12 @@
 
 todo: routes naar meervoud, unieke code bv DVJ8 om een tafel te herkennen
 routes
-post /login
-post /register
-(get /profile -> ingelogde user info)
-get /users -> geeft alle user names, id buiten eigen profiel
+x post /login
+x post /register
+x (get /profile -> ingelogde user info)
+x get /users -> geeft alle user names, id buiten eigen profiel
 post /teams -> solo of niet {player2_id: null, name: test} -> maakt een nieuw team
-get /teams -> alle team names, id buiten eigen teams
+x get /teams -> alle team names, id buiten eigen teams
 get /teams/my -> geeft eigen teams
 post /games -> {name: test, fooseballtable_unique_code: DVJ8, team1_id:1, team2_id: 2} -> maakt game, team1_id zijn eigen teams, team2_id zijn geen eigen teams
 (get /games -> alle games)

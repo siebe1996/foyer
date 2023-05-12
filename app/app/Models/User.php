@@ -52,7 +52,7 @@ class User extends Authenticatable
     }
 
     /*public function teams(){
-        return $this->belongsToMany(Team::class);
+        array_merge((array)$this->teamsAsPlayer1(), (array)$this->teamsAsPlayer2());
     }*/
 
     public function teamsAsPlayer1()

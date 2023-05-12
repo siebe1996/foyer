@@ -15,12 +15,7 @@ use phpDocumentor\Reflection\Types\Boolean;
 
 class UserApiController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index(Request $request)
+    /*public function index(Request $request)
     {
         //Gate::authorize('show-all-users');
         $request->validate([
@@ -51,7 +46,7 @@ class UserApiController extends Controller
                 $q->where('game_user.alive', (bool)$request->aliveState);
             })/*->with(['games' => function ($q) use ($request) {
                 $q->where('games.id', $request->gameId);
-            }])*/;
+            }]);
             return $q;
         });
         Log::Info($users->get());
@@ -61,12 +56,53 @@ class UserApiController extends Controller
         return response(['data' => $users], 200)
             ->header('Content-Type', 'application/json');
 
+    }*/
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    /**
+     * @OA\Get(
+     *     path="api/users",
+     *     summary="Get all users except the authenticated user",
+     *     tags={"Users"},
+     *     @OA\Response(
+     *         response=200,
+     *         description="Success",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="data",
+     *                 type="array",
+     *                 @OA\Items(
+     *                     type="object",
+     *                     @OA\Property(property="id", type="integer", example=1),
+     *                     @OA\Property(property="name", type="string", example="John Doe")
+     *                 )
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthenticated",
+     *     ),
+     *     security={{"sanctum":{}}}
+     * )
+     */
+    public function index()
+    {
+        $id = Auth::id();
+        $users = User::where('id', '!=', $id)->get()->map(function ($user) {
+            return ['id' => $user->id, 'name' => $user->full_name];
+        });
+        return response()->json(['data' => $users]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\JsonResponse
      */
     /**
@@ -182,100 +218,102 @@ class UserApiController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
     /**
+    /**
      * @OA\Get(
      *     path="api/profile",
-     *     summary="Get loggedin user profile",
-     *     tags={"Profile"},
+     *     summary="Get logged-in user profile",
+     *     tags={"Users"},
      *     security={{"sanctum":{}}},
      *     @OA\Response(
      *         response=200,
      *         description="Successful operation",
      *         @OA\JsonContent(
+     *             type="object",
      *             @OA\Property(
      *                 property="data",
-     *                 @OA\Schema(
+     *                 type="object",
+     *                 @OA\Property(
+     *                     property="id",
+     *                     type="integer",
+     *                     example=1
+     *                 ),
+     *                 @OA\Property(
+     *                     property="first_name",
+     *                     type="string",
+     *                     example="John"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="last_name",
+     *                     type="string",
+     *                     example="Doe"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="email",
+     *                     type="string",
+     *                     example="johndoe@example.com"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="total_wins",
+     *                     type="integer",
+     *                     example=0
+     *                 ),
+     *                 @OA\Property(
+     *                     property="games_played",
+     *                     type="integer",
+     *                     example=1
+     *                 ),
+     *                 @OA\Property(
+     *                     property="roles",
+     *                     type="array",
+     *                     @OA\Items(
+     *                         @OA\Property(
+     *                             property="id",
+     *                             type="integer",
+     *                             example=1
+     *                         ),
+     *                         @OA\Property(
+     *                             property="title",
+     *                             type="string",
+     *                             example="player"
+     *                         )
+     *                     )
+     *                 ),
+     *                 @OA\Property(
+     *                     property="teams",
+     *                     type="object",
      *                     @OA\Property(
-     *                         property="id",
-     *                         type="integer",
-     *                         example=1
+     *                         property="as_player1",
+     *                         type="array",
+     *                         @OA\Items()
      *                     ),
      *                     @OA\Property(
-     *                         property="first_name",
-     *                         type="string",
-     *                         example="John"
-     *                     ),
-     *                     @OA\Property(
-     *                         property="last_name",
-     *                         type="string",
-     *                         example="Doe"
-     *                     ),
-     *                     @OA\Property(
-     *                         property="email",
-     *                         type="string",
-     *                         example="bartdelrue@odisee.be"
-     *                     ),
-     *                     @OA\Property(
-     *                         property="total_wins",
-     *                         type="integer",
-     *                         example=0
-     *                     ),
-     *                     @OA\Property(
-     *                         property="games_played",
-     *                         type="integer",
-     *                         example=1
-     *                     ),
-     *                     @OA\Property(
-     *                         property="roles",
+     *                         property="as_player2",
      *                         type="array",
      *                         @OA\Items(
      *                             @OA\Property(
      *                                 property="id",
+     *                                 type="string",
+     *                                 example="ut"
+     *                             ),
+     *                             @OA\Property(
+     *                                 property="player1_id",
+     *                                 type="integer",
+     *                                 example=3
+     *                             ),
+     *                             @OA\Property(
+     *                                 property="player2_id",
      *                                 type="integer",
      *                                 example=1
      *                             ),
      *                             @OA\Property(
-     *                                 property="title",
-     *                                 type="string",
-     *                                 example="player"
-     *                             )
-     *                         )
-     *                     ),
-     *                     @OA\Property(
-     *                         property="teams",
-     *                         @OA\Property(
-     *                             property="as_player1",
-     *                             type="array",
-     *                             @OA\Items()
-     *                         ),
-     *                         @OA\Property(
-     *                             property="as_player2",
-     *                             type="array",
-     *                             @OA\Items(
-     *                                 @OA\Property(
-     *                                     property="id",
-     *                                     type="string",
-     *                                     example="ut"
-     *                                 ),
-     *                                 @OA\Property(
-     *                                     property="player1_id",
-     *                                     type="integer",
-     *                                     example=3
-     *                                 ),
-     *                                 @OA\Property(
-     *                                     property="player2_id",
-     *                                     type="integer",
-     *                                     example=1
-     *                                 ),
-     *                                 @OA\Property(
-     *                                     property="total_wins",
-     *                                     type="integer",
-     *                                     example=3
-     *                                 ),
-     *                                 @OA\Property(
-     *                                     property="games_played",
-     *                                     type="integer",
-     *                                     example=9
-     *                                 )
+     *                                 property="total_wins",
+     *                                 type="integer",
+     *                                 example=3
+     *                             ),
+     *                             @OA\Property(
+     *                                 property="games_played",
+     *                                 type="integer",
+     *                                 example=9
      *                             )
      *                         )
      *                     )
@@ -298,7 +336,8 @@ class UserApiController extends Controller
      *     )
      * )
      */
-    public function profile(){
+    public function profile()
+    {
         $id = Auth::id();
         $u = User::with('roles')->findOrFail($id);
         $user = new UserResource(User::with('roles')->with('teamsAsPlayer1')->with('teamsAsPlayer2')->findOrFail($id));
