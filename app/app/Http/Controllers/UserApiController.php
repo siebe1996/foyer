@@ -61,8 +61,7 @@ class UserApiController extends Controller
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\JsonResponse
-     */
-    /**
+     *
      * @OA\Get(
      *     path="api/users",
      *     summary="Get all users except the authenticated user",
@@ -104,8 +103,7 @@ class UserApiController extends Controller
      *
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\JsonResponse
-     */
-    /**
+     *
      * @OA\Post(
      *     path="api/register",
      *     summary="User Registration",
@@ -216,9 +214,7 @@ class UserApiController extends Controller
      * Display loggedin user.
      *
      * @return \Illuminate\Http\JsonResponse
-     */
-    /**
-    /**
+     *
      * @OA\Get(
      *     path="api/profile",
      *     summary="Get logged-in user profile",

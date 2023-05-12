@@ -20,12 +20,11 @@ class TableApiController extends Controller
      *
      * @param  int  $id
      * @return \Illuminate\Http\JsonResponse
-     */
-    /**
+     *
      * @OA\Get(
      *     path="api/tables/{id}/start",
      *     summary="Start game",
-     *     tags={"Game"},
+     *     tags={"Games"},
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
@@ -114,12 +113,11 @@ class TableApiController extends Controller
      *
      * @param  int  $id
      * @return \Illuminate\Http\JsonResponse
-     */
-    /**
+     *
      * @OA\Get(
      *     path="api/tables/{id}/end",
      *     summary="End game",
-     *     tags={"Game"},
+     *     tags={"Games"},
      *     @OA\Parameter(
      *         name="id",
      *         in="path",

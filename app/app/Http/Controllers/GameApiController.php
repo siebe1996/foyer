@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Http\Resources\GameCollection;
 use App\Http\Resources\GameResource;
 use App\Http\Resources\UserCollection;
+use App\Models\Fooseballtable;
 use App\Models\Game;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
@@ -35,16 +37,68 @@ class GameApiController extends Controller
         return response(['data' => ['active' => ['active_joinable' => $joinable, 'active_not_joinable' => $notJoinable, 'started_games' => $startedGames], 'previous_games' => $previousGames]], 200)
             ->header('Content-Type', 'application/json');
     }
-
     /**
-     * Store a newly created resource in storage.
+     * Store a new game.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\JsonResponse
+     *
+     * @OA\Post(
+     *     path="api/games",
+     *     summary="Store a new game",
+     *     tags={"Games"},
+     *     security={{"sanctum":{}}},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 required={"name", "unique_code", "team1_id", "team2_id"},
+     *                 @OA\Property(property="name", type="string", example="Game 1"),
+     *                 @OA\Property(property="unique_code", type="string", example="ABCD"),
+     *                 @OA\Property(property="team1_id", type="integer", example=1),
+     *                 @OA\Property(property="team2_id", type="integer", example=2),
+     *             ),
+     *         ),
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Success",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Game made successfully"),
+     *         ),
+     *     ),
+     *     @OA\Response(
+     *         response=422,
+     *         description="Validation error",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Table doesn't exist"),
+     *         ),
+     *     ),
+     * )
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|string',
+            'unique_code' => 'required|string|size:4|exists:fooseballtables',
+            'team1_id' => 'exists:teams,id|integer',
+            'team2_id' => 'exists:teams,id|integer',
+        ]);
+
+        try{
+            $table = Fooseballtable::where('unique_code', $request->unique_code)->firstOrFail();
+            $game = new Game();
+            $game->name = $request->name;
+            $game->active = false;
+            $game->fooseballtable()->associate($table);
+            $game->save();
+            $game->teams()->attach([$request->team1_id, $request->team2_id]);
+
+            return response()->json(['message' => 'Game made successfully']);
+        }catch(ModelNotFoundException){
+            return response()->json(['message' => 'Table doesnt exist'], 422);
+        }
     }
 
     /**

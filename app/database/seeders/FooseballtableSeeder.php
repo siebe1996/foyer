@@ -22,6 +22,7 @@ class FooseballtableSeeder extends Seeder
         for ($i = 0; $i < 2; $i++) {
             DB::table('fooseballtables')->insert([
                 'name' => $faker->word,
+                'unique_code' => $faker->unique()->regexify('[A-Za-z0-9]{4}'),
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
             ]);

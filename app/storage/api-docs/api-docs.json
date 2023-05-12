@@ -27,12 +27,96 @@
                 }
             }
         },
+        "api/games": {
+            "post": {
+                "tags": [
+                    "Games"
+                ],
+                "summary": "Store a new game",
+                "description": "Store a new game.",
+                "operationId": "358f2e3ec7a39f1b09cfab8b03a2dc63",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "unique_code",
+                                    "team1_id",
+                                    "team2_id"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Game 1"
+                                    },
+                                    "unique_code": {
+                                        "type": "string",
+                                        "example": "ABCD"
+                                    },
+                                    "team1_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "team2_id": {
+                                        "type": "integer",
+                                        "example": 2
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Game made successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Table doesn't exist"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
         "api/tables/{tableId}/teams/{teamId}": {
             "patch": {
                 "tags": [
                     "Gameinfo"
                 ],
                 "summary": "Update score",
+                "description": "Update the specified resource in storage.",
                 "operationId": "914ca45c4d078d9c5293957eedd90650",
                 "parameters": [
                     {
@@ -131,6 +215,7 @@
                     "Authentication"
                 ],
                 "summary": "User Login",
+                "description": "Store a newly created resource in storage.",
                 "operationId": "44ea62aec60279fc737c08a3415dab4f",
                 "requestBody": {
                     "required": true,
@@ -194,6 +279,7 @@
                     "Authentication"
                 ],
                 "summary": "User Logout",
+                "description": "Store a newly created resource in storage.",
                 "operationId": "043d4cac9dc94cd052bb3f902e82823a",
                 "responses": {
                     "200": {
@@ -218,9 +304,10 @@
         "api/tables/{id}/start": {
             "get": {
                 "tags": [
-                    "Game"
+                    "Games"
                 ],
                 "summary": "Start game",
+                "description": "Start a game.",
                 "operationId": "f0a5ea2b33d07ea7327fbb39d1123e5f",
                 "parameters": [
                     {
@@ -289,9 +376,10 @@
         "api/tables/{id}/end": {
             "get": {
                 "tags": [
-                    "Game"
+                    "Games"
                 ],
                 "summary": "End game",
+                "description": "Stop a game.",
                 "operationId": "b28822fa0551a7e8f6d23f08e43446c4",
                 "parameters": [
                     {
@@ -363,6 +451,7 @@
                     "Teams"
                 ],
                 "summary": "Get teams excluding the authenticated player",
+                "description": "Display a listing of the resource.",
                 "operationId": "237ce3475ae1e5a555a27effd9fbf82b",
                 "responses": {
                     "200": {
@@ -402,6 +491,143 @@
                         "sanctum": []
                     }
                 ]
+            },
+            "post": {
+                "tags": [
+                    "Teams"
+                ],
+                "summary": "Create a new team",
+                "description": "Store a newly created resource in storage.",
+                "operationId": "d6ef612b57e285ea01a58d3d9cfc4108",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "id": {
+                                        "description": "The optional ID of the second player",
+                                        "type": "integer",
+                                        "format": "int64",
+                                        "nullable": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Team created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Team was made successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "errors": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "api/teams/my": {
+            "get": {
+                "tags": [
+                    "Teams"
+                ],
+                "summary": "Get teams of the authenticated player",
+                "description": "Display loggedin user teams.",
+                "operationId": "2e7ba0b5d5d8e40f1e9e68af6644321d",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "name": {
+                                                        "type": "string",
+                                                        "example": "Team1"
+                                                    },
+                                                    "player1_id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "player2_id": {
+                                                        "type": "integer",
+                                                        "example": 7
+                                                    },
+                                                    "total_wins": {
+                                                        "type": "integer",
+                                                        "example": 3
+                                                    },
+                                                    "games_played": {
+                                                        "type": "integer",
+                                                        "example": 9
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
             }
         },
         "api/users": {
@@ -410,6 +636,7 @@
                     "Users"
                 ],
                 "summary": "Get all users except the authenticated user",
+                "description": "Display a listing of the resource.",
                 "operationId": "5b07d270d6567bb10a335547b16f5452",
                 "responses": {
                     "200": {
@@ -540,7 +767,7 @@
                     "Users"
                 ],
                 "summary": "Get logged-in user profile",
-                "description": "/**",
+                "description": "Display loggedin user.",
                 "operationId": "61ba7129bf33f31e7fa33c456876b5de",
                 "responses": {
                     "200": {

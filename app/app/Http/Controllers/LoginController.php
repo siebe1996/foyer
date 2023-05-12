@@ -12,8 +12,7 @@ class LoginController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\JsonResponse
-     */
-    /**
+     *
      * @OA\Post(
      *     path="api/login",
      *     summary="User Login",
@@ -57,8 +56,7 @@ class LoginController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\JsonResponse
-     */
-    /**
+     *
      * @OA\Post(
      *     path="api/logout",
      *     summary="User Logout",

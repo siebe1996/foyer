@@ -17,6 +17,7 @@ class FooseballtableResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
+            'unique_code' => $this->unique_code
         ];
     }
 }

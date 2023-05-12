@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('fooseballtables', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('unique_code', 4);
             $table->timestamps();
         });
     }

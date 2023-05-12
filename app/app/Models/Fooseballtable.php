@@ -11,6 +11,7 @@ class Fooseballtable extends Model
 
     protected $fillable = [
         'name',
+        'unique_code',
     ];
 
     protected $casts = [
