@@ -261,7 +261,7 @@ class GameApiController extends Controller
             //dd($game);
             return response()->json(['data' => new GameResource($game)]);
         }catch(ModelNotFoundException){
-            return response()->json(['message' => 'Game doesnt exist'], 404);
+            return response()->json(['message' => "Game doesn't exist"], 404);
         }
     }
 

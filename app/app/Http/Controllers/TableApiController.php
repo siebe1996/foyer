@@ -270,14 +270,75 @@ class TableApiController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Get the details of a fooseball table.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id The ID of the fooseball table
+     * @return \Illuminate\Http\JsonResponse
+     *
+     * @OA\Get(
+     *     path="api/tables/{id}",
+     *     operationId="getFooseballTable",
+     *     tags={"Tables"},
+     *     security={{"sanctum":{}}},
+     *     summary="Get the details of a fooseball table",
+     *     description="Returns the details of a fooseball table",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="ID of the fooseball table",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="integer",
+     *             format="int64",
+     *             example=1
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 property="data",
+     *                 type="object",
+     *                 @OA\Property(
+     *                     property="id",
+     *                     type="integer",
+     *                     example=1
+     *                 ),
+     *                 @OA\Property(
+     *                     property="name",
+     *                     type="string",
+     *                     example="Table1"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="unique_code",
+     *                     type="string",
+     *                     example="ABCD"
+     *                 )
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Fooseball table not found",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 example="Fooseball table doesn't exist"
+     *             )
+     *         )
+     *     )
+     * )
      */
     public function show($id)
     {
-        //
+        try{
+            $table = Fooseballtable::findOrFail($id);
+            return response()->json(['data' => new FooseballtableResource($table)]);
+        }catch(ModelNotFoundException){
+            return response()->json(['message' => "Fooseball table doesn't exist"], 404);
+        }
     }
 
     /**

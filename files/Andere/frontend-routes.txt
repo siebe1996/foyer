@@ -11,12 +11,13 @@ x post /games -> {name: test, unique_code: DVJ8, team1_id:1, team2_id: 2} -> maa
 x (get /games -> alle games)
 x (get /games/my)
 x (get /games/{id})
-(get /tables)
-(get /tables/{id})
+x (get /tables)
+x (get /tables/{id})
 
 
----> protected get-routes hebben cookie nodig : fooseball_session=...
----> protected post-routes hebben X-XSRF-TOKEN nodig
+---> protected get-routes hebben Cookie nodig : fooseball_session=eyJpdiI6Ii9...
+---> protected post-routes hebben X-XSRF-TOKEN nodig : eyJpdiI6ImYyd...
+---> beide hebben Referer nodig : localhost:8080
 
 ge zijt user -> user maakt team ()
 ->
