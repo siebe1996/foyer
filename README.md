@@ -7,6 +7,8 @@ Web api for communicating with a smart fooseball table
 * [MySQL 5.7 Reference Manual](https://dev.mysql.com/doc/refman/8.0/en/)
 * [Laravel 9 documentation](https://laravel.com/docs/9.x)
 * [Odisee Hoge school](https://odisee.be)
+* [API documentation online](https://fooseball-api-test.siebevandevoorde.ikdoeict.be/api/documentation)
+* [API documentation local if project is running](http://localhost:8080/)
 
 ## How to pull it from git
 
@@ -56,16 +58,16 @@ $ exit
 1. GET http://localhost:8080/sanctum/csrf-cookie
 * in response cookie copy XSRF-TOKEN (not %3D)
 2. POST http://localhost:8080/api/login
-* HEADER -> Contenet-Type : application/json
+* HEADER -> Content-Type : application/json
 * HEADER -> X-XSRF-TOKEN : <"the copied xsrf-token">
 * HEADER -> Accept : application/json
-* in response cookie copy laravel_session (niet %3D)
+* in response cookie copy fooseball_session (niet %3D)
 3. GET,POST,... all other routes
 * HEADER -> Contenet-Type : application/json
 * HEADER -> X-XSRF-TOKEN : <"the copied xsrf-token">
 * HEADER -> Accept : application/json
 * HEADER -> Referer: localhost:8080
-* HEADER -> Cookie: laravel_session=<the copied laravel_sesion>
+* HEADER -> Cookie: fooseball_session=<the copied laravel_sesion>
 #### if u want to run frontend at diffrent port go to .env and edit SANCTUM_STATEFUL_DOMAINS=localhost:3000,127.0.0.1:3000
 #### if u want to run frontend at diffrent port go to .env and edit APP_URL=http://localhost:8080
 
