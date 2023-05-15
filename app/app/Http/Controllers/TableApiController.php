@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\FooseballtableCollection;
 use App\Http\Resources\FooseballtableResource;
+use App\Http\Resources\ScoreCollection;
+use App\Http\Resources\ScoreResource;
 use App\Models\Fooseballtable;
 use App\Models\Game;
 use App\Models\Gameinfo;
@@ -338,6 +340,84 @@ class TableApiController extends Controller
             return response()->json(['data' => new FooseballtableResource($table)]);
         }catch(ModelNotFoundException){
             return response()->json(['message' => "Fooseball table doesn't exist"], 404);
+        }
+    }
+
+    /**
+     * Get the scores for a specific table.
+     *
+     * @param int $id The ID of the table.
+     * @return \Illuminate\Http\JsonResponse
+     *
+     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
+     *
+     * @OA\Get(
+     *     path="api/tables/{id}/scores",
+     *     summary="Get scores for a table",
+     *     tags={"Tables"},
+     *     security={{"sanctum": {}}},
+     *     @OA\Parameter(
+     *         name="id",
+     *         description="The ID of the table",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="integer",
+     *             format="int64"
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 property="data",
+     *                 type="array",
+     *                 @OA\Items(
+     *                     @OA\Property(
+     *                         property="team_name",
+     *                         type="string"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="game_name",
+     *                         type="string"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="table_id",
+     *                         type="integer"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="goals",
+     *                         type="integer"
+     *                     )
+     *                 )
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="No game running on this table",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 property="message",
+     *                 type="string"
+     *             )
+     *         )
+     *     )
+     * )
+     */
+    public function showScores($id)
+    {
+        try {
+            $game = Game::Where('fooseballtable_id', $id)->Where('active', true)->firstOrFail();
+            $gameInfo = $game->teamsWithPivot()->get();
+            $score = $gameInfo->map(function ($item) use ($game, $id){
+                $data = ['game_name' => $game->name, 'team_name' => $item->name, 'table_id' => $id, 'goals' => $item->pivot->goals];
+                return new ScoreResource((object)$data);
+            });
+            return response()->json(['data' => $score]);
+        }catch(ModelNotFoundException){
+            return response()->json(['message' => "No game running on this table"], 404);
         }
     }
 

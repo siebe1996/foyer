@@ -848,6 +848,82 @@
                 ]
             }
         },
+        "api/tables/{id}/scores": {
+            "get": {
+                "tags": [
+                    "Tables"
+                ],
+                "summary": "Get scores for a table",
+                "description": "Get the scores for a specific table.",
+                "operationId": "06276bee0ec1b6b150775f8495a2f657",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The ID of the table",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "team_name": {
+                                                        "type": "string"
+                                                    },
+                                                    "game_name": {
+                                                        "type": "string"
+                                                    },
+                                                    "table_id": {
+                                                        "type": "integer"
+                                                    },
+                                                    "goals": {
+                                                        "type": "integer"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "No game running on this table",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
         "api/teams": {
             "get": {
                 "tags": [

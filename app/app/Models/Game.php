@@ -17,6 +17,7 @@ class Game extends Model
         'competition_id',
         'winner_id',
         'fooseballtable_id',
+        'pivot_goals',
     ];
 
     protected $casts = [
