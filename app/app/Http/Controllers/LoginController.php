@@ -48,11 +48,11 @@ class LoginController extends Controller
         $credentials = $request->only('email', 'password');
         // Set a single header and return the response
 
-        $headers = [
+        /*$headers = [
             'Content-Type' => 'application/json',
             'X-Custom-Header' => 'Custom Value',
             'Access-Control-Allow-Origin' => '*'
-        ];
+        ];*/
 
         if (Auth::attempt($credentials)) {
             return response()->json(['message' => 'The user has been authenticated successfully'])/*->withHeaders($headers)*/;
