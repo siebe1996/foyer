@@ -55,9 +55,9 @@ class LoginController extends Controller
         ];
 
         if (Auth::attempt($credentials)) {
-            return response()->json(['message' => 'The user has been authenticated successfully'])->withHeaders($headers);
+            return response()->json(['message' => 'The user has been authenticated successfully'])/*->withHeaders($headers)*/;
         }
-        return response()->json(['message' => 'The provided credentials do not match our records'], 401)->withHeaders($headers);
+        return response()->json(['message' => 'The provided credentials do not match our records'], 401)/*->withHeaders($headers)*/;
     }
 
     /**
