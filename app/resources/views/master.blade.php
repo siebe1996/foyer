@@ -16,7 +16,7 @@
 
 <div class="container">
     <header class="blog-header py-3">
-        <h1><a href="{{ url('/') }}">Gotcha</a></h1>
+        <h1><a href="{{ url('/') }}">Smart Fooseball</a></h1>
         @if($buttons['create'] ?? '')
             <a href="{{ url('games/create') }}">Create Game</a>
         @endif
@@ -33,7 +33,7 @@
 @show
 
 <footer class="blog-footer">
-    <p>&copy; Web &amp; Mobile Full-stack @ <a href="https://www.odisee.be">odisee</a> | 2022 | template by Van de Voorde Siebe</p>
+    <p>&copy; Project & Wetenschappelijk rapporteren @ <a href="https://www.odisee.be">odisee</a> | 2023 | template by Van de Voorde Siebe</p>
     <p>
         <a href="#top">Back to top</a>
     </p>
