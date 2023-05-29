@@ -96,6 +96,7 @@ class GameApiController extends Controller
      *                 @oa\Items(
      *                     @oa\Property(property="id", type="integer"),
      *                     @oa\Property(property="name", type="string"),
+     *                     @oa\Property(property="active", type="boolean"),
      *                     @oa\Property(property="teams", type="array",
      *                         @oa\Items(
      *                             @oa\Property(property="id", type="integer"),
@@ -118,6 +119,7 @@ class GameApiController extends Controller
             return [
                 'id' => $game->id,
                 'name' => $game->name,
+                'active' => $game->active,
                 'teams' => $game->teamsWithPivot->map(function ($team) {
                     return [
                         'id' => $team->id,

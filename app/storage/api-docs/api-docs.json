@@ -214,6 +214,9 @@
                                                     "name": {
                                                         "type": "string"
                                                     },
+                                                    "active": {
+                                                        "type": "boolean"
+                                                    },
                                                     "teams": {
                                                         "type": "array",
                                                         "items": {
