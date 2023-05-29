@@ -74,6 +74,61 @@ class GameApiController extends Controller
         $games = new GameCollection(Game::get());
         return response()->json(['data' => $games]);
     }
+
+    /**
+     * Get games with teams and scores.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     *
+     * @throws \Exception
+     *
+     * @oa\Get(
+     *     path="api/games/scores",
+     *     tags={"Games"},
+     *     summary="Get games with teams and scores",
+     *     security={{"sanctum":{}}},
+     *     operationId="showAllScores",
+     *     @oa\Response(
+     *         response=200,
+     *         description="Successful operation",
+     *         @oa\JsonContent(
+     *             @oa\Property(property="data", type="array",
+     *                 @oa\Items(
+     *                     @oa\Property(property="id", type="integer"),
+     *                     @oa\Property(property="name", type="string"),
+     *                     @oa\Property(property="teams", type="array",
+     *                         @oa\Items(
+     *                             @oa\Property(property="id", type="integer"),
+     *                             @oa\Property(property="name", type="string"),
+     *                             @oa\Property(property="goals", type="integer")
+     *                         )
+     *                     )
+     *                 )
+     *             )
+     *         )
+     *     ),
+     *     @oa\Response(response=500, description="Internal server error")
+     * )
+     */
+    public function showAllScores()
+    {
+        $games = Game::with('teamsWithPivot')->get();
+
+        $data = $games->map(function ($game) {
+            return [
+                'id' => $game->id,
+                'name' => $game->name,
+                'teams' => $game->teamsWithPivot->map(function ($team) {
+                    return [
+                        'id' => $team->id,
+                        'name' => $team->name,
+                        'goals' => $team->pivot->goals ?? 0,
+                    ];
+                }),
+            ];
+        });
+        return response()->json(['data' => $data]);
+    }
     /**
      * Store a new game.
      *

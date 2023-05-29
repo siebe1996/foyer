@@ -17,6 +17,7 @@ class ScoreResource extends JsonResource
         return [
             'team_name' => isset($this->team_name) ? $this->team_name : 'bla',
             'game_name' => $this->game_name,
+            'start_time' => $this->start_time,
             'tabel_id' => $this->table_id,
             'goals' => $this->goals,
         ];

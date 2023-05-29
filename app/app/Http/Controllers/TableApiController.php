@@ -383,6 +383,10 @@ class TableApiController extends Controller
      *                         type="string"
      *                     ),
      *                     @OA\Property(
+     *                         property="start_time",
+     *                         type="datetime"
+     *                     ),
+     *                     @OA\Property(
      *                         property="table_id",
      *                         type="integer"
      *                     ),
@@ -412,7 +416,7 @@ class TableApiController extends Controller
             $game = Game::Where('fooseballtable_id', $id)->Where('active', true)->firstOrFail();
             $gameInfo = $game->teamsWithPivot()->get();
             $score = $gameInfo->map(function ($item) use ($game, $id){
-                $data = ['game_name' => $game->name, 'team_name' => $item->name, 'table_id' => $id, 'goals' => $item->pivot->goals];
+                $data = ['game_name' => $game->name, 'start_time' => $game->start_date, 'team_name' => $item->name, 'table_id' => $id, 'goals' => $item->pivot->goals];
                 return new ScoreResource((object)$data);
             });
             return response()->json(['data' => $score]);
