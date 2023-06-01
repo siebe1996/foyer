@@ -120,6 +120,8 @@ class GameApiController extends Controller
                 'id' => $game->id,
                 'name' => $game->name,
                 'active' => $game->active,
+                'start_date' => $game->start_date,
+                'end_date' => $game->end_date,
                 'teams' => $game->teamsWithPivot->map(function ($team) {
                     return [
                         'id' => $team->id,
