@@ -217,6 +217,14 @@
                                                     "active": {
                                                         "type": "boolean"
                                                     },
+                                                    "start_date": {
+                                                        "type": "string",
+                                                        "format": "date-time"
+                                                    },
+                                                    "end_date": {
+                                                        "type": "string",
+                                                        "format": "date-time"
+                                                    },
                                                     "teams": {
                                                         "type": "array",
                                                         "items": {
@@ -951,7 +959,11 @@
                                                     "game_name": {
                                                         "type": "string"
                                                     },
-                                                    "start_time": {
+                                                    "start_date": {
+                                                        "type": "string",
+                                                        "format": "date-time"
+                                                    },
+                                                    "end_date": {
                                                         "type": "string",
                                                         "format": "date-time"
                                                     },

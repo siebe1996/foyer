@@ -97,6 +97,14 @@ class GameApiController extends Controller
      *                     @oa\Property(property="id", type="integer"),
      *                     @oa\Property(property="name", type="string"),
      *                     @oa\Property(property="active", type="boolean"),
+     *                     @OA\Property(
+     *                         property="start_date",
+     *                         type="datetime"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="end_date",
+     *                         type="datetime"
+     *                     ),
      *                     @oa\Property(property="teams", type="array",
      *                         @oa\Items(
      *                             @oa\Property(property="id", type="integer"),
