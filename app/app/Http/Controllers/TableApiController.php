@@ -25,7 +25,7 @@ class TableApiController extends Controller
      * @return \Illuminate\Http\JsonResponse
      *
      * @OA\Get(
-     *     path="api/tables/{id}/start",
+     *     path="/api/tables/{id}/start",
      *     summary="Start game",
      *     tags={"Games"},
      *     @OA\Parameter(
@@ -118,7 +118,7 @@ class TableApiController extends Controller
      * @return \Illuminate\Http\JsonResponse
      *
      * @OA\Get(
-     *     path="api/tables/{id}/end",
+     *     path="/api/tables/{id}/end",
      *     summary="End game",
      *     tags={"Games"},
      *     @OA\Parameter(
@@ -219,7 +219,7 @@ class TableApiController extends Controller
      * @return \Illuminate\Http\JsonResponse
      *
      * @OA\Get(
-     *     path="api/tables",
+     *     path="/api/tables",
      *     operationId="getFooseballTables",
      *     tags={"Tables"},
      *     security={{"sanctum":{}}},
@@ -278,7 +278,7 @@ class TableApiController extends Controller
      * @return \Illuminate\Http\JsonResponse
      *
      * @OA\Get(
-     *     path="api/tables/{id}",
+     *     path="/api/tables/{id}",
      *     operationId="getFooseballTable",
      *     tags={"Tables"},
      *     security={{"sanctum":{}}},
@@ -352,7 +352,7 @@ class TableApiController extends Controller
      * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
      *
      * @OA\Get(
-     *     path="api/tables/{id}/scores",
+     *     path="/api/tables/{id}/scores",
      *     summary="Get scores for a table",
      *     tags={"Tables"},
      *     security={{"sanctum": {}}},

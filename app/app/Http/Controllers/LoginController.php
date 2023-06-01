@@ -14,10 +14,25 @@ class LoginController extends Controller
      * @return \Illuminate\Http\JsonResponse
      *
      * @OA\Post(
-     *     path="api/login",
+     *     path="/api/login",
      *     summary="User Login",
      *     tags={"Authentication"},
-     *     security={{"sanctum":{}}},
+     *     security={
+     *         {"csrfToken": {}}
+     *     },
+     *     @OA\SecurityScheme(
+     *         securityScheme="csrfToken",
+     *         type="apiKey",
+     *         in="header",
+     *         name="X-CSRF-TOKEN",
+     *     ),
+     *     @OA\Parameter(
+     *         name="X-CSRF-TOKEN",
+     *         in="header",
+     *         required=true,
+     *         description="CSRF Token",
+     *         @OA\Schema(type="string")
+     *     ),
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\MediaType(
@@ -44,20 +59,15 @@ class LoginController extends Controller
      *     )
      * )
      */
-    public function login(Request $request){
+    public function login(Request $request)
+    {
+        $csrfToken = csrf_token();
         $credentials = $request->only('email', 'password');
-        // Set a single header and return the response
-
-        /*$headers = [
-            'Content-Type' => 'application/json',
-            'X-Custom-Header' => 'Custom Value',
-            'Access-Control-Allow-Origin' => '*'
-        ];*/
 
         if (Auth::attempt($credentials)) {
-            return response()->json(['message' => 'The user has been authenticated successfully'])/*->withHeaders($headers)*/;
+            return response()->json(['message' => 'The user has been authenticated successfully']);
         }
-        return response()->json(['message' => 'The provided credentials do not match our records'], 401)/*->withHeaders($headers)*/;
+        return response()->json(['message' => 'The provided credentials do not match our records'], 401);
     }
 
     /**
@@ -67,7 +77,7 @@ class LoginController extends Controller
      * @return \Illuminate\Http\JsonResponse
      *
      * @OA\Post(
-     *     path="api/logout",
+     *     path="/api/logout",
      *     summary="User Logout",
      *     tags={"Authentication"},
      *     security={{"sanctum":{}}},

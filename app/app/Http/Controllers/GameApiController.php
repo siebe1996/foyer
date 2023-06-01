@@ -16,31 +16,13 @@ use Illuminate\Support\Facades\Gate;
 
 class GameApiController extends Controller
 {
-    /*
-    public function index()
-    {
-        $userId = Auth::id();
-        $notJoinable = new GameCollection(Game::where('start_date', '>', Carbon::now())
-            ->whereHas('users', function ($q) use ($userId){
-                $q->where('users.id', '=', $userId);
-            })->get());
-
-        $notJoinableIds = $notJoinable->pluck('id');
-        $joinable = new GameCollection(Game::where('start_date', '>', Carbon::now())->whereNotIn('id', $notJoinableIds)->get());
-
-        $startedGames = new GameCollection(Game::where('start_date', '<', Carbon::now())->where('end_date', '>', Carbon::now())->get());
-        $previousGames = new GameCollection(Game::where('end_date', '<', Carbon::now())->get());
-
-        return response(['data' => ['active' => ['active_joinable' => $joinable, 'active_not_joinable' => $notJoinable, 'started_games' => $startedGames], 'previous_games' => $previousGames]], 200)
-            ->header('Content-Type', 'application/json');
-    }*/
     /**
      * Get a list of games.
      *
      * @return \Illuminate\Http\JsonResponse
      *
      * @OA\Get(
-     *     path="api/games",
+     *     path="/api/games",
      *     summary="Get a list of games",
      *     tags={"Games"},
      *     security={{"sanctum":{}}},
@@ -83,7 +65,7 @@ class GameApiController extends Controller
      * @throws \Exception
      *
      * @oa\Get(
-     *     path="api/games/scores",
+     *     path="/api/games/scores",
      *     tags={"Games"},
      *     summary="Get games with teams and scores",
      *     security={{"sanctum":{}}},
@@ -148,7 +130,7 @@ class GameApiController extends Controller
      * @return \Illuminate\Http\JsonResponse
      *
      * @OA\Post(
-     *     path="api/games",
+     *     path="/api/games",
      *     summary="Store a new game",
      *     tags={"Games"},
      *     security={{"sanctum":{}}},
@@ -205,23 +187,6 @@ class GameApiController extends Controller
         }
     }
 
-    /*public function show($id)
-    {
-        if(!is_numeric($id)){
-            return response(['data' => 'bad request'], 400)
-                ->header('Content-Type', 'application/json');
-        }
-        $game = Game::with('users')->findOrFail($id)->with('usersWithPivot')->findOrFail($id);
-        $alivePlayers = $game->usersWithPivot->where('pivot.alive', 1);
-        $winner = $alivePlayers->count() == 1 ? $alivePlayers->first()->first_name : null;
-        $mostKilled = $game->usersWithPivot->sortByDesc('pivot.kills')->take(5);
-        $mostKilled = new UserCollection($mostKilled);
-        $alivePlayers = new UserCollection($alivePlayers);
-
-
-        return response(['data' =>['game_data' => $game, 'alive_player' => $alivePlayers, 'winner' => $winner, 'most_killed' => $mostKilled]], 200)
-            ->header('Content-Type', 'application/json');
-    }*/
     /**
      * Get a game by ID.
      *
@@ -229,7 +194,7 @@ class GameApiController extends Controller
      * @return \Illuminate\Http\JsonResponse
      *
      * @OA\Get(
-     *     path="api/games/{id}",
+     *     path="/api/games/{id}",
      *     operationId="getGameById",
      *     tags={"Games"},
      *     security={{"sanctum":{}}},
@@ -325,7 +290,6 @@ class GameApiController extends Controller
     public function show($id){
         try{
             $game = Game::findOrFail($id);
-            //dd($game);
             return response()->json(['data' => new GameResource($game)]);
         }catch(ModelNotFoundException){
             return response()->json(['message' => "Game doesn't exist"], 404);
@@ -386,7 +350,7 @@ class GameApiController extends Controller
      * @return \Illuminate\Http\JsonResponse
      *
      * @OA\Get(
-     *     path="api/games/my",
+     *     path="/api/games/my",
      *     summary="Get the games associated with the authenticated player",
      *     tags={"Games"},
      *     security={{"sanctum": {}}},

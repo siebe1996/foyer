@@ -6,7 +6,7 @@ use OpenApi\Annotations as OA;
 
 /**
  * @OA\Get(
- *     path="sanctum/csrf-cookie",
+ *     path="/sanctum/csrf-cookie",
  *     summary="Get CSRF cookie",
  *     tags={"Authentication"},
  *     @OA\Response(

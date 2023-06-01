@@ -18,7 +18,7 @@ class TeamApiController extends Controller
      * @return \Illuminate\Http\JsonResponse
      *
      * @OA\Get(
-     *     path="api/teams",
+     *     path="/api/teams",
      *     summary="Get teams excluding the authenticated player",
      *     tags={"Teams"},
      *     security={{"sanctum":{}}},
@@ -63,7 +63,7 @@ class TeamApiController extends Controller
      * @return \Illuminate\Http\JsonResponse
      *
      * @OA\Post(
-     *     path="api/teams",
+     *     path="/api/teams",
      *     summary="Create a new team",
      *     tags={"Teams"},
      *     security={{"sanctum":{}}},
@@ -156,7 +156,7 @@ class TeamApiController extends Controller
      * @return \Illuminate\Http\JsonResponse
      *
      * @OA\Get(
-     *     path="api/teams/my",
+     *     path="/api/teams/my",
      *     summary="Get teams of the authenticated player",
      *     tags={"Teams"},
      *     security={{"sanctum":{}}},

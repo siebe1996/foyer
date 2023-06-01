@@ -52,7 +52,7 @@ class GameinfoApiController extends Controller
      * @return \Illuminate\Http\JsonResponse
      *
      * @OA\Patch(
-     *     path="api/tables/{tableId}/teams/{teamId}",
+     *     path="/api/tables/{tableId}/teams/{teamId}",
      *     summary="Update score",
      *     tags={"Gameinfo"},
      *     @OA\Parameter(

@@ -14,7 +14,7 @@
         "version": "1.0.0"
     },
     "paths": {
-        "sanctum/csrf-cookie": {
+        "/sanctum/csrf-cookie": {
             "get": {
                 "tags": [
                     "Authentication"
@@ -27,14 +27,14 @@
                 }
             }
         },
-        "api/games": {
+        "/api/games": {
             "get": {
                 "tags": [
                     "Games"
                 ],
                 "summary": "Get a list of games",
                 "description": "Get a list of games.",
-                "operationId": "289b0e7fa2144f8e77695f3f02af1e83",
+                "operationId": "96f81f46ae454085f0e99c7c07bebc6f",
                 "responses": {
                     "200": {
                         "description": "Success",
@@ -113,7 +113,7 @@
                 ],
                 "summary": "Store a new game",
                 "description": "Store a new game.",
-                "operationId": "358f2e3ec7a39f1b09cfab8b03a2dc63",
+                "operationId": "a805119f9eb6a55ccaf5a63be4b41552",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -189,7 +189,7 @@
                 ]
             }
         },
-        "api/games/scores": {
+        "/api/games/scores": {
             "get": {
                 "tags": [
                     "Games"
@@ -263,7 +263,7 @@
                 ]
             }
         },
-        "api/games/{id}": {
+        "/api/games/{id}": {
             "get": {
                 "tags": [
                     "Games"
@@ -369,14 +369,14 @@
                 ]
             }
         },
-        "api/games/my": {
+        "/api/games/my": {
             "get": {
                 "tags": [
                     "Games"
                 ],
                 "summary": "Get the games associated with the authenticated player",
                 "description": "Display the games associated with the authenticated player.",
-                "operationId": "154271f75e72e16942b01eb367d422b7",
+                "operationId": "af9bb0e910a2e117272cd661ceb90d83",
                 "responses": {
                     "200": {
                         "description": "Success",
@@ -453,14 +453,14 @@
                 ]
             }
         },
-        "api/tables/{tableId}/teams/{teamId}": {
+        "/api/tables/{tableId}/teams/{teamId}": {
             "patch": {
                 "tags": [
                     "Gameinfo"
                 ],
                 "summary": "Update score",
                 "description": "Update the specified resource in storage.",
-                "operationId": "914ca45c4d078d9c5293957eedd90650",
+                "operationId": "991c8dad9358d33f3c86ca4c9a529a14",
                 "parameters": [
                     {
                         "name": "tableId",
@@ -552,14 +552,25 @@
                 }
             }
         },
-        "api/login": {
+        "/api/login": {
             "post": {
                 "tags": [
                     "Authentication"
                 ],
                 "summary": "User Login",
                 "description": "Store a newly created resource in storage.",
-                "operationId": "44ea62aec60279fc737c08a3415dab4f",
+                "operationId": "c5e838284c7f343f0e5e5fd589161c96",
+                "parameters": [
+                    {
+                        "name": "X-CSRF-TOKEN",
+                        "in": "header",
+                        "description": "CSRF Token",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -616,19 +627,19 @@
                 },
                 "security": [
                     {
-                        "sanctum": []
+                        "csrfToken": []
                     }
                 ]
             }
         },
-        "api/logout": {
+        "/api/logout": {
             "post": {
                 "tags": [
                     "Authentication"
                 ],
                 "summary": "User Logout",
                 "description": "Store a newly created resource in storage.",
-                "operationId": "043d4cac9dc94cd052bb3f902e82823a",
+                "operationId": "399284ae5e84627c95a691127018a412",
                 "responses": {
                     "200": {
                         "description": "Successful logout",
@@ -654,14 +665,14 @@
                 ]
             }
         },
-        "api/tables/{id}/start": {
+        "/api/tables/{id}/start": {
             "get": {
                 "tags": [
                     "Games"
                 ],
                 "summary": "Start game",
                 "description": "Start a game.",
-                "operationId": "f0a5ea2b33d07ea7327fbb39d1123e5f",
+                "operationId": "1fb91ac9b30bdb22dbd3ab19dcadbbf6",
                 "parameters": [
                     {
                         "name": "id",
@@ -726,14 +737,14 @@
                 }
             }
         },
-        "api/tables/{id}/end": {
+        "/api/tables/{id}/end": {
             "get": {
                 "tags": [
                     "Games"
                 ],
                 "summary": "End game",
                 "description": "Stop a game.",
-                "operationId": "b28822fa0551a7e8f6d23f08e43446c4",
+                "operationId": "8f075caa280c145914e52f1f0b7a991b",
                 "parameters": [
                     {
                         "name": "id",
@@ -798,7 +809,7 @@
                 }
             }
         },
-        "api/tables": {
+        "/api/tables": {
             "get": {
                 "tags": [
                     "Tables"
@@ -847,7 +858,7 @@
                 ]
             }
         },
-        "api/tables/{id}": {
+        "/api/tables/{id}": {
             "get": {
                 "tags": [
                     "Tables"
@@ -922,14 +933,14 @@
                 ]
             }
         },
-        "api/tables/{id}/scores": {
+        "/api/tables/{id}/scores": {
             "get": {
                 "tags": [
                     "Tables"
                 ],
                 "summary": "Get scores for a table",
                 "description": "Get the scores for a specific table.",
-                "operationId": "06276bee0ec1b6b150775f8495a2f657",
+                "operationId": "3b88ba4acb2f50f8e0ef9dac0d751071",
                 "parameters": [
                     {
                         "name": "id",
@@ -1006,14 +1017,14 @@
                 ]
             }
         },
-        "api/teams": {
+        "/api/teams": {
             "get": {
                 "tags": [
                     "Teams"
                 ],
                 "summary": "Get teams excluding the authenticated player",
                 "description": "Display a listing of the resource.",
-                "operationId": "237ce3475ae1e5a555a27effd9fbf82b",
+                "operationId": "eb8aa1f33762f49febf826d512f4bd5c",
                 "responses": {
                     "200": {
                         "description": "Success",
@@ -1059,7 +1070,7 @@
                 ],
                 "summary": "Create a new team",
                 "description": "Store a newly created resource in storage.",
-                "operationId": "d6ef612b57e285ea01a58d3d9cfc4108",
+                "operationId": "2d8fa49c50fecbdffbaefe0648856edd",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -1127,14 +1138,14 @@
                 ]
             }
         },
-        "api/teams/my": {
+        "/api/teams/my": {
             "get": {
                 "tags": [
                     "Teams"
                 ],
                 "summary": "Get teams of the authenticated player",
                 "description": "Display loggedin user teams.",
-                "operationId": "2e7ba0b5d5d8e40f1e9e68af6644321d",
+                "operationId": "f35814e77567d7086108191bf87bc3ba",
                 "responses": {
                     "200": {
                         "description": "Success",
@@ -1191,14 +1202,14 @@
                 ]
             }
         },
-        "api/users": {
+        "/api/users": {
             "get": {
                 "tags": [
                     "Users"
                 ],
                 "summary": "Get all users except the authenticated user",
                 "description": "Display a listing of the resource.",
-                "operationId": "5b07d270d6567bb10a335547b16f5452",
+                "operationId": "88e08afbcf11b50e46fded873adde45e",
                 "responses": {
                     "200": {
                         "description": "Success",
@@ -1239,7 +1250,7 @@
                 ]
             }
         },
-        "api/register": {
+        "/api/register": {
             "post": {
                 "tags": [
                     "Authentication"
@@ -1322,14 +1333,14 @@
                 }
             }
         },
-        "api/profile": {
+        "/api/profile": {
             "get": {
                 "tags": [
                     "Users"
                 ],
                 "summary": "Get logged-in user profile",
                 "description": "Display loggedin user.",
-                "operationId": "61ba7129bf33f31e7fa33c456876b5de",
+                "operationId": "650b2420492dafd00dec1efd87fb19e8",
                 "responses": {
                     "200": {
                         "description": "Successful operation",

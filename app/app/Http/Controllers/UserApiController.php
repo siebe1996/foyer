@@ -15,55 +15,13 @@ use phpDocumentor\Reflection\Types\Boolean;
 
 class UserApiController extends Controller
 {
-    /*public function index(Request $request)
-    {
-        //Gate::authorize('show-all-users');
-        $request->validate([
-            'gameId' => 'required|numeric',
-            'aliveState' => 'boolean',
-        ]);
-        $users = User::query();
-        $users->when($request->filled('gameId'), function ($q) use ($request) {
-            $q->whereHas('games', function ($q) use ($request) {
-                $q->where('games.id', $request->gameId);
-            })->with(['gamesWithPivot' => function ($q) use ($request) {
-                $q->where('games.id', $request->gameId);
-            }]);
-            return $q;
-        });
-        $users->when($request->filled('name'), function ($q) use ($request) {
-            $q->whereHas('games', function ($q) use ($request) {
-                $q->where('users.first_name', $request->name);
-            })->with(['gamesWithPivot' => function ($q) use ($request) {
-                $q->where('games.id', $request->gameId);
-            }]);
-            return $q;
-        });
-        Log::Info($users->get());
-        $users->when($request->filled('aliveState'), function ($q) use ($request) {
-            $q->whereHas('gamesWithPivot', function ($q) use ($request) {
-                $q->where('game_user.game_id', $request->gameId);
-                $q->where('game_user.alive', (bool)$request->aliveState);
-            })/*->with(['games' => function ($q) use ($request) {
-                $q->where('games.id', $request->gameId);
-            }]);
-            return $q;
-        });
-        Log::Info($users->get());
-
-        $users = $users->get();
-        //$users = new UserCollection($users);
-        return response(['data' => $users], 200)
-            ->header('Content-Type', 'application/json');
-
-    }*/
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\JsonResponse
      *
      * @OA\Get(
-     *     path="api/users",
+     *     path="/api/users",
      *     summary="Get all users except the authenticated user",
      *     tags={"Users"},
      *     @OA\Response(
@@ -105,7 +63,7 @@ class UserApiController extends Controller
      * @return \Illuminate\Http\JsonResponse
      *
      * @OA\Post(
-     *     path="api/register",
+     *     path="/api/register",
      *     summary="User Registration",
      *     description="Register a new user",
      *     operationId="registerUser",
@@ -216,7 +174,7 @@ class UserApiController extends Controller
      * @return \Illuminate\Http\JsonResponse
      *
      * @OA\Get(
-     *     path="api/profile",
+     *     path="/api/profile",
      *     summary="Get logged-in user profile",
      *     tags={"Users"},
      *     security={{"sanctum":{}}},
