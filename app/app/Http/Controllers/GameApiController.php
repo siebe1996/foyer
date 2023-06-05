@@ -87,6 +87,7 @@ class GameApiController extends Controller
      *                         property="end_date",
      *                         type="datetime"
      *                     ),
+     *                     @oa\Property(property="unique_code", type="string"),
      *                     @oa\Property(property="teams", type="array",
      *                         @oa\Items(
      *                             @oa\Property(property="id", type="integer"),
@@ -112,6 +113,7 @@ class GameApiController extends Controller
                 'active' => $game->active,
                 'start_date' => $game->start_date,
                 'end_date' => $game->end_date,
+                'unique_code' => $game->fooseballtable->unique_code,
                 'teams' => $game->teamsWithPivot->map(function ($team) {
                     return [
                         'id' => $team->id,

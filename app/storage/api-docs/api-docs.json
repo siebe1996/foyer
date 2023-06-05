@@ -225,6 +225,9 @@
                                                         "type": "string",
                                                         "format": "date-time"
                                                     },
+                                                    "unique_code": {
+                                                        "type": "string"
+                                                    },
                                                     "teams": {
                                                         "type": "array",
                                                         "items": {
