@@ -68,7 +68,7 @@ class GameinfoApiController extends Controller
      *     @OA\Parameter(
      *         name="teamId",
      *         in="path",
-     *         description="ID of the team",
+     *         description="Needs to be 1 or 2",
      *         required=true,
      *         @OA\Schema(
      *             type="integer",
@@ -121,7 +121,7 @@ class GameinfoApiController extends Controller
      *     )
      * )
      */
-    public function update(Request $request, int $tableId, int $teamId)
+    public function update(Request $request, int $tableId, int $team1Or2)
     {
         $request->validate([
             'score_change' => 'required|numeric',
@@ -134,6 +134,14 @@ class GameinfoApiController extends Controller
         }
         $gameId = Fooseballtable::findOrFail($tableId)->games()->where('active', true)
             ->pluck('id')->firstOrFail();
+        $game = Game::with('teams')->find($gameId);
+        if ($team1Or2 == 1){
+            $teamId = $game->teams()->pluck('id')->first();
+        } elseif ($team1Or2 == 2){
+            $teamId = $game->teams()->pluck('id')->last();
+        }else{
+            return response()->json(['error' => 'Choose team 1 or 2'], 400);
+        }
         try{
             Game::where('id', $gameId)
                 ->whereHas('teams', function ($q) use ($teamId) {
@@ -144,7 +152,7 @@ class GameinfoApiController extends Controller
         }catch (ModelNotFoundException){
             return response()->json(['error' => 'This team isnt playing this game'], 400);
         }
-
+        // ik krijg 1 of 2 en en de backend weet welk id team 1 en team 2 is
         $gameInfo = Game::where('id', $gameId)
             ->whereHas('teams', function ($q) use ($teamId) {
                 $q->where('teams.id', $teamId);
