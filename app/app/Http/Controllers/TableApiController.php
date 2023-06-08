@@ -355,7 +355,6 @@ class TableApiController extends Controller
      *     path="/api/tables/{id}/scores",
      *     summary="Get scores for a table",
      *     tags={"Tables"},
-     *     security={{"sanctum": {}}},
      *     @OA\Parameter(
      *         name="id",
      *         description="The ID of the table",
