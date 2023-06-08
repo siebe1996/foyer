@@ -53,7 +53,7 @@ class GameApiController extends Controller
      * )
      */
     public function index(){
-        $games = new GameCollection(Game::get());
+        $games = new GameCollection(Game::orderBy('start_date', 'desc')->get());
         return response()->json(['data' => $games]);
     }
 
@@ -389,7 +389,7 @@ class GameApiController extends Controller
     public function myGames()
     {
         $id = Auth::id();
-        $games = Game::whereHas('teams', function ($q) use ($id){
+        $games = Game::orderBy('start_date', 'desc')->whereHas('teams', function ($q) use ($id){
             $q->where('teams.player1_id', $id)->orWhere('teams.player2_id', $id);
         })->get();
         $games = new GameCollection($games);
