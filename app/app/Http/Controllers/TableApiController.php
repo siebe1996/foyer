@@ -85,8 +85,8 @@ class TableApiController extends Controller
                 $game->save();
                 return response()->json(['message' => 'Game started succesfully']);
             }catch(ModelNotFoundException){
-                $team1id = Team::where('name', 'anonteam1')->pluck('id')->firstOrFail();
-                $team2id = Team::where('name', 'anonteam2')->pluck('id')->firstOrFail();
+                $team1id = Team::where('name', 'Team1')->pluck('id')->firstOrFail();
+                $team2id = Team::where('name', 'Team2')->pluck('id')->firstOrFail();
                 $teamIds = [$team1id, $team2id];
 
                 $game = new Game;
