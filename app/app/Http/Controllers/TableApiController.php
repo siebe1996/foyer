@@ -14,7 +14,6 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
-use mysql_xdevapi\Exception;
 
 class TableApiController extends Controller
 {
@@ -91,7 +90,7 @@ class TableApiController extends Controller
                 $teamIds = [$team1id, $team2id];
 
                 $game = new Game;
-                $game->name = 'anon';
+                $game->name = 'Anonymous';
                 $game->active = true;
                 $game->start_date = Carbon::now()->format('Y-m-d H:i:s');
                 $game->fooseballtable()->associate($table);

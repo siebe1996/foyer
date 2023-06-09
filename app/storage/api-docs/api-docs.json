@@ -1175,12 +1175,14 @@
                             "schema": {
                                 "properties": {
                                     "name": {
-                                        "type": "string"
+                                        "type": "string",
+                                        "example": "Team A"
                                     },
-                                    "id": {
+                                    "player2_id": {
                                         "description": "The optional ID of the second player",
                                         "type": "integer",
                                         "format": "int64",
+                                        "example": "null",
                                         "nullable": true
                                     }
                                 },

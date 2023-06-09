@@ -70,8 +70,8 @@ class TeamApiController extends Controller
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(
-     *             @OA\Property(property="name", type="string"),
-     *             @OA\Property(property="id", type="integer", format="int64", nullable=true, description="The optional ID of the second player")
+     *             @OA\Property(property="name", type="string", example="Team A"),
+     *             @OA\Property(property="player2_id", type="integer", format="int64", nullable=true, description="The optional ID of the second player", example="null")
      *         )
      *     ),
      *     @OA\Response(
