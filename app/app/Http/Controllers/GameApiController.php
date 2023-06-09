@@ -104,7 +104,7 @@ class GameApiController extends Controller
      */
     public function showAllScores()
     {
-        $games = Game::with('teamsWithPivot')->get();
+        $games = Game::orderBy('start_date', 'desc')->with('teamsWithPivot')->get();
 
         $data = $games->map(function ($game) {
             return [
