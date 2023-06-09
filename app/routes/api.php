@@ -52,6 +52,7 @@ Route::middleware('auth:sanctum')->group(function (){
     Route::get('/games', [GameApiController::class, 'index']);
     Route::get('/games/scores', [GameApiController::class, 'showAllScores']);
     Route::get('/games/my', [GameApiController::class, 'myGames']);
+    Route::get('/games/my/scores', [GameApiController::class, 'myScores']);
     Route::get('/games/{id}', [GameApiController::class, 'show']);
     Route::post('/games', [GameApiController::class, 'store']);
     Route::get('/tables', [TableApiController::class, 'index']);

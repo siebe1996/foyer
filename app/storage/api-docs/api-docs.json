@@ -456,6 +456,105 @@
                 ]
             }
         },
+        "/api/games/my/scores": {
+            "get": {
+                "tags": [
+                    "Games"
+                ],
+                "summary": "Get scores for the authenticated user",
+                "description": "Retrieve scores for the authenticated user.",
+                "operationId": "2f43eaeefda361ad2e9cc978d02981da",
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": "1"
+                                                    },
+                                                    "name": {
+                                                        "type": "string",
+                                                        "example": "Game 1"
+                                                    },
+                                                    "active": {
+                                                        "type": "boolean",
+                                                        "example": "true"
+                                                    },
+                                                    "start_date": {
+                                                        "type": "string",
+                                                        "format": "datetime",
+                                                        "example": "2023-05-15 10:00:00"
+                                                    },
+                                                    "end_date": {
+                                                        "type": "string",
+                                                        "format": "datetime",
+                                                        "example": "2023-05-15 11:00:00"
+                                                    },
+                                                    "unique_code": {
+                                                        "type": "string",
+                                                        "example": "ABC123"
+                                                    },
+                                                    "teams": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "properties": {
+                                                                "id": {
+                                                                    "type": "integer",
+                                                                    "example": "1"
+                                                                },
+                                                                "name": {
+                                                                    "type": "string",
+                                                                    "example": "Team A"
+                                                                },
+                                                                "goals": {
+                                                                    "type": "integer",
+                                                                    "example": "2"
+                                                                }
+                                                            },
+                                                            "type": "object"
+                                                        }
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
         "/api/tables/{tableId}/teams/{teamId}": {
             "patch": {
                 "tags": [

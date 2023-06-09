@@ -395,4 +395,68 @@ class GameApiController extends Controller
         $games = new GameCollection($games);
         return response()->json(['data' => $games]);
     }
+
+    /**
+     * Retrieve scores for the authenticated user.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     *
+     * @OA\Get(
+     *     path="/api/games/my/scores",
+     *     summary="Get scores for the authenticated user",
+     *     tags={"Games"},
+     *     security={{"sanctum": {}}},
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful response",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="data", type="array", @OA\Items(
+     *                 @OA\Property(property="id", type="integer", example="1"),
+     *                 @OA\Property(property="name", type="string", example="Game 1"),
+     *                 @OA\Property(property="active", type="boolean", example="true"),
+     *                 @OA\Property(property="start_date", type="string", format="datetime", example="2023-05-15 10:00:00"),
+     *                 @OA\Property(property="end_date", type="string", format="datetime", example="2023-05-15 11:00:00"),
+     *                 @OA\Property(property="unique_code", type="string", example="ABC123"),
+     *                 @OA\Property(property="teams", type="array", @OA\Items(
+     *                     @OA\Property(property="id", type="integer", example="1"),
+     *                     @OA\Property(property="name", type="string", example="Team A"),
+     *                     @OA\Property(property="goals", type="integer", example="2")
+     *                 ))
+     *             ))
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthorized",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Unauthenticated.")
+     *         )
+     *     )
+     * )
+     */
+    public function myScores(){
+        $id = Auth::id();
+        $games = Game::orderBy('start_date', 'desc')->whereHas('teams', function ($q) use ($id){
+            $q->where('teams.player1_id', $id)->orWhere('teams.player2_id', $id);
+        })->with('teamsWithPivot')->get();
+
+        $data = $games->map(function ($game) {
+            return [
+                'id' => $game->id,
+                'name' => $game->name,
+                'active' => $game->active,
+                'start_date' => $game->start_date,
+                'end_date' => $game->end_date,
+                'unique_code' => $game->fooseballtable->unique_code,
+                'teams' => $game->teamsWithPivot->map(function ($team) {
+                    return [
+                        'id' => $team->id,
+                        'name' => $team->name,
+                        'goals' => $team->pivot->goals ?? 0,
+                    ];
+                }),
+            ];
+        });
+        return response()->json(['data' => $data]);
+    }
 }
