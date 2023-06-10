@@ -15,7 +15,7 @@ class ScoreResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'team_name' => isset($this->team_name) ? $this->team_name : 'bla',
+            'team_name' => isset($this->team_name) ? $this->team_name : 'something went wrong',
             'game_name' => $this->game_name,
             'start_date' => $this->start_date,
             'end_date' => $this->end_date,
