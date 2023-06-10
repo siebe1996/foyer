@@ -7,7 +7,7 @@
     <meta name="author" content="Van de Voorde Siebe">
     <title>@yield('title')</title>
 
-    <link rel="icon" href="{{ url('favicon.ico') }}">
+    <link rel="icon" href="{{ url('icons-soccer-ball.png') }}">
 
     <!-- Custom styles for this template -->
     <link href="{{asset('css/main.css')}}" rel="stylesheet">
