@@ -5,13 +5,13 @@ namespace App\Http\Controllers;
 use App\Http\Resources\UserCollection;
 use App\Http\Resources\UserResource;
 use App\Models\Game;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
-use phpDocumentor\Reflection\Types\Boolean;
 
 class UserApiController extends Controller
 {
@@ -111,6 +111,9 @@ class UserApiController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
+
+        $role = Role::findOrFail(1);
+        $user->roles()->attach($role);
 
         return response()->json(['message' => 'User registered successfully.']);
     }
