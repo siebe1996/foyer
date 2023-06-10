@@ -50,9 +50,15 @@ class TeamApiController extends Controller
     public function index()
     {
         $id = Auth::id();
-        $teams = Team::where('player1_id', '!=', $id)->where('player2_id', '!=', $id)->get()->map(function ($team){
-            return ['id' => $team->id, 'name' => $team->name];
-        });
+        $teams = Team::where('player1_id', '!=', $id)
+            ->where(function ($query) use ($id) {
+                $query->where('player2_id', '!=', $id)
+                    ->orWhereNull('player2_id');
+            })
+            ->get()
+            ->map(function ($team) {
+                return ['id' => $team->id, 'name' => $team->name];
+            });
         return response()->json(['data' => $teams]);
     }
 
