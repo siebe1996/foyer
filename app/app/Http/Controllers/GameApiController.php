@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\GameCollection;
 use App\Http\Resources\GameResource;
+use App\Http\Resources\GameScoreCollection;
 use App\Http\Resources\UserCollection;
 use App\Models\Fooseballtable;
 use App\Models\Game;
@@ -106,24 +107,8 @@ class GameApiController extends Controller
     {
         $games = Game::orderBy('start_date', 'desc')->with('teamsWithPivot')->get();
 
-        $data = $games->map(function ($game) {
-            return [
-                'id' => $game->id,
-                'name' => $game->name,
-                'active' => $game->active,
-                'start_date' => $game->start_date,
-                'end_date' => $game->end_date,
-                'unique_code' => $game->fooseballtable->unique_code,
-                'teams' => $game->teamsWithPivot->map(function ($team) {
-                    return [
-                        'id' => $team->id,
-                        'name' => $team->name,
-                        'goals' => $team->pivot->goals ?? 0,
-                    ];
-                }),
-            ];
-        });
-        return response()->json(['data' => $data]);
+        $games = new GameScoreCollection($games);
+        return response()->json(['data' => $games]);
     }
     /**
      * Store a new game.
@@ -434,29 +419,14 @@ class GameApiController extends Controller
      *     )
      * )
      */
-    public function myScores(){
+    public function myScores()
+    {
         $id = Auth::id();
         $games = Game::orderBy('start_date', 'desc')->whereHas('teams', function ($q) use ($id){
             $q->where('teams.player1_id', $id)->orWhere('teams.player2_id', $id);
         })->with('teamsWithPivot')->get();
 
-        $data = $games->map(function ($game) {
-            return [
-                'id' => $game->id,
-                'name' => $game->name,
-                'active' => $game->active,
-                'start_date' => $game->start_date,
-                'end_date' => $game->end_date,
-                'unique_code' => $game->fooseballtable->unique_code,
-                'teams' => $game->teamsWithPivot->map(function ($team) {
-                    return [
-                        'id' => $team->id,
-                        'name' => $team->name,
-                        'goals' => $team->pivot->goals ?? 0,
-                    ];
-                }),
-            ];
-        });
-        return response()->json(['data' => $data]);
+        $games = new GameScoreCollection($games);
+        return response()->json(['data' => $games]);
     }
 }
