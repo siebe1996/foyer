@@ -166,33 +166,43 @@ class TableApiController extends Controller
      * )
      */
     public function end(int $id){
-        try{
-            Game::where('fooseballtable_id', $id)->where('active', true)->firstOrFail();
-        }catch (ModelNotFoundException){
-            return response()->json(['message' => 'No Game is running'],208);
+        try {
+            $game = Game::where('fooseballtable_id', $id)->where('active', true)->firstOrFail();
+        } catch (ModelNotFoundException) {
+            return response()->json(['message' => 'No Game is running'], 208);
         }
-        $game = Game::where('fooseballtable_id', $id)->where('active', true)->firstOrFail();
-        $teams = $game->teams()->get();
-        $scoreTeam1 = $this->getGoalsTeams($game->id, $teams[0]->id);
-        $scoreTeam2 = $this->getGoalsTeams($game->id, $teams[1]->id);
-        if($scoreTeam1 > $scoreTeam2){
-            $winner = $teams[0];
-            $teams[0]->total_wins = $teams[0]->total_wins+1;
+
+        $teams = $game->teams;
+        $team1 = $teams->get(0);
+        $team2 = $teams->get(1);
+
+        $scoreTeam1 = $this->getGoalsTeams($game->id, $team1->id);
+        $scoreTeam2 = $this->getGoalsTeams($game->id, $team2->id);
+
+        if ($scoreTeam1 > $scoreTeam2) {
+            $winner = $team1;
+            $team1->increment('total_wins');
+            $team1->player1->increment('total_wins');
+            $team1->player2?->increment('total_wins');
+        } else {
+            $winner = $team2;
+            $team2->increment('total_wins');
+            $team2->player1->increment('total_wins');
+            $team2->player2?->increment('total_wins');
         }
-        else{
-            $winner = $teams[1];
-            $teams[1]->total_wins = $teams[1]->total_wins+1;
-        }
-        $teams[0]->games_played = $teams[0]->games_played+1;
-        $teams[1]->games_played = $teams[1]->games_played+1;
+        $team1->increment('games_played');
+        $team2->increment('games_played');
+        $team1->player1->increment('games_played');
+        $team1->player2?->increment('games_played');
+        $team2->player1->increment('games_played');
+        $team2->player2?->increment('games_played');
+
         $game->active = false;
-        $game->end_date = Carbon::now()->format('Y-m-d H:i:s');
+        $game->end_date = now();
         $game->winner()->associate($winner);
         $game->save();
-        $teams[0]->save();
-        $teams[1]->save();
 
-        return response()->json(['message' => 'Game ended succesfully']);
+        return response()->json(['message' => 'Game ended successfully']);
     }
 
     /**
