@@ -112,7 +112,7 @@ class TeamApiController extends Controller
         $team->name = $request->name;
         $team->player1()->associate($player1);
         try{
-            $player2 = User::findOrFail($request->id);
+            $player2 = User::findOrFail($request->player2_id);
             $team->player2()->associate($player2);
         }catch (ModelNotFoundException){
 
