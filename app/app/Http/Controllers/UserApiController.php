@@ -9,6 +9,7 @@ use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
@@ -115,19 +116,33 @@ class UserApiController extends Controller
         $role = Role::findOrFail(1);
         $user->roles()->attach($role);
 
+        // Perform login
         $credentials = $request->only('email', 'password');
+        $loginController = new LoginController();
+        $loginResponse = $loginController->login($request);
 
-        if (Auth::attempt($credentials)) {
-            $request2 = Request::create('/team', 'POST', [
+        if ($loginResponse->getStatusCode() === 200) {
+
+            // Create team
+            $teamRequest = new Request([
                 'name' => $request->first_name.' '.$request->last_name,
             ]);
-
             $teamApiController = new TeamApiController();
-            $teamApiController->store($request2);
-            return response()->json(['message' => 'User registered successfully and a team has been created'], );
+            $teamResponse = $teamApiController->store($teamRequest);
+
+            if ($teamResponse->getStatusCode() === 200) {
+                // Create new response with message
+                $newResponse = response()->json(['message' => 'User registered successfully and a team has been created']);
+                return $newResponse;
+            } else {
+                return response()->json(['message' => 'A problem occurred while creating the team'], 401);
+            }
+        } else {
+            return response()->json(['message' => 'A problem occurred during login'], 401);
         }
-        return response()->json(['message' => 'a problem occured'], 401);
     }
+
+
 
     /**
      * Display the specified resource.
