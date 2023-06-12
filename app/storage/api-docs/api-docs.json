@@ -1354,7 +1354,7 @@
                 "tags": [
                     "Authentication"
                 ],
-                "summary": "User Registration",
+                "summary": "User Registration with first team creation",
                 "description": "Register a new user",
                 "operationId": "registerUser",
                 "requestBody": {
@@ -1397,7 +1397,7 @@
                                     "properties": {
                                         "message": {
                                             "type": "string",
-                                            "example": "User registered successfully."
+                                            "example": "User registered successfully and a team has been created."
                                         }
                                     },
                                     "type": "object"

@@ -57,14 +57,14 @@ class UserApiController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created resource in storage and creates a team.
      *
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\JsonResponse
      *
      * @OA\Post(
      *     path="/api/register",
-     *     summary="User Registration",
+     *     summary="User Registration with first team creation",
      *     description="Register a new user",
      *     operationId="registerUser",
      *     tags={"Authentication"},
@@ -82,7 +82,7 @@ class UserApiController extends Controller
      *         response=200,
      *         description="User registered successfully",
      *         @OA\JsonContent(
-     *             @OA\Property(property="message", type="string", example="User registered successfully.")
+     *             @OA\Property(property="message", type="string", example="User registered successfully and a team has been created.")
      *         )
      *     ),
      *     @OA\Response(
@@ -115,7 +115,18 @@ class UserApiController extends Controller
         $role = Role::findOrFail(1);
         $user->roles()->attach($role);
 
-        return response()->json(['message' => 'User registered successfully.']);
+        $credentials = $request->only('email', 'password');
+
+        if (Auth::attempt($credentials)) {
+            $request2 = Request::create('/team', 'POST', [
+                'name' => $request->first_name.' '.$request->last_name,
+            ]);
+
+            $teamApiController = new TeamApiController();
+            $teamApiController->store($request2);
+            return response()->json(['message' => 'User registered successfully and a team has been created'], );
+        }
+        return response()->json(['message' => 'a problem occured'], 401);
     }
 
     /**
