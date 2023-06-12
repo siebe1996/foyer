@@ -72,43 +72,41 @@ class TableApiController extends Controller
      *     )
      * )
      */
-    public function start(int $id){
+    public function start(int $id)
+    {
         $table = Fooseballtable::findOrFail($id);
-        try{
-            Game::where('fooseballtable_id', $id)->where('active', true)->firstOrFail();
-        }catch (ModelNotFoundException){
-            try{
-                //wat als een game wordt gemaakt en niet gestart?
-                $game = Game::where('fooseballtable_id', $id)->where('start_date', null)->firstOrFail();
-                $game->active = true;
-                $game->start_date = Carbon::now()->format('Y-m-d H:i:s');
-                $game->save();
-                return response()->json(['message' => 'Game started succesfully']);
-            }catch(ModelNotFoundException){
-                $team1id = Team::where('name', 'Team1')->pluck('id')->firstOrFail();
-                $team2id = Team::where('name', 'Team2')->pluck('id')->firstOrFail();
-                $teamIds = [$team1id, $team2id];
 
-                $game = new Game;
-                $game->name = 'Anonymous';
-                $game->active = true;
-                $game->start_date = Carbon::now()->format('Y-m-d H:i:s');
-                $game->fooseballtable()->associate($table);
-                $game->save();
-
-                $game->teams()->attach($teamIds); //attach() for new, sync() for adding
-
-                return response()->json(['message' => 'Anon Game started succesfully']);
-            }
+        // Check if there is an active game on the table
+        $activeGame = Game::where('fooseballtable_id', $id)->where('active', true)->first();
+        if ($activeGame) {
+            return response()->json(['message' => 'Game is already running'], 208);
         }
-        return response()->json(['message' => 'Game is already running'], 208);
 
-        /*$player1 = User::where('email', 'anon1@example.com')->firstOrFail(); //toDo research firstOrCreate
-        $player2 = User::where('email', 'anon2@example.com')->firstOrFail();
+        // Check if there is a pending game on the table
+        $pendingGame = Game::where('fooseballtable_id', $id)->whereNull('start_date')->first();
+        if ($pendingGame) {
+            $pendingGame->active = true;
+            $pendingGame->start_date = Carbon::now()->format('Y-m-d H:i:s');
+            $pendingGame->save();
+            return response()->json(['message' => 'Game started successfully']);
+        }
 
-        $team1id = $player1->teamsAsPlayer1()->pluck('id')->firstOrFail(); //toDo research firstOrCreate
-        */
+        // Create a new game
+        $team1 = Team::where('name', 'Team1')->firstOrFail();
+        $team2 = Team::where('name', 'Team2')->firstOrFail();
+
+        $game = new Game;
+        $game->name = 'Anonymous';
+        $game->active = true;
+        $game->start_date = Carbon::now()->format('Y-m-d H:i:s');
+        $game->fooseballtable()->associate($table);
+        $game->save();
+
+        $game->teams()->attach([$team1->id, $team2->id]);
+
+        return response()->json(['message' => 'Anonymous Game started successfully']);
     }
+
 
     /**
      * Stop a game.
