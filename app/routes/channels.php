@@ -14,6 +14,6 @@ use Illuminate\Support\Facades\Broadcast;
 |
 */
 
-Broadcast::channel('chat-message.{userId}', function ($user) {
+/*Broadcast::channel('chat-message.{userId}', function ($user) {
     return true;//$user->id === $userId;
-});
+});*/
