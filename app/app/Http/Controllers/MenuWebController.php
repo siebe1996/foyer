@@ -1,0 +1,101 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Costum\Drink;
+use App\Costum\Food;
+use Illuminate\Http\Request;
+
+class MenuWebController extends Controller
+{
+    public function index(){
+        $drinks = [
+            new Drink('Negroni', 10, 'Aperitief', 'Cocktail'),
+            new Drink('Dark & Stormy', 10, 'Aperitief', 'Cocktail'),
+            new Drink('Moscow Mule', 10, 'Aperitief', 'Cocktail'),
+            new Drink('Bloody Mary', 9, 'Aperitief', 'Cocktail'),
+            new Drink('Tom Collins', 9, 'Aperitief', 'Cocktail'),
+            new Drink('Paloma', 10, 'Aperitief', 'Cocktail'),
+            new Drink('Aperol Spritz', 9, 'Aperitief', 'Aperitief'),
+            new Drink('Campari Spritz', 9, 'Aperitief', 'Aperitief'),
+            new Drink('Picon Vin Blanc', 7, 'Aperitief', 'Aperitief'),
+            new Drink('Martini (rood/wit)', 5, 'Aperitief', 'Aperitief'),
+            new Drink('Gin Tonic Beefeater', 9, 'Aperitief', 'Aperitief'),
+            new Drink('Gin Tonic Hendricks', 11.2, 'Aperitief', 'Aperitief'),
+            new Drink('Gin Beefeater', 6, 'Aperitief', 'Sterke Drank'),
+            new Drink('Gin Hendricks', 8, 'Aperitief', 'Sterke Drank'),
+            new Drink('Wiskey Bushmills', 7, 'Aperitief', 'Sterke Drank'),
+            new Drink('Wiskey Bushhmills 10y', 9, 'Aperitief', 'Sterke Drank'),
+            new Drink('Bourbon Bulleit', 7, 'Aperitief', 'Sterke Drank'),
+            new Drink('Cognac (bisquit / dubouché)', 6, 'Aperitief', 'Sterke Drank'),
+            new Drink('Rum Kraken', 8, 'Aperitief', 'Sterke Drank'),
+            new Drink('Vodka Absolut', 6, 'Aperitief', 'Sterke Drank'),
+            new Drink('Tequilla josé cuervo', 6, 'Aperitief', 'Sterke Drank'),
+            new Drink('Pink Lady', 10, 'Aperitief', 'Mocktail'),
+            new Drink('Ginger Mojito', 9, 'Aperitief', 'Mocktail'),
+            new Drink('Virgin Tom Collins', 10, 'Aperitief', 'Mocktail'),
+            new Drink('Nona June Paloma', 10, 'Aperitief', 'Mocktail'),
+            new Drink('Nona Tonic', 10, 'Aperitief', 'Non-alcoholisch'),
+            new Drink('Nona Spritz', 9, 'Aperitief', 'Non-alcoholisch'),
+            new Drink('Pacific', 5, 'Aperitief', 'Non-alcoholisch'),
+            new Drink('Belpils', 3, 'Drink', 'Bier'),
+            new Drink('Liefmans Kriek', 4, 'Drink', 'Bier'),
+            new Drink('Chimay Blauw', 4.5, 'Drink', 'Bier'),
+            new Drink('Chimay Wit', 4.5, 'Drink', 'Bier'),
+            new Drink('Tank 7', 4.5, 'Drink', 'Bier'),
+            new Drink('Bolleke', 3.5, 'Drink', 'Bier'),
+            new Drink('Gruut Blond', 3.7, 'Drink', 'Bier'),
+            new Drink('Vedett IPA', 3.7, 'Drink', 'Bier'),
+            new Drink('Vedett White', 3.7, 'Drink', 'Bier'),
+            new Drink("Triple D'Anvers", 4.5, 'Drink', 'Bier'),
+            new Drink('Duvel', 4.5, 'Drink', 'Bier'),
+            new Drink('Gentse Strop', 3.7, 'Drink', 'Bier'),
+            new Drink('Jupiler 0,0', 3, 'Drink', 'Bier'),
+            new Drink('NA Liefmans', 4, 'Drink', 'Bier'),
+            new Drink('NA La Chouffe', 4.5, 'Drink', 'Bier'),
+            new Drink('Champagne fles', 55, 'Drink', 'Wijn'),
+            new Drink('B&G Sparkling glas', 6, 'Drink', 'Wijn'),
+            new Drink('B&G Sparkling fles', 24, 'Drink', 'Wijn'),
+            new Drink('Wijn glas', 4.5, 'Drink', 'Wijn'),
+            new Drink('Wijn fles', 19, 'Drink', 'Wijn'),
+            new Drink('Coca Cola', 2.7, 'Drink', 'Soft'),
+            new Drink('Coca Cola Zero', 2.7, 'Drink', 'Soft'),
+            new Drink('Fanta', 2.7, 'Drink', 'Soft'),
+            new Drink('Sprite', 2.7, 'Drink', 'Soft'),
+            new Drink('Fever Tree Tonic', 3.2, 'Drink', 'Soft'),
+            new Drink('Fever Tree Ginger Beer', 3.2, 'Drink', 'Soft'),
+            new Drink('Almdudler', 3.2, 'Drink', 'Soft'),
+            new Drink('Ice Tea', 3, 'Drink', 'Soft'),
+            new Drink('Kombucha', 4, 'Drink', 'Soft'),
+            new Drink('Bionade Elderberry', 3.7, 'Drink', 'Soft'),
+            new Drink('Royal Bliss Agrume', 3, 'Drink', 'Soft'),
+            new Drink('Royal Bliss Tonic', 3, 'Drink', 'Soft'),
+            new Drink('Tomatensap', 3.5, 'Drink', 'Soft'),
+            new Drink('Home Made Ice Tea', 4.5, 'Drink', 'Soft'),
+            new Drink('Home Made Limonade', 3.5, 'Drink', 'Soft'),
+            new Drink('Lungo', 2.7, 'Drink', 'Warme Drank'),
+            new Drink('Cappuccino', 3.5, 'Drink', 'Warme Drank'),
+            new Drink('Latte Macchiato', 4.5, 'Drink', 'Warme Drank'),
+            new Drink('Thee', 4, 'Drink', 'Warme Drank'),
+            ];
+
+        $foods = [
+            new Food('ALL-INCLUSIVE', 53, 'Buffet + koffie, water, thee, home made ice tea + 1/2e bubbles', 'High Tea'),
+            new Food('THAI', 17, 'Lauwe rundvleessalade, mihoen, pikante dipsaus', 'Sharing Food'),
+            new Food('KIP', 15, 'Spies van krokante kipfilet, mangochutney', 'Sharing Food'),
+            new Food('ALBONDIGAS', 15, 'Spaanse gehaktballetjes, wiskeysaus', 'Sharing Food'),
+            new Food('RIB', 18, 'Gemarineerde, BBQ, peterseliepesto', 'Sharing Food'),
+            new Food('BURRATA', 15, 'Gebrande Italiaanse zachte kaas, pistache, croutons', 'Sharing Food'),
+            new Food('CAMEMBERT', 15, 'Oven, chimichurri, stokbrood', 'Sharing Food'),
+            new Food('CALAMARES', 15, 'Gebakken inktvisringen, verse tartaar', 'Sharing Food'),
+            new Food('CEVICHE', 17, 'Zeewolf, zoete aardappel, lookbrood', 'Sharing Food'),
+            new Food('SCAMPI', 19, 'Kokos, rum, citroengras', 'Sharing Food'),
+            new Food('GENTSE PLANK', 25, 'Vlees en kazen, tierenteyn', 'Sharing Food'),
+            new Food('LIBANEESE PLANK', 25, 'Hummus, baba ganoush, libanees brood', 'Sharing Food'),
+            new Food('ZOETE PLANK', 22, 'Mix van zoetigheden', 'Sharing Food'),
+            new Food('HEET IJS', 9, 'Gepaneerd, speculoos, gefrituurd', 'Sharing Food'),
+            new Food('NACHO', 17, 'Pikante salsa, zure room, advocado', 'Sharing Food'),
+            ];
+        return view('menu', ['foods' => $foods, 'drinks'=>$drinks]);
+    }
+}

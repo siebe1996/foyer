@@ -23,7 +23,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->group(function (){
+/*Route::middleware('auth:sanctum')->group(function (){
     Route::get('/profile', [UserApiController::class, 'profile']);
     Route::get('/users', [UserApiController::class, 'index']);
     Route::get('/teams', [TeamApiController::class, 'index']);
@@ -45,3 +45,4 @@ Route::get('/tables/{id}/end', [TableApiController::class, 'end']);
 Route::get('/tables/{id}/scores', [TableApiController::class, 'showScores']);
 Route::patch('/tables/{tableId}/teams/{teamId}', [GameinfoApiController::class, 'update']);
 Route::post('/register', [UserApiController::class, 'store']);
+*/
