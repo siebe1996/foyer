@@ -5,7 +5,7 @@
         <h2>Events at the city theatre of the future</h2>
         <div>
             <p><a href="/menu">Bekijk het menu</a></p>
-            <p><a href="#resengo link">Reserveer hier</a></p>
+            <p><a href="https://wwc.resengo.com/ntgent">Reserveer hier</a></p>
         </div>
     </main>
 @endsection
