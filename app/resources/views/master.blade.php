@@ -16,7 +16,8 @@
 
 <div class="container">
     <header class="">
-        <h1><a href="{{ url('/') }}">NtGent foyer</a></h1>
+        <img src="{{ url('logo-normal-gold.png') }}" alt="logo">
+        <h1>NTGent foyer</h1>
         <nav>
             <ul>
                 <li><a href="/">Home</a></li>
