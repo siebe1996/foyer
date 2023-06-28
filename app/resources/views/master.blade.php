@@ -7,7 +7,7 @@
     <meta name="author" content="Van de Voorde Siebe">
     <title>@yield('title')</title>
 
-    <link rel="icon" type="image/png" sizes="32x32" href="{{ url('logo-normal-gold.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ url('img/logo/logo-normal-gold.png') }}">
 
     <!-- Custom styles for this template -->
     <link href="{{asset('css/main.css')}}" rel="stylesheet">
@@ -16,7 +16,7 @@
 
 <div class="container">
     <header class="">
-        <img src="{{ url('logo-normal-gold.png') }}" alt="logo">
+        <img src="{{ url('img/logo/logo-normal-gold.png') }}" alt="logo">
         <h1>NTGent foyer</h1>
         <nav>
             <ul>
