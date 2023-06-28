@@ -1,5 +1,5 @@
 # Foyer site
-Web api for communicating with a smart fooseball table
+Site for NTGent Foyer
 ## Links
 
 * [Course slides wmfs-laravel](https://intern.ikdoeict.be/apps/leercentrum/courses/wmfs-laravel-course-materials/)
