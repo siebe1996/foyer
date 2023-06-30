@@ -3,9 +3,11 @@
 @section('main')
     <main class="container">
         <h2>Events at the city theatre of the future</h2>
-        <div>
-            <p><a href="/menu">Bekijk het menu</a></p>
-            <p><a href="https://wwc.resengo.com/ntgent">Reserveer hier</a></p>
+        <div class="row">
+            <div class="d-flex justify-content-center subMenu">
+                <a class="subMenuButton" href="/menu">Bekijk het menu</a>
+                <a class="subMenuButtonOff" href="https://wwc.resengo.com/ntgent">Reserveer hier</a>
+            </div>
         </div>
     </main>
 @endsection

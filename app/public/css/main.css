@@ -1,170 +1,220 @@
+@import url('https://fonts.googleapis.com/css2?family=Tinos&display=swap');
+
+.logoHeader{
+    height: 6rem;
+    width: auto;
+}
+
+.headerContainter {
+    margin: 0.5rem auto;
+}
+
+article{
+    margin-bottom: 7rem!important;
+}
+
+.marginBottom{
+    margin-bottom: 7rem!important;
+}
+
 body {
-    font-family: 'Roboto', sans-serif;
-}
-
-.container {
-    width: 80%;
-    margin: auto;
-
-}
-
-form {
-    text-align: left;
-}
-
-.game {
-    margin-bottom: 1rem;
-    border-bottom: 1px solid #36a170;
-    padding-bottom: 1rem;
-    width: 6rem;
-    text-align: center;
-}
-
-.game a {
-    font-size: 1rem;
-    text-transform: uppercase;
-    width: 100%;
-}
-
-.game form {
-    margin-top: 0.5rem;
-}
-
-label {
-    display: none;
-}
-
-input {
-    width: 100%;
-    padding: 10px;
-    text-align: center;
-    box-sizing: border-box;
-    border: none;
-    border-bottom: 2px solid #36a170;
-    margin-bottom: 2rem;
-}
-
-input[type="checkbox"] {
-    width: unset;
-    margin-right: 1rem;
-}
-
-input[type="checkbox"] + label {
-    display: inline;
-}
-
-button {
-    height: 2rem;
-    width: 6rem;
-    padding: 10px;
-    text-align: center;
-    background-color: #36a170;
-    border: none;
-    border-radius: 5px;
-
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.07), 0 1px 2px rgba(0, 0, 0, 0.07),
-    0 2px 4px rgba(0, 0, 0, 0.07), 0 4px 8px rgba(0, 0, 0, 0.07),
-    0 8px 16px rgba(0, 0, 0, 0.07), 0 16px 32px rgba(0, 0, 0, 0.07);
-}
-
-button:hover {
-    cursor: pointer;
-}
-
-.icon {
-    padding: 10px 10px 10px 0;
-    color: #36a170;
-    min-width: 30px;
-    text-align: center;
-}
-
-.checkBoxFlex {
-    display: flex;
-    justify-content: flex-start;
-}
-
-i {
-    position: absolute;
-}
-
-a {
-    color: #36a170;
-    text-decoration: none;
-}
-
-.gameControls {
-    width: 100px;
-    border: 1px solid #36a170;
-    padding: 5px;
-}
-
-.gameControls:hover {
-    background-color: #36a170;
-    color: white;
+    font-family: 'Tinos', serif;
 }
 
 h1 {
-    font-size: 3rem;
+    display: inline;
+    padding-top: 1.5rem;
 }
 
-h1, h4 {
+h2 {
     text-align: center;
+    margin-bottom: 1rem!important;
+    text-transform: uppercase;
+}
+
+h3 {
+    font-size: 1.5rem!important;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+nav {
+    margin-bottom: 8%;
+}
+
+nav ul {
+    gap: 10px;
+}
+
+nav ul li{
+    padding-bottom: 0.2rem;
+    list-style-type: none;
+    border-bottom: 1px solid white;
+}
+
+nav ul li a{
+    text-decoration: none;
+    color: black;
+    text-transform: uppercase;
+    margin: 1rem;
+}
+
+nav ul li:hover {
+    border-bottom: 1px solid #F3C567;
+}
+
+nav ul li a:hover{
+    color: black;
 }
 
 footer {
     position: fixed;
     bottom: 0;
     left: 0;
-    background-color: #a0aec0;
+    background-color: #055353;
     width: 100%;
     z-index: 10;
+    padding-top: 5px;
+    color: white;
 }
 
-.gameheaders {
+footer p, footer a {
+    margin-bottom: 0;
+    display: inline-block;
+    align-self: flex-end;
+}
+
+footer svg {
+    height: 25px;
+    width: 25px;
+    margin-right: 0.5rem;
+}
+
+svg {
+    color: white;
+}
+
+footer a {
+    color: white;
+    text-decoration: none;
+    margin-right: 1rem;
+}
+
+footer a:hover {
+    color: white;
+}
+
+footer a svg {
+    height: 30px;
+    width: auto;
+    margin: auto;
+    display: block;
+}
+
+.activeLink {
+    border: 2px solid #F3C567!important;
+}
+
+.subMenu {
+    gap: 30px;
+}
+
+.copy {
     display: flex;
-    justify-content: flex-start;
+    height: 100%;
 }
 
-.gameheaders p, .gameheaders form {
+.row {
+    --bs-gutter-x: 0!important;
+}
+
+.subMenuButton {
+    color: #055353 ;
+    text-decoration: none;
+    padding: 5px;
+    border: 1px solid #055353;
+    width: 160px;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.subMenuButton:hover {
+    color: #055353;
+}
+
+.subMenuButtonOff {
+    color: white;
+    text-decoration: none;
+    padding: 5px;
+    background-color: #055353;
+    width: 160px;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.subMenuButtonOff:hover {
+    color: white;
+}
+
+.aboutText{
+    font-size: 12px;
+}
+
+.imgAboutScale {
+    height: 40%;
+}
+
+.textIndent{
+    padding-left: 1rem!important;
+}
+
+h4{
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.menu li{
+    list-style-type: none;
+}
+
+.menu li p{
+    display: inline;
+}
+
+.menuItem{
+    width: 50px;
+}
+
+.menuItemSolo{
     width: 100px;
 }
 
-.gameheader .gameContent p {
-    width: 50%;
+.menuItemSoloPrice{
+    text-align: right;
 }
 
-.gameheaders:last-child {
-    margin-bottom: 7rem;
+.marginBottomSmall{
+    margin-bottom: 2rem;
 }
 
-.datelabel {
-    display: block;
-    margin-bottom: 1rem;
+.phone {
+    color: white;
+    text-decoration: none;
 }
 
-.createGame {
-    width: 10rem;
-    height: 3rem;
+.nav-link {
+    color: black!important;
 }
 
-select {
-    width: 50%;
-    padding: 0 10px;
-    height: 2rem;
-    margin-bottom: 2rem ;
+@media only screen and (max-width: 600px) {
+    nav ul li a {
+        text-align: center;
+    }
+    .textIndent{
+        padding-left: 0!important;
+    }
+
+    .textIndent h3 {
+        text-align: left;
+    }
 }
-
-.leaderbordHeader {
-    display: flex;
-    justify-content: space-between;
-}
-
-.deathAlive:last-child{
-    margin-bottom: 0;
-}
-
-.leaderbordTitle {
-    text-align: center;
-}
-
-

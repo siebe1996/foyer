@@ -7,6 +7,6 @@ use Illuminate\Http\Request;
 class AboutWebController extends Controller
 {
     public function index(){
-        return view('about', []);
+        return view('about', ['active' => 'about']);
     }
 }

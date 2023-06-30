@@ -22,8 +22,7 @@ hooks:
   install_before: |
     exit 0
   install_after: |
-    APP_ENV=production composer install
-    composer install
+    composer install --no-dev --optimize-autoloader
     exit 0
 
 # SHAREDSYMLINK: Create symlink to shared files and folders

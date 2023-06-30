@@ -7,6 +7,6 @@ use Illuminate\Http\Request;
 class MoodboardWebController extends Controller
 {
     public function index(){
-        return view('moodboard', []);
+        return view('moodboard', ['active' => 'moodboard']);
     }
 }

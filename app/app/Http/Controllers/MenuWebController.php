@@ -96,6 +96,6 @@ class MenuWebController extends Controller
             new Food('HEET IJS', 9, 'Gepaneerd, speculoos, gefrituurd', 'Sharing Food'),
             new Food('NACHO', 17, 'Pikante salsa, zure room, advocado', 'Sharing Food'),
             ];
-        return view('menu', ['foods' => $foods, 'drinks'=>$drinks]);
+        return view('menu', ['foods' => $foods, 'drinks'=>$drinks, 'active' => 'menu']);
     }
 }
