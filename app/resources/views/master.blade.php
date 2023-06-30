@@ -13,30 +13,30 @@
     <link href="{{asset('css/main.css')}}" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
-<body id="top">
+<body id="top" class="@if($active == 'home') backgound-img @endif">
 
 <div class="container">
     <header class="row">
         <div class="headerContainter d-flex justify-content-center">
             <img src="{{ url('img/logo/logo-normal-gold.png') }}" alt="logo" class="logoHeader">
-            <h1>NTGent De Foyer</h1>
+            <h1 class="@if($active == 'home') white @endif">NTGent De Foyer</h1>
         </div>
         <nav class="row">
   <ul class="nav nav-pills flex-column flex-md-row justify-content-center">
     <li class="nav-item">
-      <a class="nav-link @if($active == 'home') activeLink @endif" href="/">Home</a>
+      <a class="nav-link @if($active == 'home') activeLink @endif @if($active == 'home') white @endif" href="/">Home</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link @if($active == 'about') activeLink @endif" href="/about">About</a>
+      <a class="nav-link @if($active == 'about') activeLink @endif @if($active == 'home') white @endif" href="/about">About</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link @if($active == 'menu') activeLink @endif" href="/menu">Menu</a>
+      <a class="nav-link @if($active == 'menu') activeLink @endif @if($active == 'home') white @endif" href="/menu">Menu</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link @if($active == 'moodboard') activeLink @endif" href="/moodboard">Moodboard</a>
+      <a class="nav-link @if($active == 'moodboard') activeLink @endif @if($active == 'home') white @endif" href="/moodboard">Moodboard</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link @if($active == 'contact') activeLink @endif" href="/contact">Contact</a>
+      <a class="nav-link @if($active == 'contact') activeLink @endif @if($active == 'home') white @endif" href="/contact">Contact</a>
     </li>
   </ul>
 </nav>

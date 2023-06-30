@@ -49,7 +49,7 @@ nav ul {
 nav ul li{
     padding-bottom: 0.2rem;
     list-style-type: none;
-    border-bottom: 1px solid white;
+    border-bottom: 1px solid transparent;
 }
 
 nav ul li a{
@@ -138,6 +138,20 @@ footer a svg {
     text-transform: uppercase;
 }
 
+.subMenuButtonMain {
+    color: white;
+    text-decoration: none;
+    padding: 5px;
+    border: 1px solid white;
+    width: 160px;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.subMenuButtonMain:hover {
+    color: white;
+}
+
 .subMenuButton:hover {
     color: #055353;
 }
@@ -206,6 +220,16 @@ h4{
     color: black!important;
 }
 
+.backgound-img {
+    background-image: url('../img/sfeer/_DSC0062.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+.white{
+    color: white!important;
+}
+
 @media only screen and (max-width: 600px) {
     nav ul li a {
         text-align: center;
@@ -216,5 +240,9 @@ h4{
 
     .textIndent h3 {
         text-align: left;
+    }
+
+    main{
+        margin-bottom: 10vh;
     }
 }
