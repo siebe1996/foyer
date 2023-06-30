@@ -91,7 +91,7 @@ class MenuWebController extends Controller
             new Food('CEVICHE', 17, 'Zeewolf, zoete aardappel, lookbrood', 'Sharing Food'),
             new Food('SCAMPI', 19, 'Kokos, rum, citroengras', 'Sharing Food'),
             new Food('GENTSE PLANK', 25, 'Vlees en kazen, tierenteyn', 'Sharing Food'),
-            new Food('LIBANEESE PLANK', 25, 'Hummus, baba ganoush, libanees brood', 'Sharing Food'),
+            new Food('LIBANESE PLANK', 25, 'Hummus, baba ganoush, libanees brood', 'Sharing Food'),
             new Food('ZOETE PLANK', 22, 'Mix van zoetigheden', 'Sharing Food'),
             new Food('HEET IJS', 9, 'Gepaneerd, speculoos, gefrituurd', 'Sharing Food'),
             new Food('NACHO', 17, 'Pikante salsa, zure room, advocado', 'Sharing Food'),

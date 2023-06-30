@@ -19,7 +19,7 @@
     <header class="row">
         <div class="headerContainter d-flex justify-content-center">
             <img src="{{ url('img/logo/logo-normal-gold.png') }}" alt="logo" class="logoHeader">
-            <h1>NTGent foyer</h1>
+            <h1>NTGent De Foyer</h1>
         </div>
         <nav class="row">
   <ul class="nav nav-pills flex-column flex-md-row justify-content-center">
