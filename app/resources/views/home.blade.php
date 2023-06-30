@@ -1,5 +1,5 @@
 @extends('master')
-@section('title', 'Home | Gotcha')
+@section('title', 'Home | NTGent Foyer')
 @section('main')
     <main class="container">
         <h2>Events at the city theatre of the future</h2>
