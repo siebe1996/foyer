@@ -34,7 +34,7 @@
             <div class="marginBottom">
                 <p>Sharing food, tapas, petiscos, what’s in a name.. Verfijnde en uitgekiende bordjes om te smullen, om
                     te delen, global food, vis, vlees en vegetarisch. Samen met je vrienden, collega’s of je lief een
-                    optreden meepikken en je maag vullen? Bij ons, NTG terras , is dit mogelijk!
+                    optreden meepikken en je maag vullen? Bij ons, NTGent terras , is dit mogelijk!
                     Vanop de eerste verdieping, vanaf 18u zijn jullie allen welkom.</p>
             </div>
             <ul>

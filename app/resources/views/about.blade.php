@@ -13,7 +13,7 @@
                         de mogelijkheid om te opteren voor een externe cateraar die gebruik kan maken van de keuken.
                         Onze sfeervolle bar biedt een uitgebreide selectie drankjes aan, verzorgd door ons
                         barpersoneel.</p>
-                    <p>Naast de grote binnenruimte, beschikt De Foyer over een ruim terras dat uitkijkt op het
+                    <p>Naast de grote binnenruimte, beschikt De NTGent Foyer over een ruim terras dat uitkijkt op het
                         Sint-Baafsplein. Het is de ideale setting voor een zomerse receptie. Laat de sfeer van de stad
                         en het theater u omarmen terwijl u samenkomt met uw gasten in deze unieke omgeving.</p>
                 </div>
@@ -37,7 +37,7 @@
 
                         <p>Als een globetrotter in cultuur en smaken, reis ik zowel nationaal als internationaal als
                             cateraar voor theaterproducties, festivals, beurzen en soms zelfs met kunstenaar Arne
-                            Quinze. Op dit moment ben ik de vaste cateraar van NTG, waar ik uw huiselijke culinaire
+                            Quinze. Op dit moment ben ik de vaste cateraar van NTGent, waar ik uw huiselijke culinaire
                             ervaring verzorg.</p>
 
                         <p>Tussen lunch en diner bieden wij geen traditionele brunch, maar een "AFTERNOON TEA". Dit is
@@ -52,7 +52,7 @@
                             die perfect zijn om te delen, zoals tapas en petiscos. Ons aanbod omvat een scala aan
                             wereldse gerechten, waaronder vis, vlees en vegetarische opties. Geniet samen met uw
                             vrienden, collega's of geliefden van een smaakvolle avond, terwijl u ook kunt genieten van
-                            een optreden op het NTG-terras. Vanaf 18.00 uur heten wij u allen van harte welkom op de
+                            een optreden op het NTGent terras. Vanaf 18.00 uur heten wij u allen van harte welkom op de
                             eerste verdieping.</p>
 
                         <p>Kom langs en ontdek de culinaire creaties en de gezellige sfeer die ik met passie voor u heb
