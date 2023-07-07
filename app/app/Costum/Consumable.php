@@ -7,18 +7,18 @@ class Consumable
     protected $name;
     protected $price;
 
-    public function __construct($name, $price)
+    public function __construct(string $name, int $price)
     {
         $this->name = $name;
         $this->price = $price;
     }
 
-    public function getName()
+    public function getName() : string
     {
         return $this->name;
     }
 
-    public function getPrice()
+    public function getPrice() : int
     {
         return $this->price;
     }

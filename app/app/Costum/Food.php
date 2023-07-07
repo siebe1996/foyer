@@ -7,17 +7,17 @@ class Food extends Consumable
     private $description;
     private $kind;
 
-    public function __construct($name, $price, $description, $kind) {
+    public function __construct(string $name, int $price, string $description, string $kind) {
         parent::__construct($name, $price);
         $this->description = $description;
         $this->kind = $kind;
     }
 
-    public function getDescription() {
+    public function getDescription(): string {
         return $this->description;
     }
 
-    public function getKind() {
+    public function getKind(): string {
         return $this->kind;
     }
 }

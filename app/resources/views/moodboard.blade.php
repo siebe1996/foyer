@@ -20,7 +20,7 @@
         <div class="row marginBottomSmall">
             <div class="d-flex justify-content-around">
                 <div class="col-3">
-                    <img src="{{ url('img/sfeer/29-IMG_3698_druk (c) Michiel Devijver.jpg') }}" alt="vis"
+                    <img src="{{ url('img/sfeer/_DSC0040.jpg') }}" alt="macarons"
                          class="img-fluid">
                 </div>
                 <div class="col-3">

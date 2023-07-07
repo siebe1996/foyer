@@ -33,6 +33,7 @@ h2 {
 }
 
 h3 {
+    margin-bottom: 0!important;
     font-size: 1.5rem!important;
     text-align: center;
     text-transform: uppercase;
@@ -183,8 +184,13 @@ footer a svg {
 }
 
 h4{
-    text-align: center;
+    text-align: left;
     text-transform: uppercase;
+    font-size: 1.3rem!important;
+}
+
+.menu li h4 {
+    display: inline;
 }
 
 .menu li{
@@ -193,6 +199,10 @@ h4{
 
 .menu li p{
     display: inline;
+}
+
+.menu em{
+    font-size: 0.8rem;
 }
 
 .menuItem{
@@ -223,7 +233,13 @@ h4{
 .backgound-img {
     background-image: url('../img/sfeer/_DSC0062.jpg');
     background-size: cover;
-    background-position: center;
+    background-position: top;
+}
+
+.backgound-img-menu {
+    background-image: url('../img/sfeer/groente_boeket.jpg');
+    background-size: cover;
+    background-position: top;
 }
 
 .white{
