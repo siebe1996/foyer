@@ -28,7 +28,7 @@
                 @endforeach
             </ul>
         </div>
-        <div>
+        <div class="sharing-food">
             <h3>Sharing Food</h3>
             <p class="text-center">18u-23u</p>
             <div class="marginBottom">
@@ -53,6 +53,7 @@
                 @endforeach
             </ul>
         </div>
+        <div class="drinks">
         <h3>Aperitieven</h3>
 
         <div class="row">
@@ -133,10 +134,12 @@
 
             </div>
         </div>
+        </div>
+        <div class="drinks">
         <h3>Drinks</h3>
         <div class="row">
             <div class="col-12 col-md-6">
-                <h4>Bieren</h4>
+                <h4 class="d-flex justify-content-between">Bieren</h4>
                 <ul>
                     @foreach($drinks as $drink)
                         @if ($drink->getSubkind() == 'Bier')
@@ -193,6 +196,7 @@
                     @endforeach
                 </ul>
             </div>
+        </div>
         </div>
     </main>
 @endsection

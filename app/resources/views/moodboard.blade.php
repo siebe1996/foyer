@@ -28,7 +28,7 @@
                          class="img-fluid">
                 </div>
                 <div class="col-3">
-                    <img src="{{ url('img/sfeer/_DSC7987.jpg') }}" alt="st-baafs"
+                    <img src="{{ url('img/sfeer/355800547_1317378762202088_2797515416647032132_n.jpg') }}" alt="st-baafs"
                          class="img-fluid">
                 </div>
             </div>
@@ -49,7 +49,15 @@
 
         <div class="row marginBottom">
             <div class="d-flex justify-content-around">
-                <img src="{{ url('img/sfeer/_DSC7904.jpg') }}" alt="hapjes" class="img-fluid">
+                <div class="col-3">
+                    <img src="{{ url('img/sfeer/_DSC7904.jpg') }}" alt="hapjes" class="img-fluid">
+                </div>
+                <div class="col-3">
+                    <img src="{{ url('img/sfeer/356965638_3458037431191910_3413825880845877044_n.jpg') }}" alt="terras buiten" class="img-fluid">
+                </div>
+                <div class="col-3">
+                    <img src="{{ url('img/sfeer/_DSC7618.jpg') }}" alt="gezonde hapjes" class="img-fluid">
+                </div>
             </div>
         </div>
 

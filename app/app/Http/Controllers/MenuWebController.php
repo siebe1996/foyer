@@ -10,7 +10,7 @@ class MenuWebController extends Controller
 {
     public function index(){
         $drinks = [
-            new Drink('Negroni', 10, 'campari, cava en rode vermouth','Aperitief', 'Cocktail'),
+            new Drink('Negroni', 10, 'campari, gin en rode vermouth','Aperitief', 'Cocktail'),
             new Drink('Dark & Stormy', 10, 'havana club especial, ginger beer, verse munt, limoen en gember', 'Aperitief', 'Cocktail'),
             new Drink('Moscow Mule', 10, 'wodka, ginger beer, verse munt, limoen en gember', 'Aperitief', 'Cocktail'),
             new Drink('Bloody Mary', 9, 'wodka en gekruid tomatensap', 'Aperitief', 'Cocktail'),
@@ -96,6 +96,9 @@ class MenuWebController extends Controller
             new Food('HEET IJS', 9, 'Gepaneerd, speculoos, gefrituurd', 'Sharing Food'),
             new Food('NACHO', 17, 'Pikante salsa, zure room, advocado', 'Sharing Food'),
             ];
+        $drinks = collect($drinks)->sortByDesc(function (Drink $drink) {
+            return $drink->getPrice();
+        })->values()->all();
         return view('menu', ['foods' => $foods, 'drinks'=>$drinks, 'active' => 'menu']);
     }
 }
