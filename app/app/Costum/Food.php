@@ -7,8 +7,8 @@ class Food extends Consumable
     private $description;
     private $kind;
 
-    public function __construct(string $name, int $price, string $description, string $kind) {
-        parent::__construct($name, $price);
+    public function __construct(string $name, int $price, string $description, string $kind, bool $active) {
+        parent::__construct($name, $price, $active);
         $this->description = $description;
         $this->kind = $kind;
     }

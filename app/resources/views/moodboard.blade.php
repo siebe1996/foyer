@@ -60,6 +60,9 @@
                 </div>
             </div>
         </div>
+        <div>
+            <p>&copy; Laurence Delbeke, &copy; Michiel Devijver, &copy; Laura Vleugels</p>
+        </div>
 
 
     </main>

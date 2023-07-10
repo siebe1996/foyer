@@ -8,8 +8,8 @@ class Drink extends Consumable
     private $subkind;
     private $description;
 
-    public function __construct(string $name, int $price, ?string $description, string $kind, string $subkind) {
-        parent::__construct($name, $price);
+    public function __construct(string $name, float $price, ?string $description, string $kind, string $subkind, bool $active) {
+        parent::__construct($name, $price, $active);
         $this->kind = $kind;
         $this->description = $description;
         $this->subkind = $subkind;

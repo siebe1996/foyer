@@ -3,6 +3,7 @@
 @section('main')
     <main class="container">
         <article class="row">
+            <h2>About</h2>
             <div class="d-flex flex-wrap">
                 <div class="col-lg-6 aboutText">
                     <h3>NTGent Foyer</h3>

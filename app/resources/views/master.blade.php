@@ -17,10 +17,12 @@
 
 <div class="container">
     <header class="row">
+        <a class="h1-a" href="/">
         <div class="headerContainter d-flex justify-content-center">
             <img src="{{ url('img/logo/logo-normal-gold.png') }}" alt="logo" class="logoHeader">
             <h1 class="@if($active == 'home') white @endif">NTGent De Foyer</h1>
         </div>
+        </a>
         <nav class="row">
   <ul class="nav nav-pills flex-column flex-md-row justify-content-center">
     <li class="nav-item">
